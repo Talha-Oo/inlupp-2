@@ -32,4 +32,3 @@ bool edit_merch(store_t *store, char* name);
 /// @param store the store the merchendise is in
 /// @param name the name of the merchendise 
 bool show_stock(store_t *store, char* name);
-
