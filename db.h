@@ -37,7 +37,7 @@ bool edit_merch(store_t *store, char* name);
 /// @param name the name of the merchandise 
 bool show_stock(store_t *store, char* name);
 
-/// @brief adds at least one item of a merchandise
+/// @brief adds at least one item of a merchandise on one of the shelf 
 /// @param store the store the merchendise is in
 /// @param name the name to be edited
 /// @param quantity the number of items to add
@@ -45,3 +45,4 @@ bool show_stock(store_t *store, char* name);
 /// @pre quantity is at least one 
 /// @param name the name of the merchendise 
 bool replenish(store_t *store, char* name, int quantity);
+
