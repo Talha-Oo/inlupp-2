@@ -27,6 +27,7 @@ typedef struct store_t {
 };
 
 typedef struct shopping_cart_t {
+    size_t id;
     ioopm_hash_table_t cart;
 };
 

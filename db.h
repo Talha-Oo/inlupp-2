@@ -46,3 +46,23 @@ bool show_stock(store_t *store, char* name);
 /// @param name the name of the merchendise 
 bool replenish(store_t *store, char* name, int quantity);
 
+/// @brief creates a place for all of the shoping carts
+/// @return a pointer to the linked list holding the shoping cart
+all_shopping_carts_t *create_cart_holder();
+
+/// @brief creates a shoping carts
+/// @return a pointer to the shopingcart
+all_shopping_carts_t *create_cart_();
+
+/// @brief removes the shopping cart
+/// @param store linked list containing all of the carts
+/// @param id id of the shopping cart to be removed
+/// @return true if the shopping cart was removed sucessfully otherwise returns false
+bool remove_cart(all_shopping_carts_t *all_carts, size_t id);
+
+/// @brief adds x amount of merchandise to the cart 
+/// @param store pointer to the store the merchandise is in 
+/// @param all_carts pointer to the linked list all carts are in
+/// @param merch name of the merchandise to be added
+/// @return true if the merchandise was added sucessfully to the cart otherwise returns false
+bool add_to_cart(store_t *store, all_shopping_carts_t *all_carts, size_t id, char *merch);
