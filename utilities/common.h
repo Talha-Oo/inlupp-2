@@ -6,8 +6,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "hash_table.h"
-#include "linked_list.h"
+#include "hash_table.c"
+#include "linked_list.c"
 
 typedef struct shelf_t {
     char * shelf;
