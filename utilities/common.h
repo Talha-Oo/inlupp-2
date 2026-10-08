@@ -6,8 +6,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "hash_table.h"
-#include "linked_list.h"
+#include "hash_table.c"
+#include "linked_list.c"
 
 typedef struct shelf_t {
     char * shelf;
@@ -24,4 +24,13 @@ typedef struct merch_t {
 typedef struct store_t {
     ioopm_hash_table_t name_to_item;
     ioopm_hash_table_t shelf_to_item;
+};
+
+typedef struct shopping_cart_t {
+    size_t id;
+    ioopm_hash_table_t cart;
+};
+
+typedef struct all_shopping_carts_t {
+    ioopm_list_t all_carts;
 };
