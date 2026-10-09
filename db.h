@@ -3,14 +3,14 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
-#include "common.h"
+#include "utilities/common.h"
 
 /// @brief Creates and initializes a new store.
 /// @return a pointer to the newly created store.
 store_t *create_store(void);
 
 /// @brief Delete a store and free its memory
-/// @param ht a hash table to be deleted
+/// @param store a hash table to be deleted
 void store_destroy(store_t *store);
 
 /// @brief Adds merchandise to the store if an item with the same name does not already exist

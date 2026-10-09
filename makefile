@@ -1,65 +1,25 @@
-CC=gcc
-FLAGS=-Wall -Wextra -Wpedantic -g
-COV_FLAG = --coverage 
+CC = gcc
+CFLAGS = -Wall -Wextra -Wpedantic -g -Iutilities
+COV_FLAGS = --coverage
 
-HASH_OBJECTS=hash_table.o hash_table_iterator.o
-LIST_OBJECTS=linked_list.o linked_list_iterator.o
-FREQ_OBJECTS=hash_table.o hash_table_iterator.o freq_count.o
+UTIL_OBJECTS = utilities/hash_table.o \
+								utilities/hash_table_iterator.o \
+								utilities/linked_list.o \
+								utilities/linked_list_iterator.o \
+								utilities/utils.o
 
-COV_HASH_OBJECTS=hash_table.c hash_table_iterator.c
-COV_LIST_OBJECTS=linked_list.c linked_list_iterator.c
+all: backend_tests
 
-all: hash_table_tests
+backend_tests: backend_tests.c db.c $(UTIL_OBJECTS)
+	$(CC) $(CFLAGS) $^ -o $@ -lcunit	
 
-hash_table_tests: $(HASH_OBJECTS) hash_table_tests.c
-	$(CC) $(FLAGS) $^ -o $@ -lcunit
+utilities/%.o: utilities/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-linked_list_tests: $(LIST_OBJECTS) linked_list_tests.c
-	$(CC) $(FLAGS) $^ -o $@ -lcunit
+test: backend_tests
+	./backend_tests
 
-%.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@
-
-
-freq: $(FREQ_OBJECTS) 
-	$(CC) $(FLAGS) $^ -o freq_count
-
-test: hash_table_tests linked_list_tests
-	./hash_table_tests 
-	./linked_list_tests
-
-tests: hash_table_tests linked_list_tests
-	./hash_table_tests 
-	./linked_list_tests
-
-memtest: hash_table_tests linked_list_tests
-	valgrind ./hash_table_tests
-	valgrind ./linked_list_tests
-
-cov:
-	$(CC) $(FLAGS) $(COV_FLAG) $(COV_HASH_OBJECTS) hash_table_tests.c -o hash_table_tests_cov -lcunit
-	./hash_table_tests_cov
-	gcov -abcf hash_table_tests_cov-hash_table.gcno
-	gcov -abcf hash_table_tests_cov-hash_table_iterator.gcno
-	gcovr -r .
-
-	$(CC) $(FLAGS) $(COV_FLAG) $(COV_LIST_OBJECTS) linked_list_tests.c -o linked_list_tests_cov -lcunit
-	./linked_list_tests_cov
-	gcov -abcf linked_list_tests_cov-linked_list.gcno
-	gcov -abcf linked_list_tests_cov-linked_list_iterator.gcno
-	gcovr -r .
-
-prof:
-	gcc -pg hash_table.c hash_table_iterator.c freq_count.c -o freq_count
-	./freq_count sample-texts/16k-words.txt
-	gprof freq_count gmon.out > profile.txt
-	more profile.txt
-
-massif:
-	valgrind --tool=massif ./freq_count tbontb.txt
-	
-clean:	
-	rm -f *.o *.gcda *.gcno
-	rm -f *.out a.out
-	rm -f hash_table_tests linked_list_tests freq_count
-	rm -f linked_list_tests_cov hash_table_tests_cov
+clean:
+	rm -f utilities/*.o
+	rm -f backend_tests
+	rm -f *.gcda *.gcno *.gcov

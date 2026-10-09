@@ -2,7 +2,9 @@
 
 #include <stdbool.h>
 #include <stddef.h>
-#include "common.h"
+
+#include "hash_table.h"
+#include "linked_list.h"
 
 typedef struct shelf
 {
