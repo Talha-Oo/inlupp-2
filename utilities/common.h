@@ -1,17 +1,12 @@
 #pragma once
 
-#include <stdlib.h>
-#include <stddef.h>
 #include <stdbool.h>
-#include <stdio.h>
-#include <string.h>
-
-#include "hash_table.c"
-#include "linked_list.c"
+#include <stddef.h>
+#include "common.h"
 
 typedef struct shelf
 {
-    char *shelf;v
+    char *id;
     int quantity;
 } shelf_t;
 
@@ -25,17 +20,17 @@ typedef struct merch
 
 typedef struct store
 {
-    ioopm_hash_table_t name_to_item;
-    ioopm_hash_table_t shelf_to_item;
+    ioopm_hash_table_t *name_to_item;
+    ioopm_hash_table_t *shelf_to_item;
 } store_t;
 
-typedef struct shopping_cart
+typedef struct cart
 {
     size_t id;
-    ioopm_hash_table_t cart;
-} shopping_cart_t;
+    ioopm_hash_table_t *cart;
+} cart_t;
 
-typedef struct all_shopping_carts
+typedef struct all_carts
 {
-    ioopm_hash_table_t all_carts;
-} all_shopping_carts_t;
+    ioopm_hash_table_t *all_carts;
+} all_carts_t;
