@@ -19,6 +19,11 @@ int clean_suite(void)
 }
 
 //////////////////////// TODO: Tests
+void test_create_destroy()
+{
+  store_t *store = create_store();
+  destroy_store(store);
+}
 
 int main()
 {

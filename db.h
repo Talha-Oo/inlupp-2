@@ -11,7 +11,7 @@ store_t *create_store(void);
 
 /// @brief Delete a store and free its memory
 /// @param store a hash table to be deleted
-void store_destroy(store_t *store);
+void destroy_store(store_t *store);
 
 /// @brief Adds merchandise to the store if an item with the same name does not already exist
 /// @param store pointer to the store where the merchandise should be added
