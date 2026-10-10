@@ -6,9 +6,8 @@ extern char *strdup(const char *);
 #include <stdlib.h>
 #include <string.h>
 
-typedef union
-{
-  int int_value;
+typedef union { 
+  int   int_value;
   float float_value;
   char *string_value;
 } answer_t;
@@ -16,13 +15,13 @@ typedef union
 typedef bool check_func(char *);
 typedef answer_t convert_func(char *);
 
-int read_string(char *buf, int buf_siz)
-{
+
+int read_string(char *buf, int buf_siz) {
 
   int counter = 0;
-  int c;
+  char c;
 
-  while ((c = getchar()) != '\n' && counter < buf_siz - 1)
+  while((c = getchar()) != '\n' && counter < buf_siz - 1)
   {
     buf[counter] = c;
     counter++;
@@ -30,96 +29,71 @@ int read_string(char *buf, int buf_siz)
 
   buf[counter] = '\0';
 
-  if (c != '\n')
-  {
-    while (getchar() != '\n')
-      ;
+  if(c != '\n') {
+    while (getchar() != '\n');
   }
-
+  
   return counter;
 }
 
-bool is_number(char *str)
-{
+bool is_number(char *str) {
 
   int len = strlen(str);
 
-  if (len <= 0)
-    return false;
-
+  if(len <= 0) return false;
+  
   for (int i = 0; i < len; i++)
   {
-    if (i == 0 && str[0] == '-' && len > 1)
-    {
+    if(i == 0 && str[0] == '-' && len > 1) {
       continue;
-    }
-    else
-    {
-      if (!isdigit(str[i]))
-      {
-        return false;
-      }
+    } else {
+      if(!isdigit(str[i])) { return false; }
     }
   }
-
+  
   return true;
 }
 
-bool is_float(char *str)
-{
+bool is_float(char *str) {
 
   int len = strlen(str);
 
   int dot_count = 0;
   for (int i = 0; i < len; i++)
   {
-    if (i == 0 && (str[i] == '-' || str[i] == '.') && len > 1)
-    {
-      if (str[i] == '.')
-      {
-        dot_count++;
-      }
-      continue;
-    }
-    else if (str[i] == '.' && len > 1)
+    if(i == 0 && (str[i] == '-' || str[i] == '.') && len > 1 ) { 
+      if(str[i] == '.') { dot_count++; }
+      continue; 
+
+    } else if (str[i] == '.' && len > 1)
     {
       dot_count++;
-    }
-    else
-    {
-      if (!isdigit(str[i]))
-      {
-        return false;
-      }
-    }
 
-    if (dot_count > 1)
-    {
-      return false;
+    } else {
+      if(!isdigit(str[i])) { return false; }
     }
+    
+    if(dot_count > 1) { return false; }
   }
-
+  
   return true;
 }
 
-answer_t make_float(char *str)
-{
+answer_t make_float(char *str) {
 
   answer_t f;
   f.float_value = atof(str);
   return f;
 }
 
-answer_t make_string(char *str)
-{
+answer_t make_string(char *str) {
 
   answer_t s;
   s.string_value = strdup(str);
   return s;
 }
 
-answer_t make_int(char *str)
-{
+answer_t make_int(char *str) {
 
   answer_t i;
   i.int_value = atoi(str);
@@ -131,8 +105,7 @@ bool not_empty(char *str)
   return strlen(str) > 0;
 }
 
-answer_t ask_question(char *question, check_func *check, convert_func *convert)
-{
+answer_t ask_question(char *question, check_func *check, convert_func *convert) {
 
   char buffer[20];
   int buff_size = sizeof(buffer) / sizeof(buffer[0]);
@@ -142,10 +115,7 @@ answer_t ask_question(char *question, check_func *check, convert_func *convert)
     printf("%s", question);
     read_string(buffer, buff_size);
 
-    if (check(buffer))
-    {
-      break;
-    }
+    if(check(buffer)) { break; }
 
     printf("Invalid Input!!\n");
   }
@@ -171,11 +141,10 @@ double ask_question_float(char *question)
   return answer.float_value; // svaret som ett decimaltal
 }
 
-int string_length(char str[])
-{
+int string_length(char str[]) {
 
   int count = 0;
-
+  
   int i = 0;
   while (str[i] != '\0')
   {
@@ -186,8 +155,7 @@ int string_length(char str[])
   return count;
 }
 
-void print(char str[])
-{
+void print(char str[]) {
 
   int i = 0;
   while (str[i] != '\0')
@@ -197,9 +165,24 @@ void print(char str[])
   }
 }
 
-void println(char str[])
-{
+void println(char str[]) {
 
   print(str);
   printf("\n");
+}
+
+char *ask_question_shelf(char *question)
+{
+  answer_t answer;
+  char *input;
+
+  while (1)
+  {
+    answer = ask_question(question, not_empty, make_string);
+    input = answer.string_value;
+    if(isalpha(input[0]) && is_number(input + 1)) { break; }
+    puts("ENTER A VALID SHELF (eg. B212)!!");
+  }
+
+  return answer.string_value;
 }

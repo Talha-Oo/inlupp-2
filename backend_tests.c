@@ -1,5 +1,5 @@
 #include "utilities/common.h"
-#include "db.h"
+#include "main/db.h"
 
 #include <stdbool.h>
 #include <CUnit/Basic.h>
