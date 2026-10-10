@@ -19,9 +19,9 @@ typedef struct hash_table ioopm_hash_table_t;
 /// @brief Create a new hash table
 /// @param hash_fn pointer to the hash function
 /// @param key_eq_fn pointer to the function which compares keys
-/// @param fn_destroy_fn pointer to the function which destorys the elements of the hashtable
+/// @param elem_destroy_fn pointer to the function which destorys the elements of the hashtable
 /// @return A new empty hash table
-ioopm_hash_table_t *ioopm_hash_table_create(ioopm_hash_function *hash_fn, ioopm_eq_function *key_eq_fn, ioopm_destroy_function *fn_destroy_fn);
+ioopm_hash_table_t *ioopm_hash_table_create(ioopm_hash_function *hash_fn, ioopm_eq_function *key_eq_fn, ioopm_destroy_function *elem_destroy_fn);
 
 /// @brief Delete a hash table and free its memory
 /// @param ht a hash table to be deleted

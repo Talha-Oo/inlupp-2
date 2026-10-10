@@ -7,13 +7,13 @@
 #include "common_hash_table.h"
 #include "hash_table.h"
 
-ioopm_hash_table_t *ioopm_hash_table_create(ioopm_hash_function *hash_fn, ioopm_eq_function *key_eq_fn, ioopm_destroy_function *fn_destroy_fn)
+ioopm_hash_table_t *ioopm_hash_table_create(ioopm_hash_function *hash_fn, ioopm_eq_function *key_eq_fn, ioopm_destroy_function *elem_destroy_fn)
 {
   ioopm_hash_table_t *ht = calloc(1, sizeof(ioopm_hash_table_t));
 
   ht->hash_fn = hash_fn;
   ht->key_eq_fn = key_eq_fn;
-  ht->fn_destroy_fn = fn_destroy_fn;
+  ht->elem_destroy_fn = elem_destroy_fn;
   ht->size = 0;
 
   return ht;
@@ -21,7 +21,7 @@ ioopm_hash_table_t *ioopm_hash_table_create(ioopm_hash_function *hash_fn, ioopm_
 
 static void entry_destroy(ioopm_hash_table_t *ht, entry_t *entry)
 {
-  ht->fn_destroy_fn(entry);
+  ht->elem_destroy_fn(entry);
 }
 
 void ioopm_hash_table_destroy(ioopm_hash_table_t *ht)

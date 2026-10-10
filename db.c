@@ -2,6 +2,7 @@
 
 #include <string.h>
 
+// Functions required to make a hashtable which uses string as key and elem_t as object
 static size_t string_knr_hash(const elem_t elem)
 {
   size_t result = 2;
@@ -16,22 +17,32 @@ static size_t string_knr_hash(const elem_t elem)
   return result;
 }
 
-static void destroy(entry_t *entry)
-{
-  free(entry);
-}
-
 static bool str_eq_func(const elem_t elem1, const elem_t elem2)
 {
   return strcmp(elem1.s, elem2.s) == 0;
 }
 
-static size_t int_hash(const elem_t elem)
+static void destroy(entry_t *entry)
 {
-  return elem.i;
+  free(entry);
 }
 
-static bool int_eq_func(const elem_t elem1, const elem_t elem2)
+// Store functions
+store_t *create_store(void)
 {
-  return elem1.i == elem2.i;
+  store_t *store = calloc(1, sizeof(store_t));
+
+  store->name_to_item = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &destroy);
+  store->shelf_to_item = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &destroy);
+
+  return store;
+}
+
+void destroy_store(store_t *store)
+{
+  /// TODO: Free the list of every merchandise
+  ioopm_hash_table_destroy(store->name_to_item);
+  ioopm_hash_table_destroy(store->shelf_to_item);
+
+  free(store);
 }

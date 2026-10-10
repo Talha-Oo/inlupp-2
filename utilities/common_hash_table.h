@@ -39,6 +39,6 @@ struct hash_table
   entry_t buckets[No_Buckets];
   ioopm_hash_function *hash_fn;
   ioopm_eq_function *key_eq_fn;
-  ioopm_destroy_function *fn_destroy_fn;
+  ioopm_destroy_function *elem_destroy_fn;
   size_t size;
 };

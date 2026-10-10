@@ -27,7 +27,7 @@ test: backend_tests
 	./backend_tests
 
 mem: backend_tests
-	valgrind ./backend_tests
+	valgrind --leak-check=full ./backend_tests
 
 clean:
 	rm -f utilities/*.o

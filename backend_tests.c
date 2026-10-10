@@ -1,4 +1,4 @@
-#include "common.h"
+#include "utilities/common.h"
 #include "db.h"
 
 #include <stdbool.h>
@@ -47,7 +47,7 @@ int main()
   // the test in question. If you want to add another test, just
   // copy a line below and change the information
   if ((
-          //CU_add_test(my_test_suite, "Create/destroy", test_create_destroy) == NULL ||
+          CU_add_test(my_test_suite, "Create/destroy", test_create_destroy) == NULL ||
           0))
   {
     // If adding any of the tests fails, we tear down CUnit and exit
