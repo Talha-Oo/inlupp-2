@@ -2,6 +2,7 @@
 #include "main/db.h"
 
 #include <stdbool.h>
+#include <string.h>
 #include <CUnit/Basic.h>
 
 int init_suite(void)
@@ -28,9 +29,19 @@ void test_create_destroy()
 void make_merch()
 {
   store_t *store = create_store();
+
+  char *name = strdup("T");
+  char *desc = strdup("TB");
+
+  entry_t *entry = calloc(1, sizeof(entry_t));
+  merch_t *merch = create_merch(name, desc, 123);
   
+  CU_ASSERT_EQUAL(strcmp(name, merch->name), 0);
+  CU_ASSERT_EQUAL(strcmp(desc, merch->desc), 0);
+  CU_ASSERT_EQUAL(merch->price, 123);
 
-
+  entry->value.p = merch;
+  destroy_merch(entry);
   destroy_store(store);
 }
 
@@ -57,6 +68,7 @@ int main()
   // copy a line below and change the information
   if ((
           CU_add_test(my_test_suite, "Create/destroy", test_create_destroy) == NULL ||
+          CU_add_test(my_test_suite, "Create merch", make_merch) == NULL ||
           0))
   {
     // If adding any of the tests fails, we tear down CUnit and exit

@@ -23,6 +23,8 @@ void destroy_store(store_t *store);
 /// @return  ss
 merch_t *create_merch(char *name, char *desc, size_t price);
 
+void destroy_merch(entry_t *entry);
+
 /// @brief Adds merchandise to the store if an item with the same name does not already exist
 /// @param store pointer to the store where the merchandise should be added
 /// @param merch pointer to the merchandise to add

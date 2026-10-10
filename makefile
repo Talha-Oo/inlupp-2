@@ -22,7 +22,7 @@ io: main/io.c main/io.h utilities/utils.h
 	clear
 	$(CC) $(CFLAGS) utilities/utils.c $< -o $@
 
-backend_tests: backend_tests.c db.c $(UTIL_OBJECTS)
+backend_tests: backend_tests.c main/db.c $(UTIL_OBJECTS)
 	clear
 	$(CC) $(CFLAGS) $^ -o $@ -lcunit	
 

@@ -22,8 +22,15 @@ static bool str_eq_func(const elem_t elem1, const elem_t elem2)
   return strcmp(elem1.s, elem2.s) == 0;
 }
 
-static void destroy(entry_t *entry)
+void destroy_merch(entry_t *entry)
 {
+  merch_t *merch = entry->value.p;
+  
+  free(merch->name);
+  free(merch->desc);
+  ioopm_list_destroy(merch->locs);
+  free(merch);
+
   free(entry);
 }
 
@@ -32,8 +39,8 @@ store_t *create_store(void)
 {
   store_t *store = calloc(1, sizeof(store_t));
 
-  store->name_to_item = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &destroy);
-  store->shelf_to_item = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &destroy);
+  store->name_to_item = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &destroy_merch);
+  store->shelf_to_item = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &destroy_merch);
 
   return store;
 }
@@ -54,4 +61,7 @@ merch_t *create_merch(char *name, char *desc, size_t price)
   merch->name = name;
   merch->desc = desc;
   merch->price = price;
+  merch->locs = ioopm_list_create();
+
+  return merch;
 }
