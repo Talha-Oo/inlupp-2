@@ -25,6 +25,15 @@ void test_create_destroy()
   destroy_store(store);
 }
 
+void make_merch()
+{
+  store_t *store = create_store();
+  
+
+
+  destroy_store(store);
+}
+
 int main()
 {
   // First we try to set up CUnit, and exit if we fail

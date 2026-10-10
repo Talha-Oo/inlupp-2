@@ -46,3 +46,12 @@ void destroy_store(store_t *store)
 
   free(store);
 }
+
+merch_t *create_merch(char *name, char *desc, size_t price)
+{
+  merch_t *merch = calloc(1, sizeof(merch_t));
+
+  merch->name = name;
+  merch->desc = desc;
+  merch->price = price;
+}

@@ -15,7 +15,7 @@ typedef struct shelf
 typedef struct merch
 {
     char *name;
-    char *descr;
+    char *desc;
     size_t price;
     ioopm_list_t *locs;
 } merch_t;
