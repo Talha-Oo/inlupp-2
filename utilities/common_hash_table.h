@@ -19,7 +19,7 @@ union elem
   char *s;
 };
 
-#define No_Buckets 1000
+#define No_Buckets 17
 
 typedef struct entry entry_t;
 

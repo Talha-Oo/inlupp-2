@@ -42,3 +42,5 @@ clean:
 	rm -f utilities/*.o
 	rm -f backend_tests db io
 	rm -f *.gcda *.gcno *.gcov
+	clear
+

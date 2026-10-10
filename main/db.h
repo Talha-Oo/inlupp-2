@@ -21,21 +21,15 @@ void destroy_store(store_t *store);
 /// @param desc sd
 /// @param price sd
 /// @return  ss
-merch_t *create_merch(char *name, char *desc, size_t price);
+merch_t *create_merch(char *name, char *desc, const size_t price);
 
-void destroy_merch(entry_t *entry);
+void destroy_merch(merch_t *merch);
 
 /// @brief Adds merchandise to the store if an item with the same name does not already exist
 /// @param store pointer to the store where the merchandise should be added
 /// @param merch pointer to the merchandise to add
 /// @return true if the merchandise was added successfully, false otherwise
 bool add_merch(store_t *store, merch_t *merch);
-
-/// @brief Prints the merchandise in the store, 20 items at a time
-/// @param store pointer to the store containing the merchandise
-/// @param n Starting position of the merchandise batch to print
-/// @return true if there is no more merchandise to print, false if more remains
-bool list_merch(store_t *store, size_t n);
 
 /// @brief Removes merchandise from the store
 /// @param store pointer to the store containing the merchandise
@@ -61,6 +55,12 @@ bool edit_merch_desc(merch_t *merch, char *desc);
 /// @param price the new price for the merchandise
 /// @return true if the price was changed successfully, false otherwise
 bool edit_merch_price(merch_t *merch, size_t price);
+
+/// @brief Prints the merchandise in the store, 20 items at a time
+/// @param store pointer to the store containing the merchandise
+/// @param n Starting position of the merchandise batch to print
+/// @return true if there is no more merchandise to print, false if more remains
+bool list_merch(store_t *store, size_t n);
 
 /// @brief Prints all shelves on which the specified merchandise is stored
 /// @param store pointer to the store containing the merchandise
