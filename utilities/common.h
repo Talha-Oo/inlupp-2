@@ -5,10 +5,12 @@
 
 #include "hash_table.h"
 #include "linked_list.h"
+#include "linked_list_iterator.h"
 
 typedef struct shelf
 {
-    char *id;
+    char *shelf_name;
+    char *merch_name;
     int quantity;
 } shelf_t;
 
@@ -17,6 +19,7 @@ typedef struct merch
     char *name;
     char *desc;
     size_t price;
+    size_t stock;
     ioopm_list_t *locs;
 } merch_t;
 
@@ -24,6 +27,7 @@ typedef struct store
 {
     ioopm_hash_table_t *name_to_item;
     ioopm_hash_table_t *shelf_to_item;
+    size_t merch_num;
 } store_t;
 
 typedef struct cart

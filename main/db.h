@@ -31,17 +31,19 @@ void destroy_merch(merch_t *merch);
 /// @return true if the merchandise was added successfully, false otherwise
 bool add_merch(store_t *store, merch_t *merch);
 
-/// @brief Removes merchandise from the store
-/// @param store pointer to the store containing the merchandise
-/// @param name name of the merchandise to remove
-/// @return true if the merchandise was removed successfully, false otherwise
-bool remove_merch(store_t *store, char *name);
+bool get_shelf(ioopm_hash_table_t *shelf_ht, elem_t shelf_name, elem_t *lookup_res);
 
-/// @brief Changes the name of existing merchandise
+bool get_merch(ioopm_hash_table_t *merch_ht, elem_t merch_name, elem_t *lookup_res);
+
+/// @brief Adds stock of merchandise to a specified shelf
 /// @param store pointer to the store containing the merchandise
-/// @param merch pointer to the merchandise whose name should be changed
-/// @param name the new name for the merchandise
-/// @return true if the name was changed successfully, false otherwise
+/// @param name name of the merchandise to replenish
+/// @param quantity quantity of merchandise to add
+/// @param id identifier of the shelf where the merchandise should be stored
+/// @pre the quantity must be at least one
+/// @return true if the stock was replenished successfully, false otherwise
+bool replenish(store_t *store, char *name, int quantity, char *shelf_id);
+
 bool edit_merch_name(store_t *store, merch_t *merch, char *name);
 
 /// @brief Changes the description of existing merchandise
@@ -56,6 +58,18 @@ bool edit_merch_desc(merch_t *merch, char *desc);
 /// @return true if the price was changed successfully, false otherwise
 bool edit_merch_price(merch_t *merch, size_t price);
 
+/// @brief Removes merchandise from the store
+/// @param store pointer to the store containing the merchandise
+/// @param name name of the merchandise to remove
+/// @return true if the merchandise was removed successfully, false otherwise
+bool remove_merch(store_t *store, char *name);
+
+/// @brief Changes the name of existing merchandise
+/// @param store pointer to the store containing the merchandise
+/// @param merch pointer to the merchandise whose name should be changed
+/// @param name the new name for the merchandise
+/// @return true if the name was changed successfully, false otherwise
+
 /// @brief Prints the merchandise in the store, 20 items at a time
 /// @param store pointer to the store containing the merchandise
 /// @param n Starting position of the merchandise batch to print
@@ -67,16 +81,6 @@ bool list_merch(store_t *store, size_t n);
 /// @param name name of the merchandise whose stock should be displayed
 /// @return true if the stock information was displayed successfully, false otherwise
 bool show_stock(store_t *store, char *name);
-
-/// @brief Adds stock of merchandise to a specified shelf
-/// @param store pointer to the store containing the merchandise
-/// @param name name of the merchandise to replenish
-/// @param quantity quantity of merchandise to add
-/// @param id identifier of the shelf where the merchandise should be stored
-/// @pre the merchandise must exist in the store
-/// @pre the quantity must be at least one
-/// @return true if the stock was replenished successfully, false otherwise
-bool replenish(store_t *store, char *name, int quantity, char *id);
 
 //////////////////////// TODO: THE CART SYSTEM, REWRITE THE DEFINATION + ADD NEW ////////////////////////
 

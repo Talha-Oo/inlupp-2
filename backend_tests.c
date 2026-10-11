@@ -122,6 +122,117 @@ void test_add_merchs()
   destroy_store(store);
 }
 
+void test_replenish_merchs()
+{
+  store_t *store = create_store();
+  ioopm_hash_table_t *name_to_item = store->name_to_item;
+  ioopm_hash_table_t *shelf_to_item = store->shelf_to_item;
+  
+  char *name1 = strdup("Kunai");
+  char *desc1 = strdup("Kaching");
+  merch_t *merch1 = create_merch(name1, desc1, 123);
+  elem_t name1_elem = string_elem("Kunai");
+
+  char* name2 = strdup("Kaching");
+  char* desc2 = strdup("Kunai");
+  elem_t name2_elem = string_elem("Kaching");
+  merch_t *merch2 = create_merch(name2, desc2, 321);
+
+  add_merch(store, merch2);
+  add_merch(store, merch1);
+
+  elem_t merch1_elem;
+  elem_t merch2_elem;
+  CU_ASSERT_TRUE(get_merch(name_to_item, name1_elem, &merch1_elem));
+  CU_ASSERT_TRUE(get_merch(name_to_item, name2_elem, &merch2_elem));
+
+  ioopm_list_t *merch1_list = merch1->locs;
+  ioopm_list_t *merch2_list = merch2->locs;
+
+  replenish(store, name1, 1, strdup("ABC"));
+  CU_ASSERT_EQUAL(ioopm_list_size(merch1_list), 1); // check if shelf is added in the list of kunai 
+  CU_ASSERT_EQUAL(ioopm_list_size(merch2_list), 0); // list of Kaching should still be emepty 
+  
+  replenish(store, name2, 2, strdup("XYZ"));
+  CU_ASSERT_EQUAL(ioopm_list_size(merch2_list), 1); // check if shelf is added in the list of kaching 
+
+  //checking if the shelf has been added to the hashtable and if the info matches correctly with the
+  // shelf in the list, in the hashtable and the merch itself
+  //Kunai:
+  elem_t shelf_elem = ioopm_list_head(merch1_list);
+  shelf_t *shelf = shelf_elem.p;
+  CU_ASSERT_EQUAL(strcmp(shelf->shelf_name, "ABC"), 0);
+  CU_ASSERT_EQUAL(strcmp(shelf->merch_name, merch1->name), 0);
+  CU_ASSERT_EQUAL(merch1->stock, 1);
+
+  elem_t looked_up_shelf_elem;
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(shelf_to_item, string_elem("ABC"), &looked_up_shelf_elem));
+  
+  shelf_t *looked_up_shelf = looked_up_shelf_elem.p;
+  CU_ASSERT_EQUAL(strcmp(looked_up_shelf->shelf_name, "ABC"), 0);
+  CU_ASSERT_EQUAL(strcmp(looked_up_shelf->merch_name, merch1->name), 0);
+  CU_ASSERT_EQUAL(looked_up_shelf->quantity, 1);
+
+  //checking if the shelf has been added to the hashtable and if the info matches correctly with the
+  // shelf in the list, in the hashtable and the merch itself
+  //Kaching:
+  shelf_elem = ioopm_list_head(merch2_list);
+  shelf = shelf_elem.p;
+  CU_ASSERT_EQUAL(strcmp(shelf->shelf_name, "XYZ"), 0);
+  CU_ASSERT_EQUAL(strcmp(shelf->merch_name, merch2->name), 0);
+  CU_ASSERT_EQUAL(merch2->stock, 2);
+
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(shelf_to_item, string_elem("XYZ"), &looked_up_shelf_elem));
+  
+  looked_up_shelf = looked_up_shelf_elem.p;
+  CU_ASSERT_EQUAL(strcmp(looked_up_shelf->shelf_name, "XYZ"), 0);
+  CU_ASSERT_EQUAL(strcmp(looked_up_shelf->merch_name, merch2->name), 0);
+  CU_ASSERT_EQUAL(looked_up_shelf->quantity, 2);
+
+  //Trying to add stock to a shelf of different type of merch
+  CU_ASSERT_FALSE(replenish(store, "Kaching", 1000000, strdup("ABC")));
+  CU_ASSERT_FALSE(replenish(store, "Kunai", 1000000, strdup("XYZ")));
+  
+  //Trying to add stock to a shelf of a nonexistent merch
+  CU_ASSERT_FALSE(replenish(store, "YO!", 128936412, strdup("LMNOP")));
+
+  //adding stock to a shelfwith correct type
+  CU_ASSERT_TRUE(replenish(store, "Kunai", 1000000, strdup("ABC")));
+  //checking if the shelf has been updated in the hashtable and if the info matches correctly with the
+  // shelf in the list, in the hashtable and the merch itself
+  //Kunai:
+  shelf_elem = ioopm_list_head(merch1_list);
+  shelf = shelf_elem.p;
+  CU_ASSERT_EQUAL(strcmp(shelf->shelf_name, "ABC"), 0);
+  CU_ASSERT_EQUAL(strcmp(shelf->merch_name, merch1->name), 0);
+  CU_ASSERT_EQUAL(merch1->stock, 1000001);
+
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(shelf_to_item, string_elem("ABC"), &looked_up_shelf_elem));
+  
+  looked_up_shelf = looked_up_shelf_elem.p;
+  CU_ASSERT_EQUAL(strcmp(looked_up_shelf->shelf_name, "ABC"), 0);
+  CU_ASSERT_EQUAL(strcmp(looked_up_shelf->merch_name, merch1->name), 0);
+  CU_ASSERT_EQUAL(looked_up_shelf->quantity, 1000001);
+
+  //Having two different shelves
+  replenish(store, "Kunai", 1, strdup("LMNOP"));
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(shelf_to_item, string_elem("LMNOP"), &looked_up_shelf_elem));
+  looked_up_shelf = looked_up_shelf_elem.p;
+  CU_ASSERT_EQUAL(strcmp(looked_up_shelf->shelf_name, "LMNOP"), 0);
+  CU_ASSERT_EQUAL(strcmp(looked_up_shelf->merch_name, merch1->name), 0);
+  CU_ASSERT_EQUAL(looked_up_shelf->quantity, 1);
+
+  //Checking if the new shelf is in the list 
+  shelf_elem = ioopm_list_head(merch1_list);
+  shelf = shelf_elem.p;
+  CU_ASSERT_EQUAL(strcmp(shelf->shelf_name, "LMNOP"), 0);
+  CU_ASSERT_EQUAL(strcmp(shelf->merch_name, merch1->name), 0);
+  CU_ASSERT_EQUAL(merch1->stock, 1000002);
+  CU_ASSERT_EQUAL(ioopm_list_size(merch1_list), 2);
+
+  destroy_store(store);
+}
+
 int main()
 {
   // First we try to set up CUnit, and exit if we fail
@@ -147,6 +258,7 @@ int main()
           CU_add_test(my_test_suite, "Create/destroy", test_create_destroy) == NULL ||
           CU_add_test(my_test_suite, "Create merch", test_make_destroy_merch) == NULL ||
           CU_add_test(my_test_suite, "Adding merchs", test_add_merchs) == NULL ||
+          CU_add_test(my_test_suite, "Replenish merchs", test_replenish_merchs) == NULL ||
           0))
   {
     // If adding any of the tests fails, we tear down CUnit and exit
