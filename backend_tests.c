@@ -286,13 +286,47 @@ void test_edit_merch_name()
   CU_ASSERT_PTR_EQUAL(looked_up_merch, merch);
 
   // Checking that the old name no longer works for lookup
-  // Use a string literal because the original name string has been freed
   CU_ASSERT_FALSE(get_merch(store->name_to_item, string_elem("Kunai"), &looked_up_elem));
 
-  // Checking that the merchandise description remains unchanged
+  // Checking that the merchandise description and price remain unchanged
   CU_ASSERT_EQUAL(strcmp(merch->desc, "Kaching"), 0);
+  CU_ASSERT_EQUAL(merch->price, 123);
 
-  // Checking that the merchandise price remains unchanged
+  // Trying to rename the merchandise to a name that already exists
+  merch_t *other_merch = create_merch(strdup("Kunai"), strdup("Other"), 456);
+  add_merch(store, other_merch);
+
+  char *duplicate_name = strdup("Shuriken");
+  bool duplicate_res = edit_merch_name(store, other_merch, duplicate_name);
+
+  // Checking that renaming to an existing name fails
+  CU_ASSERT_FALSE(duplicate_res);
+
+  // Checking that both merchandise items keep their original names
+  CU_ASSERT_EQUAL(strcmp(merch->name, "Shuriken"), 0);
+  CU_ASSERT_EQUAL(strcmp(other_merch->name, "Kunai"), 0);
+
+  // Checking that both merchandise items can still be found
+  CU_ASSERT_TRUE(get_merch(store->name_to_item, string_elem("Shuriken"), &looked_up_elem));
+  CU_ASSERT_PTR_EQUAL(looked_up_elem.p, merch);
+
+  CU_ASSERT_TRUE(get_merch(store->name_to_item, string_elem("Kunai"), &looked_up_elem));
+  CU_ASSERT_PTR_EQUAL(looked_up_elem.p, other_merch);
+
+  // Renaming the first merchandise a second time
+  char *last_name = strdup("Ninja Star");
+  bool second_edit = edit_merch_name(store, merch, last_name);
+
+  // Checking that the second rename succeeds
+  CU_ASSERT_TRUE(second_edit);
+
+  // Checking that only the latest name works
+  CU_ASSERT_FALSE(get_merch(store->name_to_item, string_elem("Shuriken"), &looked_up_elem));
+  CU_ASSERT_TRUE(get_merch(store->name_to_item, string_elem("Ninja Star"), &looked_up_elem));
+  CU_ASSERT_PTR_EQUAL(looked_up_elem.p, merch);
+
+  // Checking that the merchandise description and price remain unchanged
+  CU_ASSERT_EQUAL(strcmp(merch->desc, "Kaching"), 0);
   CU_ASSERT_EQUAL(merch->price, 123);
 
   // Destroying the store and freeing its allocated memory
