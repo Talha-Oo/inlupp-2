@@ -77,7 +77,8 @@ void ioopm_hash_table_insert(ioopm_hash_table_t *ht, elem_t key, elem_t value)
   entry_t *previous = find_previous_entry(ht, key); // Find previous entry, or the last entry if the key does not exist
 
   // if the key exists, update the value, otherwise create a new entry
-  if (previous->next != NULL)
+  entry_t *current = previous->next;
+  if (previous->next != NULL && ht->key_eq_fn(current->key, key))
   {
     previous->next->value = value;
   }
@@ -133,6 +134,29 @@ bool ioopm_hash_table_remove(ioopm_hash_table_t *ht, const elem_t key, elem_t *r
     *removed_value = current->value;
     previous->next = current->next;
     entry_destroy(ht, current);
+    ht->size--;
+
+    return true;
+  }
+  else
+  {
+    // ...return that the lookup failed
+    return false;
+  }
+}
+bool ioopm_hash_table_remove_without_destroy(ioopm_hash_table_t *ht, const elem_t key, elem_t *removed_value)
+{
+  entry_t *previous = find_previous_entry(ht, key); // Find previous entry, or the last entry if the key does not exist
+  entry_t *current = previous->next;
+
+  // If the key we are trying to remove exists...
+  if (current != NULL && ht->key_eq_fn(current->key, key))
+  {
+    // ...remove it and relink the previous node to the new next node
+    *removed_value = current->value;
+    previous->next = current->next;
+
+    free(current);
     ht->size--;
 
     return true;

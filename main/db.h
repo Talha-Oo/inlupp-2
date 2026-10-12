@@ -44,19 +44,19 @@ bool get_merch(ioopm_hash_table_t *merch_ht, elem_t merch_name, elem_t *lookup_r
 /// @return true if the stock was replenished successfully, false otherwise
 bool replenish(store_t *store, char *name, int quantity, char *shelf_id);
 
-bool edit_merch_name(store_t *store, merch_t *merch, char *name);
+bool edit_merch_name(store_t *store, merch_t *merch, char *new_name);
 
 /// @brief Changes the description of existing merchandise
 /// @param merch pointer to the merchandise whose description should be changed
 /// @param desc the new description for the merchandise
 /// @return true if the description was changed successfully, false otherwise
-bool edit_merch_desc(merch_t *merch, char *desc);
+void edit_merch_desc(merch_t *merch, char *desc);
 
 /// @brief Changes the price of existing merchandise
 /// @param merch pointer to the merchandise whose price should be changed
 /// @param price the new price for the merchandise
 /// @return true if the price was changed successfully, false otherwise
-bool edit_merch_price(merch_t *merch, size_t price);
+void edit_merch_price(merch_t *merch, size_t price);
 
 /// @brief Removes merchandise from the store
 /// @param store pointer to the store containing the merchandise

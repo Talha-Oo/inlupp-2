@@ -61,3 +61,5 @@ bool ioopm_hash_table_is_empty(const ioopm_hash_table_t *ht);
 /// @param key key to remove
 /// @return the value mapped to by key
 bool ioopm_hash_table_remove(ioopm_hash_table_t *ht, const elem_t key, elem_t *removed_value);
+
+bool ioopm_hash_table_remove_without_destroy(ioopm_hash_table_t *ht, const elem_t key, elem_t *removed_value);

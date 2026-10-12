@@ -6,11 +6,12 @@
 #include "hash_table.h"
 #include "linked_list.h"
 #include "linked_list_iterator.h"
+#include "hash_table_iterator.h"
 
 typedef struct shelf
 {
     char *shelf_name;
-    char *merch_name;
+    char **merch_name;
     int quantity;
 } shelf_t;
 
