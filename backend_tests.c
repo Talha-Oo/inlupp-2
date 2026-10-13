@@ -143,8 +143,8 @@ void test_replenish_merchs()
 
   elem_t merch1_elem;
   elem_t merch2_elem;
-  CU_ASSERT_TRUE(get_merch(name_to_item, name1_elem, &merch1_elem));
-  CU_ASSERT_TRUE(get_merch(name_to_item, name2_elem, &merch2_elem));
+  CU_ASSERT_TRUE(get_merch(name_to_item, name1, &merch1_elem));
+  CU_ASSERT_TRUE(get_merch(name_to_item, name2, &merch2_elem));
 
   ioopm_list_t *merch1_list = merch1->locs;
   ioopm_list_t *merch2_list = merch2->locs;
@@ -279,14 +279,14 @@ void test_edit_merch_name()
 
   // Checking that the new name works for lookup
   elem_t looked_up_elem;
-  CU_ASSERT_TRUE(get_merch(store->name_to_item, string_elem("Shuriken"), &looked_up_elem));
+  CU_ASSERT_TRUE(get_merch(store->name_to_item, "Shuriken", &looked_up_elem));
 
   // Checking that the lookup returns the same merchandise
   merch_t *looked_up_merch = looked_up_elem.p;
   CU_ASSERT_PTR_EQUAL(looked_up_merch, merch);
 
   // Checking that the old name no longer works for lookup
-  CU_ASSERT_FALSE(get_merch(store->name_to_item, string_elem("Kunai"), &looked_up_elem));
+  CU_ASSERT_FALSE(get_merch(store->name_to_item, "Kunai", &looked_up_elem));
 
   // Checking that the merchandise description and price remain unchanged
   CU_ASSERT_EQUAL(strcmp(merch->desc, "Kaching"), 0);
@@ -307,10 +307,10 @@ void test_edit_merch_name()
   CU_ASSERT_EQUAL(strcmp(other_merch->name, "Kunai"), 0);
 
   // Checking that both merchandise items can still be found
-  CU_ASSERT_TRUE(get_merch(store->name_to_item, string_elem("Shuriken"), &looked_up_elem));
+  CU_ASSERT_TRUE(get_merch(store->name_to_item, "Shuriken", &looked_up_elem));
   CU_ASSERT_PTR_EQUAL(looked_up_elem.p, merch);
 
-  CU_ASSERT_TRUE(get_merch(store->name_to_item, string_elem("Kunai"), &looked_up_elem));
+  CU_ASSERT_TRUE(get_merch(store->name_to_item, "Kunai", &looked_up_elem));
   CU_ASSERT_PTR_EQUAL(looked_up_elem.p, other_merch);
 
   // Renaming the first merchandise a second time
@@ -321,8 +321,8 @@ void test_edit_merch_name()
   CU_ASSERT_TRUE(second_edit);
 
   // Checking that only the latest name works
-  CU_ASSERT_FALSE(get_merch(store->name_to_item, string_elem("Shuriken"), &looked_up_elem));
-  CU_ASSERT_TRUE(get_merch(store->name_to_item, string_elem("Ninja Star"), &looked_up_elem));
+  CU_ASSERT_FALSE(get_merch(store->name_to_item, "Shuriken", &looked_up_elem));
+  CU_ASSERT_TRUE(get_merch(store->name_to_item, "Ninja Star", &looked_up_elem));
   CU_ASSERT_PTR_EQUAL(looked_up_elem.p, merch);
 
   // Checking that the merchandise description and price remain unchanged
