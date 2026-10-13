@@ -2,107 +2,98 @@
 
 #include <stdbool.h>
 #include <stddef.h>
-#include <stdlib.h>
 #include "../utilities/common.h"
 
-/// @brief Creates and initializes a new store.
-/// @return a pointer to the newly created store.
+/// @brief Creates a new store.
+/// @return A pointer to the store
+/// @note The caller must eventually call destroy_store().
 store_t *create_store(void);
 
-/// @brief Delete a store and free its memory
-/// @param store a hash table to be deleted
+/// @brief Deletes a store and frees its memory.
+/// @param store Pointer to the store to delete.
+/// @note The store owns its merchandise and shelf data.
 void destroy_store(store_t *store);
 
-/// TODO: Documentation
-
-
-/// @brief d
-/// @param name sds
-/// @param desc sd
-/// @param price sd
-/// @return  ss
+/// @brief Creates new merchandise.
+/// @param name Name of the merchandise. Ownership is transferred.
+/// @param desc Description of the merchandise. Ownership is transferred.
+/// @param price Price of the merchandise.
+/// @return A pointer to the new merchandise.
+/// @note The strings are not copied. Use heap-allocated strings.
 merch_t *create_merch(char *name, char *desc, const size_t price);
 
+/// @brief Deletes merchandise and frees its memory.
+/// @param merch Pointer to the merchandise to delete.
+/// @note Frees its name, description, shelf data, and list.
 void destroy_merch(merch_t *merch);
 
-/// @brief Adds merchandise to the store if an item with the same name does not already exist
-/// @param store pointer to the store where the merchandise should be added
-/// @param merch pointer to the merchandise to add
-/// @return true if the merchandise was added successfully, false otherwise
+/// @brief Adds merchandise if its name does not already exist.
+/// @param store Store where the merchandise should be added.
+/// @param merch Merchandise to add.
+/// @return true if added, false otherwise.
+/// @note On success, the store owns merch. On failure, merch is destroyed.
 bool add_merch(store_t *store, merch_t *merch);
 
-bool get_shelf(ioopm_hash_table_t *shelf_ht, elem_t shelf_name, elem_t *lookup_res);
+/// @brief Looks up a shelf by its name.
+/// @param shelf_ht Hash table containing shelves.
+/// @param shelf_name Name of the shelf to find.
+/// @param lookup_res Where the result is stored.
+/// @return true if found, false otherwise.
+/// @note The returned shelf pointer is borrowed. Do not free it.
+bool get_shelf(ioopm_hash_table_t *shelf_ht, char *shelf_name, elem_t *lookup_res);
 
-bool get_merch(ioopm_hash_table_t *merch_ht, elem_t merch_name, elem_t *lookup_res);
+/// @brief Looks up merchandise by its name.
+/// @param merch_ht Hash table containing merchandise.
+/// @param merch_name Name of the merchandise to find.
+/// @param lookup_res Where the result is stored.
+/// @return true if found, false otherwise.
+/// @note The returned merchandise pointer is borrowed. Do not free it.
+bool get_merch(ioopm_hash_table_t *merch_ht, char *merch_name, elem_t *lookup_res);
 
-/// @brief Adds stock of merchandise to a specified shelf
-/// @param store pointer to the store containing the merchandise
-/// @param name name of the merchandise to replenish
-/// @param quantity quantity of merchandise to add
-/// @param id identifier of the shelf where the merchandise should be stored
-/// @pre the quantity must be at least one
-/// @return true if the stock was replenished successfully, false otherwise
-bool replenish(store_t *store, char *name, int quantity, char *shelf_id);
+/// @brief Adds stock to a shelf.
+/// @param store Store containing the merchandise.
+/// @param name Name of the merchandise.
+/// @param quantity Quantity to add.
+/// @param shelf_name Name of the shelf.
+/// @return true if successful, false otherwise.
+/// @note Takes ownership of shelf_name, even if it fails.
+///       Do not free or use shelf_name afterward.
+bool replenish(store_t *store, char *name, size_t quantity, char *shelf_name);
 
+/// @brief Changes the name of merchandise.
+/// @param store Store containing the merchandise.
+/// @param merch Merchandise to rename.
+/// @param new_name New name for the merchandise.
+/// @return true if changed, false otherwise.
+/// @note On success, the old name is freed and new_name is stored.
+///       If the name already exists, new_name is freed.
 bool edit_merch_name(store_t *store, merch_t *merch, char *new_name);
 
-/// @brief Changes the description of existing merchandise
-/// @param merch pointer to the merchandise whose description should be changed
-/// @param desc the new description for the merchandise
-/// @return true if the description was changed successfully, false otherwise
+/// @brief Changes the description of merchandise.
+/// @param merch Merchandise to update.
+/// @param desc New description.
+/// @note The old description is freed. The new string is stored without copying.
 void edit_merch_desc(merch_t *merch, char *desc);
 
-/// @brief Changes the price of existing merchandise
-/// @param merch pointer to the merchandise whose price should be changed
-/// @param price the new price for the merchandise
-/// @return true if the price was changed successfully, false otherwise
+/// @brief Changes the price of merchandise.
+/// @param merch Merchandise to update.
+/// @param price New price.
 void edit_merch_price(merch_t *merch, size_t price);
 
-/// @brief Removes merchandise from the store
-/// @param store pointer to the store containing the merchandise
-/// @param name name of the merchandise to remove
-/// @return true if the merchandise was removed successfully, false otherwise
+/// @brief Removes merchandise from the store.
+/// @param store Store containing the merchandise.
+/// @param name Name of the merchandise to remove.
+/// @return true if removed, false otherwise.
 bool remove_merch(store_t *store, char *name);
 
-/// @brief Changes the name of existing merchandise
-/// @param store pointer to the store containing the merchandise
-/// @param merch pointer to the merchandise whose name should be changed
-/// @param name the new name for the merchandise
-/// @return true if the name was changed successfully, false otherwise
-
-/// @brief Prints the merchandise in the store, 20 items at a time
-/// @param store pointer to the store containing the merchandise
-/// @param n Starting position of the merchandise batch to print
-/// @return true if there is no more merchandise to print, false if more remains
+/// @brief Prints 20 merchandise items at a time.
+/// @param store Store containing the merchandise.
+/// @param n Starting position of the items.
+/// @return true if no more items remain, false if more remain.
 bool list_merch(store_t *store, size_t n);
 
-/// @brief Prints all shelves on which the specified merchandise is stored
-/// @param store pointer to the store containing the merchandise
-/// @param name name of the merchandise whose stock should be displayed
-/// @return true if the stock information was displayed successfully, false otherwise
+/// @brief Prints the shelves containing the merchandise.
+/// @param store Store containing the merchandise.
+/// @param name Name of the merchandise.
+/// @return true if successful, false otherwise.
 bool show_stock(store_t *store, char *name);
-
-//////////////////////// TODO: THE CART SYSTEM, REWRITE THE DEFINATION + ADD NEW ////////////////////////
-
-// /// @brief Creates a container for all shopping carts
-// /// @return pointer to the container of shopping carts, or NULL if creation fails
-// all_shopping_carts_t *create_cart_holder(void);
-
-// /// @brief Creates an empty shopping cart
-// /// @return pointer to the new shopping cart, or NULL if creation fails
-// shopping_cart_t *create_cart_(void);
-
-// /// @brief Removes a shopping cart from the container
-// /// @param all_carts pointer to the container holding all shopping carts
-// /// @param id identifier of the shopping cart to remove
-// /// @return true if the cart was removed successfully, false otherwise
-// bool remove_cart(all_shopping_carts_t *all_carts, size_t id);
-
-// /// @brief Adds a quantity of merchandise to a shopping cart
-// /// @param store pointer to the store containing the merchandise
-// /// @param all_carts pointer to the container holding all shopping carts
-// /// @param id identifier of the shopping cart to which merchandise should be added
-// /// @param merch name of the merchandise to add
-// /// @param quantity quantity of merchandise to add
-// /// @return true if the merchandise was added successfully, false otherwise
-// bool add_to_cart(store_t *store, all_shopping_carts_t *all_carts, size_t id, char *merch, size_t quantity);
