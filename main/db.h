@@ -40,7 +40,7 @@ bool add_merch(store_t *store, merch_t *merch);
 /// @param lookup_res Where the result is stored.
 /// @return true if found, false otherwise.
 /// @note The returned shelf pointer is borrowed. Do not free it.
-bool get_shelf(ioopm_hash_table_t *shelf_ht, char *shelf_name, elem_t *lookup_res);
+bool get_shelf(store_t *store, char *shelf_name, elem_t *lookup_res);
 
 /// @brief Looks up merchandise by its name.
 /// @param merch_ht Hash table containing merchandise.
@@ -48,7 +48,7 @@ bool get_shelf(ioopm_hash_table_t *shelf_ht, char *shelf_name, elem_t *lookup_re
 /// @param lookup_res Where the result is stored.
 /// @return true if found, false otherwise.
 /// @note The returned merchandise pointer is borrowed. Do not free it.
-bool get_merch(ioopm_hash_table_t *merch_ht, char *merch_name, elem_t *lookup_res);
+bool get_merch(store_t *store, char *merch_name, elem_t *lookup_res);
 
 /// @brief Adds stock to a shelf.
 /// @param store Store containing the merchandise.
