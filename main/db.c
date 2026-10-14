@@ -9,14 +9,13 @@ void destory_merch_shelves(ioopm_list_t *list)
 {
   ioopm_list_iterator_t *it = ioopm_list_iterator_create(list);
 
-  elem_t curr_merch;
+  elem_t shelf_elem;
   shelf_t *shelf;
   while (!ioopm_list_iterator_at_end(it))
   {
-    ioopm_list_iterator_current(it, &curr_merch);
-    shelf = curr_merch.p;
+    ioopm_list_iterator_current(it, &shelf_elem);
+    shelf = shelf_elem.p;
 
-    /// TODO: Maybe have to free the merch name (?)
     free(shelf->shelf_name);
     free(shelf);
 
@@ -27,23 +26,28 @@ void destory_merch_shelves(ioopm_list_t *list)
   ioopm_list_destroy(list);
 }
 
-// void destory_all_shelves(ioopm_hash_table_t *ht)
-// {
-//   ioopm_hash_table_iterator_t *it = ioopm_hash_table_iterator_create(ht);
+void remove_merch_shelf_ht(store_t *store, ioopm_list_t *list)
+{
+  ioopm_list_iterator_t *it = ioopm_list_iterator_create(list);
+  ioopm_hash_table_t *ht = store->shelf_to_item;
 
-//   elem_t merch_elem;
-//   merch_t *merch;
-//   while (!ioopm_hash_table_iterator_at_end(it))
-//   {
-//     merch_elem = ioopm_hash_table_iterator_current_value(it);
-//     merch = merch_elem.p;
+  elem_t shelf_elem;
+  shelf_t *shelf;
 
-//     destory_merch_shelves(merch->locs);
-//     ioopm_hash_table_iterator_advance(it);
-//   }
+  char *name;
+  elem_t dummy;
+  while (!ioopm_list_iterator_at_end(it))
+  {
+    ioopm_list_iterator_current(it, &shelf_elem);
+    shelf = shelf_elem.p;
+    name = shelf->shelf_name;
 
-//   ioopm_hash_table_iterator_destroy(it);
-// }
+    ioopm_hash_table_remove(ht, string_elem(name), &dummy);
+    ioopm_list_iterator_advance(it);
+  }
+
+  ioopm_list_iterator_destroy(it);
+}
 
 void destroy_merch(merch_t *merch)
 {
@@ -151,16 +155,16 @@ static shelf_t *create_shelf(char *shelf_name, char **merch_name, size_t quantit
   return shelf;
 }
 
-bool get_shelf(ioopm_hash_table_t *shelf_ht, char *shelf_name, elem_t *lookup_res)
+bool get_shelf(store_t *store, char *shelf_name, elem_t *lookup_res)
 {
   elem_t elem_name = string_elem(shelf_name);
-  return ioopm_hash_table_lookup(shelf_ht, elem_name, lookup_res);
+  return ioopm_hash_table_lookup(store->shelf_to_item, elem_name, lookup_res);
 }
 
-bool get_merch(ioopm_hash_table_t *merch_ht, char *merch_name, elem_t *lookup_res)
+bool get_merch(store_t *store, char *merch_name, elem_t *lookup_res)
 {
   elem_t elem_name = string_elem(merch_name);
-  return ioopm_hash_table_lookup(merch_ht, elem_name, lookup_res);
+  return ioopm_hash_table_lookup(store->name_to_item, elem_name, lookup_res);
 }
 
 static bool update_shelf(elem_t shelf_elem, merch_t *merch, size_t quantity)
@@ -199,14 +203,13 @@ bool replenish(store_t *store, char *name, size_t quantity, char *shelf_name)
 {
   elem_t shelf_name_elem = string_elem(shelf_name);
 
-  ioopm_hash_table_t *name_ht = store->name_to_item;
   ioopm_hash_table_t *shelf_ht = store->shelf_to_item;
 
   elem_t looked_up_elem_merch;
-  if (get_merch(name_ht, name, &looked_up_elem_merch))
+  if (get_merch(store, name, &looked_up_elem_merch))
   {
     elem_t looked_up_elem_shelf;
-    if (get_shelf(shelf_ht, shelf_name, &looked_up_elem_shelf))
+    if (get_shelf(store, shelf_name, &looked_up_elem_shelf))
     {
       // Shelf exits
       merch_t *merch = looked_up_elem_merch.p;
@@ -230,12 +233,14 @@ bool replenish(store_t *store, char *name, size_t quantity, char *shelf_name)
 
 /// TODO: Maybe support char *merch_name instead of merch_t *merch for edit functions
 
-void edit_merch_desc(merch_t *merch, char *desc) {
+void edit_merch_desc(merch_t *merch, char *desc)
+{
   free(merch->desc);
   merch->desc = desc;
 }
 
-void edit_merch_price(merch_t *merch, size_t price) {
+void edit_merch_price(merch_t *merch, size_t price)
+{
   merch->price = price;
 }
 
@@ -265,24 +270,40 @@ bool edit_merch_name(store_t *store, merch_t *merch, char *new_name)
   elem_t looked_up_merch_elem;
   elem_t merch_elem;
 
-  //if a merch with this new_name doesn't exist 
-  if (!get_merch(name_to_item, new_name, &looked_up_merch_elem))
+  // if a merch with this new_name doesn't exist
+  if (!get_merch(store, new_name, &looked_up_merch_elem))
   {
     elem_t old_name = string_elem(merch->name);
-  
-    //remove item without freeing its memory
-    ioopm_hash_table_remove_without_destroy(name_to_item, old_name, &merch_elem);
-    get_merch(name_to_item, "Kunai", &looked_up_merch_elem);
 
-    free(merch->name); //free old name
+    // remove item without freeing its memory
+    ioopm_hash_table_remove_without_destroy(name_to_item, old_name, &merch_elem);
+
+    free(merch->name); // free old name
     merch->name = new_name;
 
-    ioopm_hash_table_insert(name_to_item, string_elem(merch->name), merch_elem);
+    ioopm_hash_table_insert(name_to_item, string_elem(new_name), merch_elem);
     return true;
   }
-  else //if a merch with the new_name exists
+  else // if a merch with the new_name exists
   {
     free(new_name);
     return false;
   }
+}
+
+bool remove_merch(store_t *store, char *name)
+{
+  elem_t merch_elem;
+  bool res = get_merch(store, name, &merch_elem);
+  merch_t *merch = merch_elem.p;
+
+  if (!res)
+  {
+    return res;
+  }
+
+  remove_merch_shelf_ht(store, merch->locs);
+  res = ioopm_hash_table_remove(store->name_to_item, string_elem(name), &merch_elem);
+
+  return res;
 }

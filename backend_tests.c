@@ -43,7 +43,6 @@ void test_make_destroy_merch()
 void test_add_merchs()
 {
   store_t *store = create_store();
-  ioopm_hash_table_t *ht = store->name_to_item;
 
   elem_t looked_up_elem;
 
@@ -54,8 +53,7 @@ void test_add_merchs()
   // Adding a new merchendise
   bool add_res = add_merch(store, merch1);
 
-  elem_t key1 = string_elem("T");
-  bool lookup_res = ioopm_hash_table_lookup(ht, key1, &looked_up_elem);
+  bool lookup_res = get_merch(store, name1, &looked_up_elem);
 
   CU_ASSERT_TRUE(add_res);
   CU_ASSERT_TRUE(lookup_res);
@@ -72,7 +70,7 @@ void test_add_merchs()
   merch_t *merch2 = create_merch(name2, desc2, 123);
 
   add_res = add_merch(store, merch2);
-  lookup_res = ioopm_hash_table_lookup(ht, key1, &looked_up_elem);
+  lookup_res = get_merch(store, name1, &looked_up_elem);
 
   CU_ASSERT_FALSE(add_res);
   CU_ASSERT_TRUE(lookup_res);
@@ -89,7 +87,7 @@ void test_add_merchs()
   merch_t *merch3 = create_merch(old_name, new_desc, 123123);
 
   add_res = add_merch(store, merch3);
-  lookup_res = ioopm_hash_table_lookup(ht, key1, &looked_up_elem);
+  lookup_res = get_merch(store, name1, &looked_up_elem);
 
   CU_ASSERT_FALSE(add_res);
   CU_ASSERT_TRUE(lookup_res);
@@ -107,8 +105,7 @@ void test_add_merchs()
 
   add_res = add_merch(store, merch4);
 
-  elem_t key2 = string_elem("YO!");
-  lookup_res = ioopm_hash_table_lookup(ht, key2, &looked_up_elem);
+  lookup_res = get_merch(store, new_name, &looked_up_elem);
 
   CU_ASSERT_TRUE(add_res);
   CU_ASSERT_TRUE(lookup_res);
@@ -125,17 +122,13 @@ void test_add_merchs()
 void test_replenish_merchs()
 {
   store_t *store = create_store();
-  ioopm_hash_table_t *name_to_item = store->name_to_item;
-  ioopm_hash_table_t *shelf_to_item = store->shelf_to_item;
 
   char *name1 = strdup("Kunai");
   char *desc1 = strdup("Kaching");
   merch_t *merch1 = create_merch(name1, desc1, 123);
-  elem_t name1_elem = string_elem("Kunai");
 
   char *name2 = strdup("Kaching");
   char *desc2 = strdup("Kunai");
-  elem_t name2_elem = string_elem("Kaching");
   merch_t *merch2 = create_merch(name2, desc2, 321);
 
   add_merch(store, merch2);
@@ -143,8 +136,8 @@ void test_replenish_merchs()
 
   elem_t merch1_elem;
   elem_t merch2_elem;
-  CU_ASSERT_TRUE(get_merch(name_to_item, name1, &merch1_elem));
-  CU_ASSERT_TRUE(get_merch(name_to_item, name2, &merch2_elem));
+  CU_ASSERT_TRUE(get_merch(store, name1, &merch1_elem));
+  CU_ASSERT_TRUE(get_merch(store, name2, &merch2_elem));
 
   ioopm_list_t *merch1_list = merch1->locs;
   ioopm_list_t *merch2_list = merch2->locs;
@@ -166,7 +159,7 @@ void test_replenish_merchs()
   CU_ASSERT_EQUAL(merch1->stock, 1);
 
   elem_t looked_up_shelf_elem;
-  CU_ASSERT_TRUE(ioopm_hash_table_lookup(shelf_to_item, string_elem("ABC"), &looked_up_shelf_elem));
+  CU_ASSERT_TRUE(get_shelf(store, "ABC", &looked_up_shelf_elem));
 
   shelf_t *looked_up_shelf = looked_up_shelf_elem.p;
   CU_ASSERT_EQUAL(strcmp(looked_up_shelf->shelf_name, "ABC"), 0);
@@ -182,7 +175,7 @@ void test_replenish_merchs()
   CU_ASSERT_EQUAL(strcmp(*(shelf->merch_name), merch2->name), 0);
   CU_ASSERT_EQUAL(merch2->stock, 2);
 
-  CU_ASSERT_TRUE(ioopm_hash_table_lookup(shelf_to_item, string_elem("XYZ"), &looked_up_shelf_elem));
+  CU_ASSERT_TRUE(get_shelf(store, "XYZ", &looked_up_shelf_elem));
 
   looked_up_shelf = looked_up_shelf_elem.p;
   CU_ASSERT_EQUAL(strcmp(looked_up_shelf->shelf_name, "XYZ"), 0);
@@ -207,7 +200,7 @@ void test_replenish_merchs()
   CU_ASSERT_EQUAL(strcmp(*(shelf->merch_name), merch1->name), 0);
   CU_ASSERT_EQUAL(merch1->stock, 1000001);
 
-  CU_ASSERT_TRUE(ioopm_hash_table_lookup(shelf_to_item, string_elem("ABC"), &looked_up_shelf_elem));
+  CU_ASSERT_TRUE(get_shelf(store, "ABC", &looked_up_shelf_elem));
 
   looked_up_shelf = looked_up_shelf_elem.p;
   CU_ASSERT_EQUAL(strcmp(looked_up_shelf->shelf_name, "ABC"), 0);
@@ -216,7 +209,7 @@ void test_replenish_merchs()
 
   // Having two different shelves
   replenish(store, "Kunai", 1, strdup("LMNOP"));
-  CU_ASSERT_TRUE(ioopm_hash_table_lookup(shelf_to_item, string_elem("LMNOP"), &looked_up_shelf_elem));
+  CU_ASSERT_TRUE(get_shelf(store, "LMNOP", &looked_up_shelf_elem));
   looked_up_shelf = looked_up_shelf_elem.p;
   CU_ASSERT_EQUAL(strcmp(looked_up_shelf->shelf_name, "LMNOP"), 0);
   CU_ASSERT_EQUAL(strcmp(*(looked_up_shelf->merch_name), merch1->name), 0);
@@ -279,14 +272,14 @@ void test_edit_merch_name()
 
   // Checking that the new name works for lookup
   elem_t looked_up_elem;
-  CU_ASSERT_TRUE(get_merch(store->name_to_item, "Shuriken", &looked_up_elem));
+  CU_ASSERT_TRUE(get_merch(store, "Shuriken", &looked_up_elem));
 
   // Checking that the lookup returns the same merchandise
   merch_t *looked_up_merch = looked_up_elem.p;
   CU_ASSERT_PTR_EQUAL(looked_up_merch, merch);
 
   // Checking that the old name no longer works for lookup
-  CU_ASSERT_FALSE(get_merch(store->name_to_item, "Kunai", &looked_up_elem));
+  CU_ASSERT_FALSE(get_merch(store, "Kunai", &looked_up_elem));
 
   // Checking that the merchandise description and price remain unchanged
   CU_ASSERT_EQUAL(strcmp(merch->desc, "Kaching"), 0);
@@ -307,10 +300,10 @@ void test_edit_merch_name()
   CU_ASSERT_EQUAL(strcmp(other_merch->name, "Kunai"), 0);
 
   // Checking that both merchandise items can still be found
-  CU_ASSERT_TRUE(get_merch(store->name_to_item, "Shuriken", &looked_up_elem));
+  CU_ASSERT_TRUE(get_merch(store, "Shuriken", &looked_up_elem));
   CU_ASSERT_PTR_EQUAL(looked_up_elem.p, merch);
 
-  CU_ASSERT_TRUE(get_merch(store->name_to_item, "Kunai", &looked_up_elem));
+  CU_ASSERT_TRUE(get_merch(store, "Kunai", &looked_up_elem));
   CU_ASSERT_PTR_EQUAL(looked_up_elem.p, other_merch);
 
   // Renaming the first merchandise a second time
@@ -321,8 +314,8 @@ void test_edit_merch_name()
   CU_ASSERT_TRUE(second_edit);
 
   // Checking that only the latest name works
-  CU_ASSERT_FALSE(get_merch(store->name_to_item, "Shuriken", &looked_up_elem));
-  CU_ASSERT_TRUE(get_merch(store->name_to_item, "Ninja Star", &looked_up_elem));
+  CU_ASSERT_FALSE(get_merch(store, "Shuriken", &looked_up_elem));
+  CU_ASSERT_TRUE(get_merch(store, "Ninja Star", &looked_up_elem));
   CU_ASSERT_PTR_EQUAL(looked_up_elem.p, merch);
 
   // Checking that the merchandise description and price remain unchanged
@@ -330,6 +323,75 @@ void test_edit_merch_name()
   CU_ASSERT_EQUAL(merch->price, 123);
 
   // Destroying the store and freeing its allocated memory
+  destroy_store(store);
+}
+
+void test_remove_merch()
+{
+  store_t *store = create_store();
+
+  char *name1 = strdup("T");
+  char *desc1 = strdup("TB");
+  char *name2 = strdup("YO!");
+  char *desc2 = strdup("YO");
+
+  merch_t *merch1 = create_merch(name1, desc1, 123);
+  merch_t *merch2 = create_merch(name2, desc2, 123123);
+
+  add_merch(store, merch1);
+  add_merch(store, merch2);
+
+  char *shelf1 = strdup("ABC");
+  char *shelf2 = strdup("LMNOP");
+  char *shelf3 = strdup("QWERTY");
+
+  replenish(store, "T", 1, shelf1);
+  replenish(store, "T", 10, shelf2);
+  replenish(store, "T", 100, shelf3);
+
+  char *shelf4 = strdup("XYZ");
+  char *shelf5 = strdup("ÅÄÖ");
+
+  replenish(store, "YO!", 1, shelf4);
+  replenish(store, "YO!", 1, shelf5);
+
+  elem_t looked_up_elem;
+
+  CU_ASSERT_TRUE(get_merch(store, "T", &looked_up_elem));
+  CU_ASSERT_TRUE(get_merch(store, "YO!", &looked_up_elem));
+
+  CU_ASSERT_TRUE(get_shelf(store, "ABC", &looked_up_elem));
+  CU_ASSERT_TRUE(get_shelf(store, "LMNOP", &looked_up_elem));
+  CU_ASSERT_TRUE(get_shelf(store, "QWERTY", &looked_up_elem));
+  CU_ASSERT_TRUE(get_shelf(store, "XYZ", &looked_up_elem));
+  CU_ASSERT_TRUE(get_shelf(store, "ÅÄÖ", &looked_up_elem));
+
+  // Trying to remove a merch which doesn't exist
+  CU_ASSERT_FALSE(remove_merch(store, "BlaBlaBla"));
+
+  // Removing a merch which exists
+  CU_ASSERT_TRUE(remove_merch(store, "T"));
+
+  CU_ASSERT_FALSE(get_merch(store, "T", &looked_up_elem));
+  CU_ASSERT_FALSE(get_shelf(store, "ABC", &looked_up_elem));
+  CU_ASSERT_FALSE(get_shelf(store, "LMNOP", &looked_up_elem));
+  CU_ASSERT_FALSE(get_shelf(store, "QWERTY", &looked_up_elem));
+
+  // Checking if the other merch exists
+  CU_ASSERT_TRUE(get_merch(store, "YO!", &looked_up_elem));
+  CU_ASSERT_TRUE(get_shelf(store, "XYZ", &looked_up_elem));
+  CU_ASSERT_TRUE(get_shelf(store, "ÅÄÖ", &looked_up_elem));
+
+  // Trying to remove a removed merch
+  CU_ASSERT_FALSE(remove_merch(store, "T"));
+
+  // Removing a merch which exists
+  CU_ASSERT_TRUE(remove_merch(store, "YO!"));
+
+  CU_ASSERT_FALSE(get_merch(store, "YO!", &looked_up_elem));
+  CU_ASSERT_FALSE(get_shelf(store, "XYZ", &looked_up_elem));
+  CU_ASSERT_FALSE(get_shelf(store, "ÅÄÖ", &looked_up_elem));
+
   destroy_store(store);
 }
 
@@ -361,6 +423,7 @@ int main()
           CU_add_test(my_test_suite, "Replenish merchs", test_replenish_merchs) == NULL ||
           CU_add_test(my_test_suite, "Edit desc and price", test_edit_desc_price) == NULL ||
           CU_add_test(my_test_suite, "Edit name", test_edit_merch_name) == NULL ||
+          CU_add_test(my_test_suite, "Remove merch", test_remove_merch) == NULL ||
           0))
   {
     // If adding any of the tests fails, we tear down CUnit and exit
