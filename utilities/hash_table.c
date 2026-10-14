@@ -7,13 +7,13 @@
 #include "common_hash_table.h"
 #include "hash_table.h"
 
-ioopm_hash_table_t *ioopm_hash_table_create(ioopm_hash_function *hash_fn, ioopm_eq_function *key_eq_fn, ioopm_destroy_function *fn_destroy_fn)
+ioopm_hash_table_t *ioopm_hash_table_create(ioopm_hash_function *hash_fn, ioopm_eq_function *key_eq_fn, ioopm_destroy_function *elem_destroy_fn)
 {
   ioopm_hash_table_t *ht = calloc(1, sizeof(ioopm_hash_table_t));
 
   ht->hash_fn = hash_fn;
   ht->key_eq_fn = key_eq_fn;
-  ht->fn_destroy_fn = fn_destroy_fn;
+  ht->elem_destroy_fn = elem_destroy_fn;
   ht->size = 0;
 
   return ht;
@@ -21,7 +21,7 @@ ioopm_hash_table_t *ioopm_hash_table_create(ioopm_hash_function *hash_fn, ioopm_
 
 static void entry_destroy(ioopm_hash_table_t *ht, entry_t *entry)
 {
-  ht->fn_destroy_fn(entry);
+  ht->elem_destroy_fn(entry);
 }
 
 void ioopm_hash_table_destroy(ioopm_hash_table_t *ht)
@@ -77,7 +77,8 @@ void ioopm_hash_table_insert(ioopm_hash_table_t *ht, elem_t key, elem_t value)
   entry_t *previous = find_previous_entry(ht, key); // Find previous entry, or the last entry if the key does not exist
 
   // if the key exists, update the value, otherwise create a new entry
-  if (previous->next != NULL)
+  entry_t *current = previous->next;
+  if (previous->next != NULL && ht->key_eq_fn(current->key, key))
   {
     previous->next->value = value;
   }
@@ -133,6 +134,29 @@ bool ioopm_hash_table_remove(ioopm_hash_table_t *ht, const elem_t key, elem_t *r
     *removed_value = current->value;
     previous->next = current->next;
     entry_destroy(ht, current);
+    ht->size--;
+
+    return true;
+  }
+  else
+  {
+    // ...return that the lookup failed
+    return false;
+  }
+}
+bool ioopm_hash_table_remove_without_destroy(ioopm_hash_table_t *ht, const elem_t key, elem_t *removed_value)
+{
+  entry_t *previous = find_previous_entry(ht, key); // Find previous entry, or the last entry if the key does not exist
+  entry_t *current = previous->next;
+
+  // If the key we are trying to remove exists...
+  if (current != NULL && ht->key_eq_fn(current->key, key))
+  {
+    // ...remove it and relink the previous node to the new next node
+    *removed_value = current->value;
+    previous->next = current->next;
+
+    free(current);
     ht->size--;
 
     return true;

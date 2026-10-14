@@ -1,65 +1,40 @@
-CC=gcc
-FLAGS=-Wall -Wextra -Wpedantic -g
-COV_FLAG = --coverage 
+CC = gcc
+CFLAGS = -Wall -Wextra -Wpedantic -g
+COV_FLAGS = --coverage
 
-HASH_OBJECTS=hash_table.o hash_table_iterator.o
-LIST_OBJECTS=linked_list.o linked_list_iterator.o
-FREQ_OBJECTS=hash_table.o hash_table_iterator.o freq_count.o
+UTIL_OBJECTS = utilities/hash_table.o \
+								utilities/hash_table_iterator.o \
+								utilities/linked_list.o \
+								utilities/linked_list_iterator.o \
+								utilities/utils.o
 
-COV_HASH_OBJECTS=hash_table.c hash_table_iterator.c
-COV_LIST_OBJECTS=linked_list.c linked_list_iterator.c
-
-all: hash_table_tests
-
-hash_table_tests: $(HASH_OBJECTS) hash_table_tests.c
-	$(CC) $(FLAGS) $^ -o $@ -lcunit
-
-linked_list_tests: $(LIST_OBJECTS) linked_list_tests.c
-	$(CC) $(FLAGS) $^ -o $@ -lcunit
+all: backend_tests
 
 %.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
+db: main/db.c main/db.h utilities/common.h
+	$(CC) $(CFLAGS) -c $< -o $@
 
-freq: $(FREQ_OBJECTS) 
-	$(CC) $(FLAGS) $^ -o freq_count
+io: main/io.c main/io.h utilities/utils.h
+	$(CC) $(CFLAGS) utilities/utils.c $< -o $@
 
-test: hash_table_tests linked_list_tests
-	./hash_table_tests 
-	./linked_list_tests
+backend_tests: backend_tests.c main/db.c $(UTIL_OBJECTS)
+	$(CC) $(CFLAGS) $^ -o $@ -lcunit	
 
-tests: hash_table_tests linked_list_tests
-	./hash_table_tests 
-	./linked_list_tests
+utilities/%.o: utilities/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-memtest: hash_table_tests linked_list_tests
-	valgrind ./hash_table_tests
-	valgrind ./linked_list_tests
+test: backend_tests
+	./backend_tests
 
-cov:
-	$(CC) $(FLAGS) $(COV_FLAG) $(COV_HASH_OBJECTS) hash_table_tests.c -o hash_table_tests_cov -lcunit
-	./hash_table_tests_cov
-	gcov -abcf hash_table_tests_cov-hash_table.gcno
-	gcov -abcf hash_table_tests_cov-hash_table_iterator.gcno
-	gcovr -r .
+mem: backend_tests
+	valgrind --leak-check=full ./backend_tests
 
-	$(CC) $(FLAGS) $(COV_FLAG) $(COV_LIST_OBJECTS) linked_list_tests.c -o linked_list_tests_cov -lcunit
-	./linked_list_tests_cov
-	gcov -abcf linked_list_tests_cov-linked_list.gcno
-	gcov -abcf linked_list_tests_cov-linked_list_iterator.gcno
-	gcovr -r .
-
-prof:
-	gcc -pg hash_table.c hash_table_iterator.c freq_count.c -o freq_count
-	./freq_count sample-texts/16k-words.txt
-	gprof freq_count gmon.out > profile.txt
-	more profile.txt
-
-massif:
-	valgrind --tool=massif ./freq_count tbontb.txt
-	
-clean:	
-	rm -f *.o *.gcda *.gcno
-	rm -f *.out a.out
-	rm -f hash_table_tests linked_list_tests freq_count
-	rm -f linked_list_tests_cov hash_table_tests_cov
+clean:
+	rm -f utilities/*.o
+	rm -f backend_tests db io
+	rm -f *.gcda *.gcno *.gcov:
+	rm -f utilities/*.o
+	rm -f backend_tests db io
+	rm -f *.gcda *.gcno *.gcov

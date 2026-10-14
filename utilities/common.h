@@ -1,36 +1,45 @@
 #pragma once
 
-#include <stddef.h>
-#include <stdlib.h>
 #include <stdbool.h>
-#include <stdio.h>
-#include <string.h>
+#include <stddef.h>
 
-#include "hash_table.c"
-#include "linked_list.c"
+#include "hash_table.h"
+#include "linked_list.h"
+#include "linked_list_iterator.h"
+#include "hash_table_iterator.h"
+#include "common_elem.h"
 
-typedef struct shelf_t {
-    char * shelf;
+
+typedef struct shelf
+{
+    char *shelf_name;
+    char **merch_name;
     int quantity;
-};
+} shelf_t;
 
-typedef struct merch_t {
-    char * name;
-    char * descr;
+typedef struct merch
+{
+    char *name;
+    char *desc;
     size_t price;
-    ioopm_list_t * locs;
-};
+    size_t stock;
+    ioopm_list_t *locs;
+} merch_t;
 
-typedef struct store_t {
-    ioopm_hash_table_t name_to_item;
-    ioopm_hash_table_t shelf_to_item;
-};
+typedef struct store
+{
+    ioopm_hash_table_t *name_to_item;
+    ioopm_hash_table_t *shelf_to_item;
+    size_t merch_num;
+} store_t;
 
-typedef struct shopping_cart_t {
+typedef struct cart
+{
     size_t id;
-    ioopm_hash_table_t cart;
-};
+    ioopm_hash_table_t *cart;
+} cart_t;
 
-typedef struct all_shopping_carts_t {
-    ioopm_list_t all_carts;
-};
+typedef struct all_carts
+{
+    ioopm_hash_table_t *all_carts;
+} all_carts_t;
