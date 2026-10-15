@@ -1,24 +1,41 @@
-//////////////////////// TODO: THE CART SYSTEM, REWRITE THE DEFINATION + ADD NEW ////////////////////////
+#pragma once
 
-// /// @brief Creates a container for all shopping carts
-// /// @return pointer to the container of shopping carts, or NULL if creation fails
-// all_shopping_carts_t *create_cart_holder(void);
+#include <stdbool.h>
+#include <stddef.h>
+#include "../utilities/common.h"
 
-// /// @brief Creates an empty shopping cart
-// /// @return pointer to the new shopping cart, or NULL if creation fails
-// shopping_cart_t *create_cart_(void);
+// TODO: UPDATE THE DOC
 
-// /// @brief Removes a shopping cart from the container
-// /// @param all_carts pointer to the container holding all shopping carts
-// /// @param id identifier of the shopping cart to remove
-// /// @return true if the cart was removed successfully, false otherwise
-// bool remove_cart(all_shopping_carts_t *all_carts, size_t id);
+/// @brief Creates an empty shopping cart
+/// @return pointer to the new shopping cart
+void add_cart(store_t *store);
 
-// /// @brief Adds a quantity of merchandise to a shopping cart
-// /// @param store pointer to the store containing the merchandise
-// /// @param all_carts pointer to the container holding all shopping carts
-// /// @param id identifier of the shopping cart to which merchandise should be added
-// /// @param merch name of the merchandise to add
-// /// @param quantity quantity of merchandise to add
-// /// @return true if the merchandise was added successfully, false otherwise
-// bool add_to_cart(store_t *store, all_shopping_carts_t *all_carts, size_t id, char *merch, size_t quantity);
+/// @brief Removes a shopping cart from the container
+/// @param store pointer to the container holding all shopping carts
+/// @param id identifier of the shopping cart to remove
+/// @return true if the cart was removed successfully, false otherwise
+bool remove_cart(store_t *store, size_t id);
+
+/// @brief Adds a quantity of merchandise to a shopping cart
+/// @param store pointer to the store containing the merchandise
+/// @param id identifier of the shopping cart to which merchandise should be added
+/// @param merch name of the merchandise to add
+/// @param quantity quantity of merchandise to add
+/// @return true if the merchandise was added successfully, false otherwise
+bool add_to_cart(store_t *store, size_t id, char *merch, size_t quantity);
+
+/// @brief Removes a quantity of merchandise from a shopping cart
+/// @param store pointer to the store containing the merchandise
+/// @param id identifier of the shopping cart from which merchandise should be added
+/// @param merch name of the merchandise to remove
+/// @param quantity quantity of merchandise to remove
+/// @return true if the merchandise was removed successfully, false otherwise
+bool remove_from_cart(store_t *store, size_t id, char *merch, size_t quantity);
+
+/// @brief Removes a quantity of merchandise from a shopping cart
+/// @param store pointer to the store containing the merchandise
+/// @param id identifier of the shopping cart from which merchandise should be added
+/// @param merch name of the merchandise to remove
+/// @param quantity quantity of merchandise to remove
+/// @return true if the merchandise was removed successfully, false otherwise
+long checkout(store_t *store, size_t id, char *merch, size_t quantity);

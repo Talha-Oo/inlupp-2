@@ -27,6 +27,7 @@ static bool str_eq_func(const elem_t elem1, const elem_t elem2)
 static void cart_destroy(entry_t *entry) {
   // TODO: IMPLEMENT, MAYBE??
 
+  free(entry);
 }
 
 static cart_t *create_cart(store_t *store) {
@@ -48,9 +49,4 @@ void add_cart(store_t *store) {
   elem_t key_elem = int_elem(cart->id);
 
   ioopm_hash_table_insert(all_cart, key_elem, cart_elem);
-}
-
-bool remove_cart(store_t *store, size_t id) {
-
-  return 
 }
