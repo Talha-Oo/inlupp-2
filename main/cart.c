@@ -24,14 +24,14 @@ static bool str_eq_func(const elem_t elem1, const elem_t elem2)
   return strcmp(elem1.s, elem2.s) == 0;
 }
 
-static void cart_destroy(entry_t *entry)
+void cart_destroy(entry_t *entry)
 {
   // TODO: IMPLEMENT, MAYBE??
 
   free(entry);
 }
 
-static cart_t *create_cart(store_t *store)
+cart_t *create_cart(store_t *store)
 {
   cart_t *cart = calloc(1, sizeof(cart_t));
   cart->merchandise = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &cart_destroy);

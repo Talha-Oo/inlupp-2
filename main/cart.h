@@ -39,3 +39,7 @@ bool remove_from_cart(store_t *store, size_t chart_id, char *merch_name, size_t 
 /// @param quantity quantity of merchandise to remove
 /// @return true if the merchandise was removed successfully, false otherwise
 long checkout(store_t *store, size_t chart_id, char *merch_name, size_t quantity);
+
+
+void cart_destroy(entry_t *entry);
+cart_t *create_cart(store_t *store);
