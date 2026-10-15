@@ -29,7 +29,7 @@ typedef struct merch
 typedef struct cart
 {
     size_t id;
-    ioopm_hash_table_t *merchendise;
+    ioopm_hash_table_t *merchandise;
 } cart_t;
 
 typedef struct store
