@@ -67,7 +67,7 @@ static void name_to_item_destroy(entry_t *entry)
   free(entry);
 }
 
-static void shelf_to_item_destroy(entry_t *entry)
+static void simple_entrt_destroy(entry_t *entry)
 {
   free(entry);
 }
@@ -91,13 +91,27 @@ static bool str_eq_func(const elem_t elem1, const elem_t elem2)
   return strcmp(elem1.s, elem2.s) == 0;
 }
 
+static size_t int_hash(const elem_t elem)
+{
+  return elem.i;
+}
+
+static bool int_eq_func(const elem_t elem1, const elem_t elem2)
+{
+  return elem1.i == elem2.i;
+}
+
 // Store functions
 store_t *create_store(void)
 {
   store_t *store = calloc(1, sizeof(store_t));
 
   store->name_to_item = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &name_to_item_destroy);
-  store->shelf_to_item = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &shelf_to_item_destroy);
+  store->shelf_to_item = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &simple_entrt_destroy);
+
+  // TODO: Make the destory func for all_carts hashtable
+  store->all_carts = ioopm_hash_table_create(&int_hash, &int_eq_func, &simple_entrt_destroy);
+  store->reserved_merchs = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &simple_entrt_destroy);
   store->merch_num = 0;
 
   return store;
@@ -106,6 +120,7 @@ store_t *create_store(void)
 void destroy_store(store_t *store)
 {
   ioopm_hash_table_destroy(store->shelf_to_item);
+  ioopm_hash_table_destroy(store->all_carts);
   ioopm_hash_table_destroy(store->name_to_item);
   free(store);
 }
@@ -232,7 +247,6 @@ bool replenish(store_t *store, char *name, size_t quantity, char *shelf_name)
 }
 
 /// TODO: Maybe support char *merch_name instead of merch_t *merch for edit functions
-
 void edit_merch_desc(merch_t *merch, char *desc)
 {
   free(merch->desc);
@@ -243,25 +257,6 @@ void edit_merch_price(merch_t *merch, size_t price)
 {
   merch->price = price;
 }
-
-// static void change_merch_name_in_shelves(ioopm_list_t *list, char *new_name) {
-//   ioopm_list_iterator_t *it = ioopm_list_iterator_create(list);
-
-//   elem_t curr_merch;
-//   shelf_t *shelf;
-//   while (!ioopm_list_iterator_at_end(it))
-//   {
-//     ioopm_list_iterator_current(it, &curr_merch);
-//     shelf = curr_merch.p;
-
-//     free(shelf->shelf_name);
-//     shelf->shelf_name = new_name;
-
-//     ioopm_list_iterator_advance(it);
-//   }
-
-//   ioopm_list_iterator_destroy(it);
-// }
 
 bool edit_merch_name(store_t *store, merch_t *merch, char *new_name)
 {

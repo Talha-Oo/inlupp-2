@@ -26,20 +26,18 @@ typedef struct merch
     ioopm_list_t *locs;
 } merch_t;
 
+typedef struct cart
+{
+    size_t id;
+    ioopm_hash_table_t *merchendise;
+} cart_t;
+
 typedef struct store
 {
     ioopm_hash_table_t *name_to_item;
     ioopm_hash_table_t *shelf_to_item;
-    size_t merch_num;
-} store_t;
-
-typedef struct cart
-{
-    size_t id;
-    ioopm_hash_table_t *cart;
-} cart_t;
-
-typedef struct all_carts
-{
     ioopm_hash_table_t *all_carts;
-} all_carts_t;
+    ioopm_hash_table_t *reserved_merchs; 
+    // TODO: TESTS for merch_num!!
+    size_t merch_num; 
+} store_t;
