@@ -5,17 +5,17 @@
 
 static char *get_merch_name(void)
 {
-  return ask_question_string("ENTER THE NAME OF THE MERCHENDISE: ");
+  return ask_question_string("ENTER THE NAME OF THE MERCHANDISE: ");
 }
 
 static char *get_merch_desc(void)
 {
-  return ask_question_string("ENTER THE DESCRIPTION OF THE MERCHENDISE: ");
+  return ask_question_string("ENTER THE DESCRIPTION OF THE MERCHANDISE: ");
 }
 
 static int get_merch_price(void)
 {
-  return ask_question_int("ENTER THE PRICE OF THE MERCHENDISE: ");
+  return ask_question_int("ENTER THE PRICE OF THE MERCHANDISE: ");
 }
 
 void get_merch_info(char **name, char **desc, int *price) {
