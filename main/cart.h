@@ -4,9 +4,11 @@
 #include <stddef.h>
 #include "../utilities/common.h"
 
+// TODO: UPDATE THE DOC
+
 /// @brief Creates an empty shopping cart
 /// @return pointer to the new shopping cart
-cart_t *create_cart_(void);
+void add_cart(store_t *store);
 
 /// @brief Removes a shopping cart from the container
 /// @param store pointer to the container holding all shopping carts

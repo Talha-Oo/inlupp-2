@@ -22,6 +22,9 @@ all: backend_tests
 db: main/db.c main/db.h utilities/common.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
+cart: main/cart.c main/cart.h utilities/common.h
+	$(CC) $(CFLAGS) -c $< -o $@
+
 io: main/io.c main/io.h utilities/utils.h
 	$(CC) $(CFLAGS) utilities/utils.c $< -o $@
 

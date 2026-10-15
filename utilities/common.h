@@ -40,4 +40,5 @@ typedef struct store
     ioopm_hash_table_t *reserved_merchs; 
     // TODO: TESTS for merch_num!!
     size_t merch_num; 
+    size_t carts_num; 
 } store_t;
