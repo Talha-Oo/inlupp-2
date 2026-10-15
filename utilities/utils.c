@@ -1,188 +1,85 @@
-extern char *strdup(const char *);
-
-#include <ctype.h>
-#include <stdbool.h>
+#include "utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
-typedef union { 
-  int   int_value;
-  float float_value;
-  char *string_value;
-} answer_t;
+void print(char *str) {
+    int i = 0;
+    while (str[i] != '\0') {
+        putchar(str[i]);
+        i++;
+    }
+}
 
-typedef bool check_func(char *);
-typedef answer_t convert_func(char *);
-
+void println(char *str) {
+    print(str);
+    putchar('\n');
+}
 
 int read_string(char *buf, int buf_siz) {
+    int i = 0;
+    int c;
 
-  int counter = 0;
-  char c;
+    while (i < buf_siz - 1) {
+        c = getchar();
+        if (c == '\n' || c == EOF) {
+            break;
+        }
+        buf[i] = (char)c;
+        i++;
+    }
+    buf[i] = '\0';
 
-  while((c = getchar()) != '\n' && counter < buf_siz - 1)
-  {
-    buf[counter] = c;
-    counter++;
-  }
+    if (c != '\n' && c != EOF) {
+        int discard;
+        do {
+            discard = getchar();
+        } while (discard != '\n' && discard != EOF);
+    }
 
-  buf[counter] = '\0';
-
-  if(c != '\n') {
-    while (getchar() != '\n');
-  }
-  
-  return counter;
+    return i;
 }
 
 bool is_number(char *str) {
+    int len = strlen(str);
+    if (len == 0) return false;
 
-  int len = strlen(str);
-
-  if(len <= 0) return false;
-  
-  for (int i = 0; i < len; i++)
-  {
-    if(i == 0 && str[0] == '-' && len > 1) {
-      continue;
-    } else {
-      if(!isdigit(str[i])) { return false; }
+    int start = 0;
+    if (str[0] == '-') {
+        if (len == 1) return false;
+        start = 1;
     }
-  }
-  
-  return true;
-}
 
-bool is_float(char *str) {
-
-  int len = strlen(str);
-
-  int dot_count = 0;
-  for (int i = 0; i < len; i++)
-  {
-    if(i == 0 && (str[i] == '-' || str[i] == '.') && len > 1 ) { 
-      if(str[i] == '.') { dot_count++; }
-      continue; 
-
-    } else if (str[i] == '.' && len > 1)
-    {
-      dot_count++;
-
-    } else {
-      if(!isdigit(str[i])) { return false; }
+    for (int i = start; i < len; i++) {
+        if (!isdigit((unsigned char)str[i])) {
+            return false;
+        }
     }
-    
-    if(dot_count > 1) { return false; }
-  }
-  
-  return true;
+
+    return true;
 }
 
-answer_t make_float(char *str) {
-
-  answer_t f;
-  f.float_value = atof(str);
-  return f;
-}
-
-answer_t make_string(char *str) {
-
-  answer_t s;
-  s.string_value = strdup(str);
-  return s;
-}
-
-answer_t make_int(char *str) {
-
-  answer_t i;
-  i.int_value = atoi(str);
-  return i;
-}
-
-bool not_empty(char *str)
-{
-  return strlen(str) > 0;
+bool not_empty(char *str) {
+    return strlen(str) > 0;
 }
 
 answer_t ask_question(char *question, check_func *check, convert_func *convert) {
+    int buf_siz = 255;
+    char buf[buf_siz];
+    do {
+        println(question);
+        read_string(buf, buf_siz);
+    } while (!check(buf));
 
-  char buffer[20];
-  int buff_size = sizeof(buffer) / sizeof(buffer[0]);
-
-  while (1)
-  {
-    printf("%s", question);
-    read_string(buffer, buff_size);
-
-    if(check(buffer)) { break; }
-
-    printf("Invalid Input!!\n");
-  }
-
-  return convert(buffer);
+    return convert(buf);
 }
 
-char *ask_question_string(char *question)
-{
-  answer_t answer = ask_question(question, not_empty, make_string);
-  return answer.string_value;
+int ask_question_int(char *question) {
+    answer_t answer = ask_question(question, is_number, (convert_func *) atoi);
+    return answer.int_value;
 }
 
-int ask_question_int(char *question)
-{
-  answer_t answer = ask_question(question, is_number, make_int);
-  return answer.int_value; // svaret som ett heltal
-}
-
-double ask_question_float(char *question)
-{
-  answer_t answer = ask_question(question, is_float, make_float);
-  return answer.float_value; // svaret som ett decimaltal
-}
-
-int string_length(char str[]) {
-
-  int count = 0;
-  
-  int i = 0;
-  while (str[i] != '\0')
-  {
-    count++;
-    i++;
-  }
-
-  return count;
-}
-
-void print(char str[]) {
-
-  int i = 0;
-  while (str[i] != '\0')
-  {
-    putchar(str[i]);
-    i++;
-  }
-}
-
-void println(char str[]) {
-
-  print(str);
-  printf("\n");
-}
-
-char *ask_question_shelf(char *question)
-{
-  answer_t answer;
-  char *input;
-
-  while (1)
-  {
-    answer = ask_question(question, not_empty, make_string);
-    input = answer.string_value;
-    if(isalpha(input[0]) && is_number(input + 1)) { break; }
-    puts("ENTER A VALID SHELF (eg. B212)!!");
-  }
-
-  return answer.string_value;
+char *ask_question_string(char *question) {
+    return ask_question(question, not_empty, (convert_func *) strdup).string_value; //hämtar strängen ur 'answer_t' unionen
 }
