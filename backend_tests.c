@@ -223,6 +223,12 @@ void test_replenish_merchs()
   CU_ASSERT_EQUAL(merch1->stock, 1000002);
   CU_ASSERT_EQUAL(ioopm_list_size(merch1_list), 2);
 
+  //Adding stock to a existing shelf with correct merch
+  replenish(store, "Kunai", 1, strdup("LMNOP"));
+  CU_ASSERT_TRUE(get_shelf(store, "LMNOP", &looked_up_shelf_elem));
+  looked_up_shelf = looked_up_shelf_elem.p;
+  CU_ASSERT_EQUAL(looked_up_shelf->quantity, 2);
+
   destroy_store(store);
 }
 
