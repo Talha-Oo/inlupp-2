@@ -2,8 +2,18 @@
 
 #include "../utilities/utils.h"
 
-/// @brief Prompts the user to enter merchandise information
-/// @param name pointer to the merchandise name pointer
-/// @param desc pointer to the merchandise description pointer
-/// @param price pointer to the merchandise price
-void get_merch_info(char **name, char **desc, int *price);
+char *get_name_io(void);
+
+char *get_desc_io(void);
+
+int get_price_io(void);
+
+char *get_shelf_io(void);
+
+int get_quantity_io(void);
+
+int get_cart_id_io(void);
+
+bool is_confirmed_io(void);
+
+bool should_continue_listing_io(void);
