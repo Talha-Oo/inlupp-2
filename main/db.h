@@ -87,15 +87,3 @@ void edit_merch_price(merch_t *merch, size_t price);
 /// @param name Name of the merchandise to remove.
 /// @return true if removed, false otherwise.
 bool remove_merch(store_t *store, char *name);
-
-/// @brief Prints 20 merchandise items at a time.
-/// @param store Store containing the merchandise.
-/// @param n Starting position of the items.
-/// @return true if no more items remain, false if more remain.
-bool list_merch(store_t *store, size_t n);
-
-/// @brief Prints the shelves containing the merchandise.
-/// @param store Store containing the merchandise.
-/// @param name Name of the merchandise.
-/// @return true if successful, false otherwise.
-bool show_stock(store_t *store, char *name);

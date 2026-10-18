@@ -166,12 +166,31 @@ static int cmp_merch_name(const void *p1, const void *p2)
   return strcmp(name1, name2);
 }
 
-void sort_merch(merch_t *all_merch[], size_t merch_num)
+static int cmp_shelf_name(const void *p1, const void *p2)
+{
+  shelf_t *const *shelf1_ptr = p1;
+  shelf_t *const *shelf2_ptr = p2;
+
+  shelf_t *shelf1 = *shelf1_ptr;
+  shelf_t *shelf2 = *shelf2_ptr;
+
+  const char *name1 = shelf1->shelf_name;
+  const char *name2 = shelf2->shelf_name;
+
+  return strcmp(name1, name2);
+}
+
+static void sort_merch(merch_t *all_merch[], size_t merch_num)
 {
   qsort(all_merch, merch_num, sizeof(merch_t *), cmp_merch_name);
 }
 
-void put_merch_in_arr(store_t *store, merch_t *merchs[])
+static void sort_shelf(shelf_t *shelves[], size_t shelf_num)
+{
+  qsort(shelves, shelf_num, sizeof(shelf_t *), cmp_shelf_name);
+}
+
+static void put_merch_in_arr(store_t *store, merch_t *merchs[])
 {
   ioopm_hash_table_t *ht = store->name_to_item;
   ioopm_hash_table_iterator_t *it = ioopm_hash_table_iterator_create(ht);
@@ -191,7 +210,27 @@ void put_merch_in_arr(store_t *store, merch_t *merchs[])
   ioopm_hash_table_iterator_destroy(it);
 }
 
-void print_merch_list(merch_t *merchs[], size_t size, size_t *printed)
+static void put_shelf_in_arr(ioopm_list_t *list, shelf_t *shelves[])
+{
+  ioopm_list_iterator_t *it = ioopm_list_iterator_create(list);
+
+  size_t i = 0;
+  while (!ioopm_list_iterator_at_end(it))
+  {
+    elem_t shelf_elem;
+    ioopm_list_iterator_current(it, &shelf_elem);
+    shelf_t *shelf = shelf_elem.p;
+
+    shelves[i] = shelf;
+    i++;
+
+    ioopm_list_iterator_advance(it);
+  }
+
+  ioopm_list_iterator_destroy(it);
+}
+
+static void print_list_merch(merch_t *merchs[], size_t size, size_t *printed)
 {
   size_t i;
   for (i = *printed; i < *printed + 20 && i < size; i++)
@@ -203,8 +242,23 @@ void print_merch_list(merch_t *merchs[], size_t size, size_t *printed)
   *printed = i;
 }
 
+static void print_list_shelf(shelf_t *shelves[], size_t size, size_t *printed)
+{
+  size_t i;
+  for (i = *printed; i < *printed + 20 && i < size; i++)
+  {
+    shelf_t *shelf = shelves[i];
+    printf("%s: %d\n", shelf->shelf_name, shelf->quantity);
+  }
+
+  *printed = i;
+}
+
 void list_merchandise(store_t *store)
 {
+  puts("----------------------------------");
+  puts("------- LIST MERCHANDISE ---------");
+
   size_t merch_num = store->merch_num;
 
   if (merch_num == 0)
@@ -223,7 +277,7 @@ void list_merchandise(store_t *store)
 
   while (to_continue && printed < merch_num)
   {
-    print_merch_list(merchs, merch_num, &printed);
+    print_list_merch(merchs, merch_num, &printed);
 
     if (printed < merch_num)
     {
@@ -236,12 +290,90 @@ void list_merchandise(store_t *store)
   }
 }
 
+void show_stock(store_t *store)
+{
+  puts("----------------------------------");
+  puts("---------- SHOW STOCK ------------");
+
+  char *merch_name = get_name_io();
+
+  elem_t merch_elem;
+  bool exists = get_merch(store, merch_name, &merch_elem);
+  if (!exists)
+  {
+    puts("\nA MERCHANDISE BY THIS NAME DOES NOT EXIST!!");
+
+    free(merch_name);
+    return;
+  }
+
+  merch_t *merch = merch_elem.p;
+
+  ioopm_list_t *shelf_list = merch->locs;
+  size_t shelf_num = ioopm_list_size(shelf_list);
+
+  if (shelf_num == 0)
+  {
+    puts("NOTHIING TO LIST, THE MERCHANDISE HAS NO STOCK!!");
+    return;
+  }
+
+  shelf_t *shelves[shelf_num];
+
+  put_shelf_in_arr(shelf_list, shelves);
+  sort_shelf(shelves, shelf_num);
+
+  size_t printed = 0;
+  bool to_continue = true;
+
+  while (to_continue && printed < shelf_num)
+  {
+    print_list_shelf(shelves, shelf_num, &printed);
+
+    if (printed < shelf_num)
+    {
+      to_continue = should_continue_listing_io();
+    }
+    else
+    {
+      break;
+    }
+  }
+
+  free(merch_name);
+}
+
+
 int main(void)
 {
   store_t *store = create_store();
 
-  add_merchandise_to_store(store);
-  add_merchandise_to_store(store);
+  merch_t *milk = create_merch(strdup("Milk"), strdup("Whole milk 1L"), 15);
+  merch_t *bread = create_merch(strdup("Bread"), strdup("Wholegrain bread"), 25);
+  merch_t *eggs = create_merch(strdup("Eggs"), strdup("Pack of 12 eggs"), 35);
+  merch_t *apples = create_merch(strdup("Apples"), strdup("Red apples 1kg"), 20);
+  merch_t *coffee = create_merch(strdup("Coffee"), strdup("Ground coffee 500g"), 65);
+
+  add_merch(store, milk);
+  add_merch(store, bread);
+  add_merch(store, eggs);
+  add_merch(store, apples);
+  add_merch(store, coffee);
+
+  replenish(store, strdup("Milk"), 15, strdup("A20"));
+  replenish(store, strdup("Milk"), 10, strdup("B01"));
+  replenish(store, strdup("Milk"), 20, strdup("C10"));
+
+  replenish(store, strdup("Bread"), 8, strdup("A10"));
+  replenish(store, strdup("Bread"), 12, strdup("B05"));
+
+  replenish(store, strdup("Eggs"), 6, strdup("C01"));
+  replenish(store, strdup("Apples"), 25, strdup("A05"));
+  replenish(store, strdup("Coffee"), 10, strdup("D02"));
+
+  list_merchandise(store);
+
+  show_stock(store);
 
   destroy_store(store);
   return 0;

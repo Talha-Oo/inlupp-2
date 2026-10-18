@@ -227,6 +227,8 @@ bool replenish(store_t *store, char *name, size_t quantity, char *shelf_name)
   elem_t looked_up_elem_merch;
   if (get_merch(store, name, &looked_up_elem_merch))
   {
+    free(name);
+
     elem_t looked_up_elem_shelf;
     if (get_shelf(store, shelf_name, &looked_up_elem_shelf))
     {
@@ -245,6 +247,7 @@ bool replenish(store_t *store, char *name, size_t quantity, char *shelf_name)
   }
   else
   {
+    free(name);
     free(shelf_name);
     return false;
   }

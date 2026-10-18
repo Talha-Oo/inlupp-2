@@ -142,11 +142,11 @@ void test_replenish_merchs()
   ioopm_list_t *merch1_list = merch1->locs;
   ioopm_list_t *merch2_list = merch2->locs;
 
-  replenish(store, name1, 1, strdup("ABC"));
+  replenish(store, strdup("Kunai"), 1, strdup("ABC"));
   CU_ASSERT_EQUAL(ioopm_list_size(merch1_list), 1); // check if shelf is added in the list of kunai
   CU_ASSERT_EQUAL(ioopm_list_size(merch2_list), 0); // list of Kaching should still be emepty
 
-  replenish(store, name2, 2, strdup("XYZ"));
+  replenish(store, strdup("Kaching"), 2, strdup("XYZ"));
   CU_ASSERT_EQUAL(ioopm_list_size(merch2_list), 1); // check if shelf is added in the list of kaching
 
   // checking if the shelf has been added to the hashtable and if the info matches correctly with the
@@ -183,14 +183,14 @@ void test_replenish_merchs()
   CU_ASSERT_EQUAL(looked_up_shelf->quantity, 2);
 
   // Trying to add stock to a shelf of different type of merch
-  CU_ASSERT_FALSE(replenish(store, "Kaching", 1000000, strdup("ABC")));
-  CU_ASSERT_FALSE(replenish(store, "Kunai", 1000000, strdup("XYZ")));
+  CU_ASSERT_FALSE(replenish(store, strdup("Kaching"), 1000000, strdup("ABC")));
+  CU_ASSERT_FALSE(replenish(store, strdup("Kunai"), 1000000, strdup("XYZ")));
 
   // Trying to add stock to a shelf of a nonexistent merch
-  CU_ASSERT_FALSE(replenish(store, "YO!", 128936412, strdup("LMNOP")));
+  CU_ASSERT_FALSE(replenish(store, strdup("YO!"), 128936412, strdup("LMNOP")));
 
   // adding stock to a shelfwith correct type
-  CU_ASSERT_TRUE(replenish(store, "Kunai", 1000000, strdup("ABC")));
+  CU_ASSERT_TRUE(replenish(store, strdup("Kunai"), 1000000, strdup("ABC")));
   // checking if the shelf has been updated in the hashtable and if the info matches correctly with the
   //  shelf in the list, in the hashtable and the merch itself
   // Kunai:
@@ -208,7 +208,7 @@ void test_replenish_merchs()
   CU_ASSERT_EQUAL(looked_up_shelf->quantity, 1000001);
 
   // Having two different shelves
-  replenish(store, "Kunai", 1, strdup("LMNOP"));
+  replenish(store, strdup("Kunai"), 1, strdup("LMNOP"));
   CU_ASSERT_TRUE(get_shelf(store, "LMNOP", &looked_up_shelf_elem));
   looked_up_shelf = looked_up_shelf_elem.p;
   CU_ASSERT_EQUAL(strcmp(looked_up_shelf->shelf_name, "LMNOP"), 0);
@@ -224,7 +224,7 @@ void test_replenish_merchs()
   CU_ASSERT_EQUAL(ioopm_list_size(merch1_list), 2);
 
   //Adding stock to a existing shelf with correct merch
-  replenish(store, "Kunai", 1, strdup("LMNOP"));
+  replenish(store, strdup("Kunai"), 1, strdup("LMNOP"));
   CU_ASSERT_TRUE(get_shelf(store, "LMNOP", &looked_up_shelf_elem));
   looked_up_shelf = looked_up_shelf_elem.p;
   CU_ASSERT_EQUAL(looked_up_shelf->quantity, 2);
@@ -347,19 +347,13 @@ void test_remove_merch()
   add_merch(store, merch1);
   add_merch(store, merch2);
 
-  char *shelf1 = strdup("ABC");
-  char *shelf2 = strdup("LMNOP");
-  char *shelf3 = strdup("QWERTY");
+  replenish(store, strdup("T"), 1, strdup("ABC"));
+  replenish(store, strdup("T"), 10, strdup("LMNOP"));
+  replenish(store, strdup("T"), 100, strdup("QWERTY"));
 
-  replenish(store, "T", 1, shelf1);
-  replenish(store, "T", 10, shelf2);
-  replenish(store, "T", 100, shelf3);
 
-  char *shelf4 = strdup("XYZ");
-  char *shelf5 = strdup("ÅÄÖ");
-
-  replenish(store, "YO!", 1, shelf4);
-  replenish(store, "YO!", 1, shelf5);
+  replenish(store, strdup("YO!"), 1, strdup("XYZ"));
+  replenish(store, strdup("YO!"), 1, strdup("ÅÄÖ"));
 
   elem_t looked_up_elem;
 
