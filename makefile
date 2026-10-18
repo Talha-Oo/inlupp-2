@@ -43,6 +43,9 @@ test: backend_tests
 mem: backend_tests
 	valgrind --leak-check=full ./backend_tests
 
+memu: ui
+	valgrind --leak-check=full ./ui
+
 
 cov:
 	$(CC) $(CFLAGS) $(COV_FLAGS) $(COV_OBJECTS) main/db.c backend_tests.c -o backend_tests_cov -lcunit

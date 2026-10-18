@@ -1,10 +1,11 @@
 #include <ctype.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "../utilities/utils.h"
 
 char *get_name_io(void)
 {
-  return ask_question_string("NAME: ",
+  return ask_question_string("MERCHANDISE NAME: ",
                              "INVALID NAME!!");
 }
 
@@ -26,9 +27,9 @@ char *get_shelf_io(void)
                             "ENTER A VALID SHELF (eg. B21)!!");
 }
 
-int get_quantity_io(void)
+size_t get_quantity_io(void)
 {
-  return ask_question_int("QUANTITY: ",
+  return (size_t) ask_question_int("QUANTITY: ",
                           "PLEASE ENTER A POSITIVE NUMBER!!");
 }
 
@@ -45,9 +46,11 @@ bool is_confirmed_io(void)
 
   if(toupper(*str) == 'Y')
   {
+    free(str);
     return true;
   }
-  
+
+  free(str);
   return false;
 }
 

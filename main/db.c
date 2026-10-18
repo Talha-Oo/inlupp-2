@@ -122,6 +122,7 @@ void destroy_store(store_t *store)
   ioopm_hash_table_destroy(store->shelf_to_item);
   ioopm_hash_table_destroy(store->all_carts);
   ioopm_hash_table_destroy(store->name_to_item);
+  ioopm_hash_table_destroy(store->reserved_merchs);
   free(store);
 }
 
@@ -179,7 +180,9 @@ bool get_shelf(store_t *store, char *shelf_name, elem_t *lookup_res)
 bool get_merch(store_t *store, char *merch_name, elem_t *lookup_res)
 {
   elem_t elem_name = string_elem(merch_name);
-  return ioopm_hash_table_lookup(store->name_to_item, elem_name, lookup_res);
+  bool res = ioopm_hash_table_lookup(store->name_to_item, elem_name, lookup_res);
+
+  return res;
 }
 
 static bool update_shelf(elem_t shelf_elem, merch_t *merch, size_t quantity)
@@ -294,11 +297,13 @@ bool remove_merch(store_t *store, char *name)
 
   if (!res)
   {
+    //free(name);
     return res;
   }
 
   remove_merch_shelf_ht(store, merch->locs);
   res = ioopm_hash_table_remove(store->name_to_item, string_elem(name), &merch_elem);
 
+  //free(name);
   return res;
 }
