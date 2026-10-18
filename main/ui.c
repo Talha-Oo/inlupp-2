@@ -143,7 +143,7 @@ void replenish_merchandise_in_store(store_t *store)
   size_t quantity = get_quantity_io();
 
   bool replenished = replenish(store, merch_name, quantity, shelf_name);
-  if(!replenished)
+  if (!replenished)
   {
     puts("YOU CAN ONLY STORE ON TYPE OF MERCHANDISE ON A SHELF!!");
   }
@@ -152,10 +152,96 @@ void replenish_merchandise_in_store(store_t *store)
   puts("----------------------------------");
 }
 
+static int cmp_merch_name(const void *p1, const void *p2)
+{
+  merch_t *const *merch1_ptr = p1;
+  merch_t *const *merch2_ptr = p2;
+
+  merch_t *merch1 = *merch1_ptr;
+  merch_t *merch2 = *merch2_ptr;
+
+  const char *name1 = merch1->name;
+  const char *name2 = merch2->name;
+
+  return strcmp(name1, name2);
+}
+
+void sort_merch(merch_t *all_merch[], size_t merch_num)
+{
+  qsort(all_merch, merch_num, sizeof(merch_t *), cmp_merch_name);
+}
+
+void put_merch_in_arr(store_t *store, merch_t *merchs[])
+{
+  ioopm_hash_table_t *ht = store->name_to_item;
+  ioopm_hash_table_iterator_t *it = ioopm_hash_table_iterator_create(ht);
+
+  size_t i = 0;
+  while (!ioopm_hash_table_iterator_at_end(it))
+  {
+    elem_t merch_elem = ioopm_hash_table_iterator_current_value(it);
+    merch_t *merch = merch_elem.p;
+
+    merchs[i] = merch;
+    i++;
+
+    ioopm_hash_table_iterator_advance(it);
+  }
+
+  ioopm_hash_table_iterator_destroy(it);
+}
+
+void print_merch_list(merch_t *merchs[], size_t size, size_t *printed)
+{
+  size_t i;
+  for (i = *printed; i < *printed + 20 && i < size; i++)
+  {
+    merch_t *merch = merchs[i];
+    print_merch(merch);
+  }
+
+  *printed = i;
+}
+
+void list_merchandise(store_t *store)
+{
+  size_t merch_num = store->merch_num;
+
+  if (merch_num == 0)
+  {
+    puts("NOTHIING TO LIST, PLEASE ADD MERCHANDISE TO THE STORE FIRST!!");
+    return;
+  }
+
+  merch_t *merchs[merch_num];
+
+  put_merch_in_arr(store, merchs);
+  sort_merch(merchs, merch_num);
+
+  size_t printed = 0;
+  bool to_continue = true;
+
+  while (to_continue && printed < merch_num)
+  {
+    print_merch_list(merchs, merch_num, &printed);
+
+    if (printed < merch_num)
+    {
+      to_continue = should_continue_listing_io();
+    }
+    else
+    {
+      break;
+    }
+  }
+}
+
 int main(void)
 {
   store_t *store = create_store();
 
+  add_merchandise_to_store(store);
+  add_merchandise_to_store(store);
 
   destroy_store(store);
   return 0;

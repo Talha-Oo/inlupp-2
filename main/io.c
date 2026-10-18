@@ -61,9 +61,11 @@ bool should_continue_listing_io(void)
 
   if(toupper(*str) == 'N')
   {
+    free(str);
     return true;
   }
-  
+
+  free(str);
   return false;
 }
 

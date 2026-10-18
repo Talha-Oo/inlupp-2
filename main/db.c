@@ -151,6 +151,7 @@ bool add_merch(store_t *store, merch_t *merch)
   if (!result)
   {
     ioopm_hash_table_insert(ht, key, value);
+    store->merch_num++;
     return true;
   }
   else
@@ -303,6 +304,11 @@ bool remove_merch(store_t *store, char *name)
 
   remove_merch_shelf_ht(store, merch->locs);
   res = ioopm_hash_table_remove(store->name_to_item, string_elem(name), &merch_elem);
+
+  if(res)
+  {
+    store->merch_num--;
+  }
 
   //free(name);
   return res;
