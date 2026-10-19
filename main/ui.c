@@ -27,6 +27,108 @@ void print_merch(merch_t *merch)
   puts("----------------------------------");
 }
 
+static int cmp_merch_name(const void *p1, const void *p2)
+{
+  merch_t *const *merch1_ptr = p1;
+  merch_t *const *merch2_ptr = p2;
+
+  merch_t *merch1 = *merch1_ptr;
+  merch_t *merch2 = *merch2_ptr;
+
+  const char *name1 = merch1->name;
+  const char *name2 = merch2->name;
+
+  return strcmp(name1, name2);
+}
+
+static int cmp_shelf_name(const void *p1, const void *p2)
+{
+  shelf_t *const *shelf1_ptr = p1;
+  shelf_t *const *shelf2_ptr = p2;
+
+  shelf_t *shelf1 = *shelf1_ptr;
+  shelf_t *shelf2 = *shelf2_ptr;
+
+  const char *name1 = shelf1->shelf_name;
+  const char *name2 = shelf2->shelf_name;
+
+  return strcmp(name1, name2);
+}
+
+static void sort_merch(merch_t *all_merch[], size_t merch_num)
+{
+  qsort(all_merch, merch_num, sizeof(merch_t *), cmp_merch_name);
+}
+
+static void sort_shelf(shelf_t *shelves[], size_t shelf_num)
+{
+  qsort(shelves, shelf_num, sizeof(shelf_t *), cmp_shelf_name);
+}
+
+static void put_merch_in_arr(store_t *store, merch_t *merchs[])
+{
+  ioopm_hash_table_t *ht = store->name_to_item;
+  ioopm_hash_table_iterator_t *it = ioopm_hash_table_iterator_create(ht);
+
+  size_t i = 0;
+  while (!ioopm_hash_table_iterator_at_end(it))
+  {
+    elem_t merch_elem = ioopm_hash_table_iterator_current_value(it);
+    merch_t *merch = merch_elem.p;
+
+    merchs[i] = merch;
+    i++;
+
+    ioopm_hash_table_iterator_advance(it);
+  }
+
+  ioopm_hash_table_iterator_destroy(it);
+}
+
+static void put_shelf_in_arr(ioopm_list_t *list, shelf_t *shelves[])
+{
+  ioopm_list_iterator_t *it = ioopm_list_iterator_create(list);
+
+  size_t i = 0;
+  while (!ioopm_list_iterator_at_end(it))
+  {
+    elem_t shelf_elem;
+    ioopm_list_iterator_current(it, &shelf_elem);
+    shelf_t *shelf = shelf_elem.p;
+
+    shelves[i] = shelf;
+    i++;
+
+    ioopm_list_iterator_advance(it);
+  }
+
+  ioopm_list_iterator_destroy(it);
+}
+
+static void print_list_merch(merch_t *merchs[], size_t size, size_t *printed)
+{
+  size_t i;
+  for (i = *printed; i < *printed + 20 && i < size; i++)
+  {
+    merch_t *merch = merchs[i];
+    print_merch(merch);
+  }
+
+  *printed = i;
+}
+
+static void print_list_shelf(shelf_t *shelves[], size_t size, size_t *printed)
+{
+  size_t i;
+  for (i = *printed; i < *printed + 20 && i < size; i++)
+  {
+    shelf_t *shelf = shelves[i];
+    printf("%s: %d\n", shelf->shelf_name, shelf->quantity);
+  }
+
+  *printed = i;
+}
+
 void add_merchandise_to_store(store_t *store)
 {
   puts("----------------------------------");
@@ -152,108 +254,6 @@ void replenish_merchandise_in_store(store_t *store)
   puts("----------------------------------");
 }
 
-static int cmp_merch_name(const void *p1, const void *p2)
-{
-  merch_t *const *merch1_ptr = p1;
-  merch_t *const *merch2_ptr = p2;
-
-  merch_t *merch1 = *merch1_ptr;
-  merch_t *merch2 = *merch2_ptr;
-
-  const char *name1 = merch1->name;
-  const char *name2 = merch2->name;
-
-  return strcmp(name1, name2);
-}
-
-static int cmp_shelf_name(const void *p1, const void *p2)
-{
-  shelf_t *const *shelf1_ptr = p1;
-  shelf_t *const *shelf2_ptr = p2;
-
-  shelf_t *shelf1 = *shelf1_ptr;
-  shelf_t *shelf2 = *shelf2_ptr;
-
-  const char *name1 = shelf1->shelf_name;
-  const char *name2 = shelf2->shelf_name;
-
-  return strcmp(name1, name2);
-}
-
-static void sort_merch(merch_t *all_merch[], size_t merch_num)
-{
-  qsort(all_merch, merch_num, sizeof(merch_t *), cmp_merch_name);
-}
-
-static void sort_shelf(shelf_t *shelves[], size_t shelf_num)
-{
-  qsort(shelves, shelf_num, sizeof(shelf_t *), cmp_shelf_name);
-}
-
-static void put_merch_in_arr(store_t *store, merch_t *merchs[])
-{
-  ioopm_hash_table_t *ht = store->name_to_item;
-  ioopm_hash_table_iterator_t *it = ioopm_hash_table_iterator_create(ht);
-
-  size_t i = 0;
-  while (!ioopm_hash_table_iterator_at_end(it))
-  {
-    elem_t merch_elem = ioopm_hash_table_iterator_current_value(it);
-    merch_t *merch = merch_elem.p;
-
-    merchs[i] = merch;
-    i++;
-
-    ioopm_hash_table_iterator_advance(it);
-  }
-
-  ioopm_hash_table_iterator_destroy(it);
-}
-
-static void put_shelf_in_arr(ioopm_list_t *list, shelf_t *shelves[])
-{
-  ioopm_list_iterator_t *it = ioopm_list_iterator_create(list);
-
-  size_t i = 0;
-  while (!ioopm_list_iterator_at_end(it))
-  {
-    elem_t shelf_elem;
-    ioopm_list_iterator_current(it, &shelf_elem);
-    shelf_t *shelf = shelf_elem.p;
-
-    shelves[i] = shelf;
-    i++;
-
-    ioopm_list_iterator_advance(it);
-  }
-
-  ioopm_list_iterator_destroy(it);
-}
-
-static void print_list_merch(merch_t *merchs[], size_t size, size_t *printed)
-{
-  size_t i;
-  for (i = *printed; i < *printed + 20 && i < size; i++)
-  {
-    merch_t *merch = merchs[i];
-    print_merch(merch);
-  }
-
-  *printed = i;
-}
-
-static void print_list_shelf(shelf_t *shelves[], size_t size, size_t *printed)
-{
-  size_t i;
-  for (i = *printed; i < *printed + 20 && i < size; i++)
-  {
-    shelf_t *shelf = shelves[i];
-    printf("%s: %d\n", shelf->shelf_name, shelf->quantity);
-  }
-
-  *printed = i;
-}
-
 void list_merchandise(store_t *store)
 {
   puts("----------------------------------");
@@ -343,6 +343,41 @@ void show_stock(store_t *store)
   free(merch_name);
 }
 
+void create_cart_in_store(store_t *store)
+{
+  ioopm_add_cart(store);
+}
+
+void remove_cart_from_store(store_t *store)
+{
+  puts("----------------------------------");
+  puts("--------- REMOVE CART ------------");
+
+  int cart_id = get_cart_id_io();
+  ioopm_hash_table_t *all_carts = store->all_carts;
+
+  elem_t cart_elem;
+  if (!ioopm_hash_table_lookup(all_carts, int_elem(cart_id), &cart_elem))
+  {
+    puts("THE CART WAS NOT FOUND!!");
+    return;
+  }
+
+  bool delete = is_confirmed_io();
+  if (delete)
+  {
+    cart_destroy(&cart_elem);
+  }
+}
+
+void add_to_cart_in_stpre(store_t *store)
+{
+  puts("----------------------------------");
+  puts("--------- ADDING TO CART ---------");
+
+  char *merch_name = get_name_io();
+  
+}
 
 int main(void)
 {

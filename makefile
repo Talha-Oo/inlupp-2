@@ -22,16 +22,16 @@ all: backend_tests
 db: main/db.c main/db.h utilities/common.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
-cart: main/cart.c main/cart.h utilities/common.h
+cart: main/extra_cart.c main/extra_cart.h utilities/common.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 io: main/io.c main/io.h utilities/utils.h
 	$(CC) $(CFLAGS) -c $< -o $@
 	
-ui: main/ui.c main/db.c main/cart.c main/io.c $(UTIL_OBJECTS)
+ui: main/ui.c main/db.c main/extra_cart.c main/io.c $(UTIL_OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $@
 
-backend_tests: backend_tests.c main/db.c $(UTIL_OBJECTS)
+backend_tests: backend_tests.c main/db.c main/extra_cart.c $(UTIL_OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $@ -lcunit	
 
 utilities/%.o: utilities/%.c
@@ -56,8 +56,8 @@ cov:
 clean:
 	rm -f utilities/*.o
 	rm -f main/*.o
-	rm -f backend_tests db io ui cart
+	rm -f backend_tests db io ui extra_cart
 	rm -f *.gcda *.gcno *.gcov
 	rm -f backend_tests_cov
-	rm -f cart
+	rm -f extra_cart
 	rm -f Doxyfile

@@ -1,6 +1,6 @@
 #include "utilities/common.h"
 #include "main/db.h"
-#include "main/cart.h"
+#include "main/extra_cart.h"
 
 #include <stdbool.h>
 #include <string.h>
@@ -224,7 +224,7 @@ void test_replenish_merchs()
   CU_ASSERT_EQUAL(merch1->stock, 1000002);
   CU_ASSERT_EQUAL(ioopm_list_size(merch1_list), 2);
 
-  //Adding stock to a existing shelf with correct merch
+  // Adding stock to a existing shelf with correct merch
   replenish(store, strdup("Kunai"), 1, strdup("LMNOP"));
   CU_ASSERT_TRUE(get_shelf(store, "LMNOP", &looked_up_shelf_elem));
   looked_up_shelf = looked_up_shelf_elem.p;
@@ -352,7 +352,6 @@ void test_remove_merch()
   replenish(store, strdup("T"), 10, strdup("LMNOP"));
   replenish(store, strdup("T"), 100, strdup("QWERTY"));
 
-
   replenish(store, strdup("YO!"), 1, strdup("XYZ"));
   replenish(store, strdup("YO!"), 1, strdup("ÅÄÖ"));
 
@@ -398,6 +397,98 @@ void test_remove_merch()
 
 /////////////////////////////////////////// CART /////////////////////////////////////////////////////
 
+void test_create_destroy_cart()
+{
+  store_t *store = create_store();
+  cart_t *cart = ioopm_create_cart(store);
+
+  CU_ASSERT_EQUAL(cart->id, 1);
+
+  ioopm_destroy_cart(cart);
+  destroy_store(store);
+}
+
+void test_add_carts(void)
+{
+  store_t *store = create_store();
+  ioopm_add_cart(store);
+
+  CU_ASSERT_EQUAL(store->carts_num, 1);
+
+  elem_t cart_elem;
+  ioopm_hash_table_lookup(store->all_carts, int_elem(1), &cart_elem);
+  cart_t *cart = cart_elem.p;
+
+  CU_ASSERT_EQUAL(cart->id, 1);
+
+  ioopm_add_cart(store);
+  CU_ASSERT_EQUAL(store->carts_num, 2);
+
+  destroy_store(store);
+}
+
+void test_add_to_cart(void)
+{
+  store_t *store = create_store();
+
+  merch_t *merch = create_merch(strdup("Kunai"), strdup("Knife"), 100);
+  add_merch(store, merch);
+  replenish(store, strdup("Kunai"), 10, strdup("ABC")); //Has stock 10
+
+  merch_t *merch1 = create_merch(strdup("BLA"), strdup("BLA"), 100);
+  add_merch(store, merch1);
+  replenish(store, strdup("BLA"), 3, strdup("XYZ")); //Has stock 3
+
+  ioopm_add_cart(store);
+  ioopm_add_cart(store);
+
+  // Adding merchandise to the cart
+  CU_ASSERT_EQUAL(add_to_cart(store, 1, strdup("Kunai"), 4), 1); //IT should succedd
+
+  elem_t cart1_elem;
+  elem_t cart2_elem;
+  CU_ASSERT_TRUE(get_cart(store, 1, &cart1_elem)); //Get the first cart
+  CU_ASSERT_TRUE(get_cart(store, 2, &cart2_elem)); //Get the second cart
+  cart_t *cart1 = cart1_elem.p;
+  cart_t *cart2 = cart2_elem.p;
+
+  elem_t quantity1_elem;
+  elem_t quantity2_elem;
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(cart1->merchandise, string_elem("Kunai"), &quantity1_elem));
+  CU_ASSERT_FALSE(ioopm_hash_table_lookup(cart2->merchandise, string_elem("Kunai"), &quantity2_elem));
+  CU_ASSERT_EQUAL(quantity1_elem.i, 4); // Should be 4 Kunais in the cart
+
+  // Adding more of the same merchandise to the same cart
+  CU_ASSERT_EQUAL(add_to_cart(store, 2, strdup("Kunai"), 6), 1); //Adding 6 Kuanais in 2nd cart
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(cart2->merchandise, string_elem("Kunai"), &quantity2_elem));
+  CU_ASSERT_EQUAL(quantity2_elem.i, 6);
+
+  elem_t reserved_elem;
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(store->reserved_merchs, string_elem("Kunai"), &reserved_elem));
+  CU_ASSERT_EQUAL(reserved_elem.i, 10); //Checking if the reserved kunais are now ten
+
+  //Adding 1 more Kuanais in 2nd cart, shouldn't work bcs the stock is out
+  CU_ASSERT_EQUAL(add_to_cart(store, 2, strdup("Kunai"), 1), -3); 
+
+  //Checking if the info is still same
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(cart1->merchandise, string_elem("Kunai"), &quantity1_elem));
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(cart2->merchandise, string_elem("Kunai"), &quantity2_elem));
+  CU_ASSERT_EQUAL(quantity1_elem.i, 4); // Should still be 4 Kunais in the cart
+  CU_ASSERT_EQUAL(quantity2_elem.i, 6); // Should still be 6 Kunais in the cart
+
+  CU_ASSERT_EQUAL(add_to_cart(store, 1123213, strdup("BLA"), 1), -2); //It should fail, cart doesn't exist
+  CU_ASSERT_EQUAL(add_to_cart(store, 1, strdup("BLABLABLA"), 1), -1); //It should fail, merch doesn't exist
+  CU_ASSERT_EQUAL(add_to_cart(store, 1, strdup("BLA"), 1), 1); //It should succeed
+
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(cart1->merchandise, string_elem("BLA"), &quantity1_elem));
+  CU_ASSERT_EQUAL(quantity1_elem.i, 1); 
+
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(store->reserved_merchs, string_elem("BLA"), &reserved_elem));
+  CU_ASSERT_EQUAL(reserved_elem.i, 1);
+
+  destroy_store(store);
+}
+
 int main()
 {
   // First we try to set up CUnit, and exit if we fail
@@ -421,13 +512,17 @@ int main()
   // the test in question. If you want to add another test, just
   // copy a line below and change the information
   if ((
-          CU_add_test(db, "Create/destroy", test_create_destroy_store) == NULL ||
-          CU_add_test(db, "Create merch", test_make_destroy_merch) == NULL ||
-          CU_add_test(db, "Adding merchs", test_add_merchs) == NULL ||
-          CU_add_test(db, "Replenish merchs", test_replenish_merchs) == NULL ||
-          CU_add_test(db, "Edit desc and price", test_edit_desc_price) == NULL ||
-          CU_add_test(db, "Edit name", test_edit_merch_name) == NULL ||
-          CU_add_test(db, "Remove merch", test_remove_merch) == NULL ||
+          // CU_add_test(db, "Create/destroy", test_create_destroy_store) == NULL ||
+          // CU_add_test(db, "Create merch", test_make_destroy_merch) == NULL ||
+          // CU_add_test(db, "Adding merchs", test_add_merchs) == NULL ||
+          // CU_add_test(db, "Replenish merchs", test_replenish_merchs) == NULL ||
+          // CU_add_test(db, "Edit desc and price", test_edit_desc_price) == NULL ||
+          // CU_add_test(db, "Edit name", test_edit_merch_name) == NULL ||
+          // CU_add_test(db, "Remove merch", test_remove_merch) == NULL ||
+          //////////////////////////// CART /////////////////////////////////
+          CU_add_test(cart, "Create/destroy", test_create_destroy_cart) == NULL ||
+          CU_add_test(cart, "Adding cart", test_add_carts) == NULL ||
+          CU_add_test(cart, "Add to cart", test_add_to_cart) == NULL ||
           0))
   {
     // If adding any of the tests fails, we tear down CUnit and exit

@@ -1,4 +1,5 @@
 #include "../utilities/common.h"
+#include "extra_cart.h"
 
 #include <string.h>
 #include <stdbool.h>
@@ -67,7 +68,7 @@ static void name_to_item_destroy(entry_t *entry)
   free(entry);
 }
 
-static void simple_entrt_destroy(entry_t *entry)
+static void simple_entry_destroy(entry_t *entry)
 {
   free(entry);
 }
@@ -101,17 +102,18 @@ static bool int_eq_func(const elem_t elem1, const elem_t elem2)
   return elem1.i == elem2.i;
 }
 
+
 // Store functions
 store_t *create_store(void)
 {
   store_t *store = calloc(1, sizeof(store_t));
 
   store->name_to_item = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &name_to_item_destroy);
-  store->shelf_to_item = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &simple_entrt_destroy);
+  store->shelf_to_item = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &simple_entry_destroy);
 
   // TODO: Make the destroy func for all_carts hashtable
-  store->all_carts = ioopm_hash_table_create(&int_hash, &int_eq_func, &simple_entrt_destroy);
-  store->reserved_merchs = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &simple_entrt_destroy);
+  store->all_carts = ioopm_hash_table_create(&int_hash, &int_eq_func, &all_cart_destroyer);
+  store->reserved_merchs = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &simple_entry_destroy);
   store->merch_num = 0;
 
   return store;
