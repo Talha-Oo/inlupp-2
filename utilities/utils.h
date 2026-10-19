@@ -1,5 +1,4 @@
-#ifndef UTILS_H
-#define UTILS_H
+#pragma once
 
 #include <stdbool.h>
 
@@ -21,8 +20,7 @@ bool not_empty(char *str);
 void print(char *str);
 void println(char *str);
 
-answer_t ask_question(char *question, check_func *check, convert_func *convert);
-int ask_question_int(char *question);
-char *ask_question_string(char *question);
-
-#endif
+answer_t ask_question(char *question, char *error_txt, check_func *check, convert_func *convert);
+int ask_question_int(char *question, char *error_txt);
+char *ask_question_string(char *question, char *error_txt);
+char *ask_question_shelf(char *question, char *error_txt);

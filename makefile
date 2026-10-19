@@ -26,7 +26,10 @@ cart: main/cart.c main/cart.h utilities/common.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 io: main/io.c main/io.h utilities/utils.h
-	$(CC) $(CFLAGS) utilities/utils.c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
+	
+ui: main/ui.c main/db.c main/cart.c main/io.c $(UTIL_OBJECTS)
+	$(CC) $(CFLAGS) $^ -o $@
 
 backend_tests: backend_tests.c main/db.c $(UTIL_OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $@ -lcunit	
@@ -40,6 +43,9 @@ test: backend_tests
 mem: backend_tests
 	valgrind --leak-check=full ./backend_tests
 
+memu: ui
+	valgrind --leak-check=full ./ui
+
 
 cov:
 	$(CC) $(CFLAGS) $(COV_FLAGS) $(COV_OBJECTS) main/db.c backend_tests.c -o backend_tests_cov -lcunit
@@ -49,9 +55,8 @@ cov:
 
 clean:
 	rm -f utilities/*.o
-	rm -f backend_tests db io
-	rm -f utilities/*.o
-	rm -f backend_tests db io
+	rm -f main/*.o
+	rm -f backend_tests db io ui cart
 	rm -f *.gcda *.gcno *.gcov
 	rm -f backend_tests_cov
 	rm -f cart

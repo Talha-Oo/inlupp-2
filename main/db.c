@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-// Functions required to make a hashtable which uses string as key and elem_t as object and destory funcs
+// Functions required to make a hashtable which uses string as key and elem_t as object and destroy funcs
 void destroy_merch_shelves(ioopm_list_t *list)
 {
   ioopm_list_iterator_t *it = ioopm_list_iterator_create(list);
@@ -53,7 +53,7 @@ void destroy_merch(merch_t *merch)
 {
   ioopm_list_t *list = merch->locs;
 
-  destory_merch_shelves(list);
+  destroy_merch_shelves(list);
 
   free(merch->name);
   free(merch->desc);
@@ -109,7 +109,7 @@ store_t *create_store(void)
   store->name_to_item = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &name_to_item_destroy);
   store->shelf_to_item = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &simple_entrt_destroy);
 
-  // TODO: Make the destory func for all_carts hashtable
+  // TODO: Make the destroy func for all_carts hashtable
   store->all_carts = ioopm_hash_table_create(&int_hash, &int_eq_func, &simple_entrt_destroy);
   store->reserved_merchs = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &simple_entrt_destroy);
   store->merch_num = 0;
@@ -122,6 +122,7 @@ void destroy_store(store_t *store)
   ioopm_hash_table_destroy(store->shelf_to_item);
   ioopm_hash_table_destroy(store->all_carts);
   ioopm_hash_table_destroy(store->name_to_item);
+  ioopm_hash_table_destroy(store->reserved_merchs);
   free(store);
 }
 
@@ -150,6 +151,7 @@ bool add_merch(store_t *store, merch_t *merch)
   if (!result)
   {
     ioopm_hash_table_insert(ht, key, value);
+    store->merch_num++;
     return true;
   }
   else
@@ -179,7 +181,9 @@ bool get_shelf(store_t *store, char *shelf_name, elem_t *lookup_res)
 bool get_merch(store_t *store, char *merch_name, elem_t *lookup_res)
 {
   elem_t elem_name = string_elem(merch_name);
-  return ioopm_hash_table_lookup(store->name_to_item, elem_name, lookup_res);
+  bool res = ioopm_hash_table_lookup(store->name_to_item, elem_name, lookup_res);
+
+  return res;
 }
 
 static bool update_shelf(elem_t shelf_elem, merch_t *merch, size_t quantity)
@@ -223,6 +227,8 @@ bool replenish(store_t *store, char *name, size_t quantity, char *shelf_name)
   elem_t looked_up_elem_merch;
   if (get_merch(store, name, &looked_up_elem_merch))
   {
+    free(name);
+
     elem_t looked_up_elem_shelf;
     if (get_shelf(store, shelf_name, &looked_up_elem_shelf))
     {
@@ -241,6 +247,7 @@ bool replenish(store_t *store, char *name, size_t quantity, char *shelf_name)
   }
   else
   {
+    free(name);
     free(shelf_name);
     return false;
   }
@@ -294,11 +301,18 @@ bool remove_merch(store_t *store, char *name)
 
   if (!res)
   {
+    //free(name);
     return res;
   }
 
   remove_merch_shelf_ht(store, merch->locs);
   res = ioopm_hash_table_remove(store->name_to_item, string_elem(name), &merch_elem);
 
+  if(res)
+  {
+    store->merch_num--;
+  }
+
+  //free(name);
   return res;
 }
