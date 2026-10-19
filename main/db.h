@@ -4,8 +4,6 @@
 #include <stddef.h>
 #include "../utilities/common.h"
 
-// TODO: UPDATE THE DOC
-
 /// @brief Creates a new store.
 /// @return A pointer to the store
 /// @note The caller must eventually call destroy_store().

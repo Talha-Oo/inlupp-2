@@ -99,14 +99,11 @@ bool remove_cart(store_t *store, size_t chart_id)
 
 bool add_to_cart(store_t *store, size_t chart_id, char *merch_name, size_t quantity)
 {
-
   elem_t merch_name_elem = string_elem(merch_name);
   elem_t merch_elem;
   elem_t cart_elem;
   if (!get_merch(store, merch_name, &merch_elem) || !get_cart(store, chart_id, &cart_elem))
-  {
-    return false;
-  }
+  {return false;} 
 
   cart_t *cart = cart_elem.p;
   merch_t *merch = merch_elem.p;
@@ -156,4 +153,60 @@ bool add_to_cart(store_t *store, size_t chart_id, char *merch_name, size_t quant
 
     return true;
   }
+}
+
+bool remove_from_cart(store_t *store, size_t chart_id, char *merch_name, size_t quantity){
+  elem_t merch_name_elem = string_elem(merch_name);
+  elem_t merch_elem;
+  elem_t cart_elem;
+
+  if (!get_merch(store, merch_name, &merch_elem) || !get_cart(store, chart_id, &cart_elem))
+  {
+    return false;
+  } 
+  //kollar att kundvagn och 'merch' finns i affären
+
+  cart_t *cart = cart_elem.p;
+  merch_t *merch = merch_elem.p;
+  size_t merch_stock = merch->stock;
+
+  ioopm_hash_table_t *merchs_in_cart = cart->merchandise;
+  ioopm_hash_table_t *reserved_merchs = store->reserved_merchs;
+
+  elem_t reserved_merch_elem;
+  size_t reserved_merch; // Kan inte vara noll.
+  if (ioopm_hash_table_lookup(reserved_merchs, merch_name_elem, &reserved_merch_elem)) // Kollar att 'merchen' redan är reserverad
+  {
+    reserved_merch = reserved_merch_elem.i; //Sparar antalet av 'merchen' som är reserverad
+  } else{return false;}
+
+  elem_t old_quantity;
+  if (ioopm_hash_table_lookup(merchs_in_cart, merch_name_elem, &old_quantity))
+  {
+
+    size_t merch_in_cart = old_quantity.i;
+    elem_t dummy;
+
+    if (merch_in_cart < quantity)
+    {return false;}
+    size_t new_cart_quantity = merch_in_cart - quantity;
+    size_t new_reserved_quantity = reserved_merch - quantity;
+    if (new_cart_quantity == 0){
+      ioopm_hash_table_remove(merchs_in_cart, merch_name_elem, &dummy);
+    } else{
+      ioopm_hash_table_insert(merchs_in_cart, merch_name_elem, int_elem(new_cart_quantity));
+    }
+    if (new_reserved_quantity == 0){
+      ioopm_hash_table_remove(reserved_merchs, merch_name_elem, &dummy);
+    }
+    else{
+      ioopm_hash_table_insert(reserved_merchs, merch_name_elem, int_elem(new_reserved_quantity));
+    }
+    return true;
+}
+  return false;
+}
+
+long checkout(store_t *store, size_t chart_id, char *merch_name, size_t quantity){
+   
 }

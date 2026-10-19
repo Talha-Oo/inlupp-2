@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 // Functions required to make a hashtable which uses string as key and elem_t as object and destory funcs
-void destory_merch_shelves(ioopm_list_t *list)
+void destroy_merch_shelves(ioopm_list_t *list)
 {
   ioopm_list_iterator_t *it = ioopm_list_iterator_create(list);
 

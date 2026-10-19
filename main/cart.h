@@ -32,9 +32,9 @@ bool add_to_cart(store_t *store, size_t chart_id, char *merch_name, size_t quant
 /// @return true if the merchandise was removed successfully, false otherwise
 bool remove_from_cart(store_t *store, size_t chart_id, char *merch_name, size_t quantity);
 
-/// @brief Removes a quantity of merchandise from a shopping cart
+/// @brief A purchase removes a shopping cart as well as all its items
 /// @param store pointer to the store containing the merchandise
-/// @param id identifier of the shopping cart from which merchandise should be added
+/// @param id identifier of the shopping cart
 /// @param merch_name name of the merchandise to remove
 /// @param quantity quantity of merchandise to remove
 /// @return true if the merchandise was removed successfully, false otherwise
