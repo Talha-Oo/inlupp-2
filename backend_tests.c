@@ -1,5 +1,6 @@
 #include "utilities/common.h"
 #include "main/db.h"
+#include "main/cart.h"
 
 #include <stdbool.h>
 #include <string.h>
@@ -20,7 +21,7 @@ int clean_suite(void)
 }
 
 //////////////////////// TODO: Tests
-void test_create_destroy()
+void test_create_destroy_store()
 {
   store_t *store = create_store();
   destroy_store(store);
@@ -395,6 +396,8 @@ void test_remove_merch()
   destroy_store(store);
 }
 
+/////////////////////////////////////////// CART /////////////////////////////////////////////////////
+
 int main()
 {
   // First we try to set up CUnit, and exit if we fail
@@ -403,8 +406,9 @@ int main()
 
   // We then create an empty test suite and specify the name and
   // the init and cleanup functions
-  CU_pSuite my_test_suite = CU_add_suite("My awesome test suite", init_suite, clean_suite);
-  if (my_test_suite == NULL)
+  CU_pSuite db = CU_add_suite("db.c", init_suite, clean_suite);
+  CU_pSuite cart = CU_add_suite("cart.c", init_suite, clean_suite);
+  if (db == NULL || cart == NULL)
   {
     // If the test suite could not be added, tear down CUnit and exit
     CU_cleanup_registry();
@@ -417,13 +421,13 @@ int main()
   // the test in question. If you want to add another test, just
   // copy a line below and change the information
   if ((
-          CU_add_test(my_test_suite, "Create/destroy", test_create_destroy) == NULL ||
-          CU_add_test(my_test_suite, "Create merch", test_make_destroy_merch) == NULL ||
-          CU_add_test(my_test_suite, "Adding merchs", test_add_merchs) == NULL ||
-          CU_add_test(my_test_suite, "Replenish merchs", test_replenish_merchs) == NULL ||
-          CU_add_test(my_test_suite, "Edit desc and price", test_edit_desc_price) == NULL ||
-          CU_add_test(my_test_suite, "Edit name", test_edit_merch_name) == NULL ||
-          CU_add_test(my_test_suite, "Remove merch", test_remove_merch) == NULL ||
+          CU_add_test(db, "Create/destroy", test_create_destroy_store) == NULL ||
+          CU_add_test(db, "Create merch", test_make_destroy_merch) == NULL ||
+          CU_add_test(db, "Adding merchs", test_add_merchs) == NULL ||
+          CU_add_test(db, "Replenish merchs", test_replenish_merchs) == NULL ||
+          CU_add_test(db, "Edit desc and price", test_edit_desc_price) == NULL ||
+          CU_add_test(db, "Edit name", test_edit_merch_name) == NULL ||
+          CU_add_test(db, "Remove merch", test_remove_merch) == NULL ||
           0))
   {
     // If adding any of the tests fails, we tear down CUnit and exit

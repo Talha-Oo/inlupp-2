@@ -59,3 +59,5 @@ clean:
 	rm -f backend_tests db io ui cart
 	rm -f *.gcda *.gcno *.gcov
 	rm -f backend_tests_cov
+	rm -f cart
+	rm -f Doxyfile
