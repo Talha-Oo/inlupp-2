@@ -4,8 +4,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-// Functions required to make a hashtable which uses string as key and elem_t as object and destory funcs
-void destory_merch_shelves(ioopm_list_t *list)
+// Functions required to make a hashtable which uses string as key and elem_t as object and destroy funcs
+void destroy_merch_shelves(ioopm_list_t *list)
 {
   ioopm_list_iterator_t *it = ioopm_list_iterator_create(list);
 
@@ -53,7 +53,7 @@ void destroy_merch(merch_t *merch)
 {
   ioopm_list_t *list = merch->locs;
 
-  destory_merch_shelves(list);
+  destroy_merch_shelves(list);
 
   free(merch->name);
   free(merch->desc);
@@ -109,7 +109,7 @@ store_t *create_store(void)
   store->name_to_item = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &name_to_item_destroy);
   store->shelf_to_item = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &simple_entrt_destroy);
 
-  // TODO: Make the destory func for all_carts hashtable
+  // TODO: Make the destroy func for all_carts hashtable
   store->all_carts = ioopm_hash_table_create(&int_hash, &int_eq_func, &simple_entrt_destroy);
   store->reserved_merchs = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &simple_entrt_destroy);
   store->merch_num = 0;
