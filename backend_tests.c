@@ -433,22 +433,22 @@ void test_add_to_cart(void)
 
   merch_t *merch = create_merch(strdup("Kunai"), strdup("Knife"), 100);
   add_merch(store, merch);
-  replenish(store, strdup("Kunai"), 10, strdup("ABC")); //Has stock 10
+  replenish(store, strdup("Kunai"), 10, strdup("ABC")); // Has stock 10
 
   merch_t *merch1 = create_merch(strdup("BLA"), strdup("BLA"), 100);
   add_merch(store, merch1);
-  replenish(store, strdup("BLA"), 3, strdup("XYZ")); //Has stock 3
+  replenish(store, strdup("BLA"), 3, strdup("XYZ")); // Has stock 3
 
   ioopm_add_cart(store);
   ioopm_add_cart(store);
 
   // Adding merchandise to the cart
-  CU_ASSERT_EQUAL(add_to_cart(store, 1, strdup("Kunai"), 4), 1); //IT should succedd
+  CU_ASSERT_EQUAL(add_to_cart(store, 1, strdup("Kunai"), 4), 1); // IT should succedd
 
   elem_t cart1_elem;
   elem_t cart2_elem;
-  CU_ASSERT_TRUE(get_cart(store, 1, &cart1_elem)); //Get the first cart
-  CU_ASSERT_TRUE(get_cart(store, 2, &cart2_elem)); //Get the second cart
+  CU_ASSERT_TRUE(get_cart(store, 1, &cart1_elem)); // Get the first cart
+  CU_ASSERT_TRUE(get_cart(store, 2, &cart2_elem)); // Get the second cart
   cart_t *cart1 = cart1_elem.p;
   cart_t *cart2 = cart2_elem.p;
 
@@ -459,29 +459,29 @@ void test_add_to_cart(void)
   CU_ASSERT_EQUAL(quantity1_elem.i, 4); // Should be 4 Kunais in the cart
 
   // Adding more of the same merchandise to the same cart
-  CU_ASSERT_EQUAL(add_to_cart(store, 2, strdup("Kunai"), 6), 1); //Adding 6 Kuanais in 2nd cart
+  CU_ASSERT_EQUAL(add_to_cart(store, 2, strdup("Kunai"), 6), 1); // Adding 6 Kuanais in 2nd cart
   CU_ASSERT_TRUE(ioopm_hash_table_lookup(cart2->merchandise, string_elem("Kunai"), &quantity2_elem));
   CU_ASSERT_EQUAL(quantity2_elem.i, 6);
 
   elem_t reserved_elem;
   CU_ASSERT_TRUE(ioopm_hash_table_lookup(store->reserved_merchs, string_elem("Kunai"), &reserved_elem));
-  CU_ASSERT_EQUAL(reserved_elem.i, 10); //Checking if the reserved kunais are now ten
+  CU_ASSERT_EQUAL(reserved_elem.i, 10); // Checking if the reserved kunais are now ten
 
-  //Adding 1 more Kuanais in 2nd cart, shouldn't work bcs the stock is out
-  CU_ASSERT_EQUAL(add_to_cart(store, 2, strdup("Kunai"), 1), -3); 
+  // Adding 1 more Kuanais in 2nd cart, shouldn't work bcs the stock is out
+  CU_ASSERT_EQUAL(add_to_cart(store, 2, strdup("Kunai"), 1), -3);
 
-  //Checking if the info is still same
+  // Checking if the info is still same
   CU_ASSERT_TRUE(ioopm_hash_table_lookup(cart1->merchandise, string_elem("Kunai"), &quantity1_elem));
   CU_ASSERT_TRUE(ioopm_hash_table_lookup(cart2->merchandise, string_elem("Kunai"), &quantity2_elem));
   CU_ASSERT_EQUAL(quantity1_elem.i, 4); // Should still be 4 Kunais in the cart
   CU_ASSERT_EQUAL(quantity2_elem.i, 6); // Should still be 6 Kunais in the cart
 
-  CU_ASSERT_EQUAL(add_to_cart(store, 1123213, strdup("BLA"), 1), -2); //It should fail, cart doesn't exist
-  CU_ASSERT_EQUAL(add_to_cart(store, 1, strdup("BLABLABLA"), 1), -1); //It should fail, merch doesn't exist
-  CU_ASSERT_EQUAL(add_to_cart(store, 1, strdup("BLA"), 1), 1); //It should succeed
+  CU_ASSERT_EQUAL(add_to_cart(store, 1123213, strdup("BLA"), 1), -2); // It should fail, cart doesn't exist
+  CU_ASSERT_EQUAL(add_to_cart(store, 1, strdup("BLABLABLA"), 1), -1); // It should fail, merch doesn't exist
+  CU_ASSERT_EQUAL(add_to_cart(store, 1, strdup("BLA"), 1), 1);        // It should succeed
 
   CU_ASSERT_TRUE(ioopm_hash_table_lookup(cart1->merchandise, string_elem("BLA"), &quantity1_elem));
-  CU_ASSERT_EQUAL(quantity1_elem.i, 1); 
+  CU_ASSERT_EQUAL(quantity1_elem.i, 1);
 
   CU_ASSERT_TRUE(ioopm_hash_table_lookup(store->reserved_merchs, string_elem("BLA"), &reserved_elem));
   CU_ASSERT_EQUAL(reserved_elem.i, 1);
@@ -491,40 +491,192 @@ void test_add_to_cart(void)
 
 void test_remove_cart(void)
 {
-    store_t *store = create_store();
-    ioopm_add_cart(store);
-    ioopm_add_cart(store);
-    ioopm_add_cart(store);
-    ioopm_add_cart(store);
+  store_t *store = create_store();
+  ioopm_add_cart(store);
+  ioopm_add_cart(store);
+  ioopm_add_cart(store);
+  ioopm_add_cart(store);
 
-    elem_t cart_elem;
-    
-    // Removing a empty cart
-    CU_ASSERT_TRUE(get_cart(store, 4, &cart_elem));
-    CU_ASSERT_TRUE(remove_cart(store, 4));
-    CU_ASSERT_FALSE(get_cart(store, 4, &cart_elem));
+  elem_t cart_elem;
 
-    //Removing a non-existent cart
-    CU_ASSERT_FALSE(get_cart(store, 999, &cart_elem));
-    CU_ASSERT_FALSE(remove_cart(store, 999));
+  // Removing a empty cart
+  CU_ASSERT_TRUE(get_cart(store, 4, &cart_elem));
+  CU_ASSERT_TRUE(remove_cart(store, 4));
+  CU_ASSERT_FALSE(get_cart(store, 4, &cart_elem));
 
-    add_merch(store, create_merch(strdup("Kunai"), strdup("Sharp weapon"), 100));
-    add_merch(store, create_merch(strdup("Kaching"), strdup("Another weapon"), 200));
-    replenish(store, strdup("Kunai"), 10, strdup("ABC"));
-    replenish(store, strdup("Kaching"), 1, strdup("XYZ"));
+  // Removing a non-existent cart
+  CU_ASSERT_FALSE(get_cart(store, 999, &cart_elem));
+  CU_ASSERT_FALSE(remove_cart(store, 999));
 
-    
-    CU_ASSERT_EQUAL(add_to_cart(store, 1, strdup("Kunai"), 6), 1);
-    CU_ASSERT_EQUAL(add_to_cart(store, 1, strdup("Kaching"), 1), 1);
+  add_merch(store, create_merch(strdup("Kunai"), strdup("Sharp weapon"), 100));
+  add_merch(store, create_merch(strdup("Kaching"), strdup("Another weapon"), 200));
+  replenish(store, strdup("Kunai"), 10, strdup("ABC"));
+  replenish(store, strdup("Kaching"), 1, strdup("XYZ"));
 
-    CU_ASSERT_EQUAL(add_to_cart(store, 2, strdup("Kunai"), 5), -3); //Not enough stock
-    CU_ASSERT_EQUAL(add_to_cart(store, 3, strdup("Kaching"), 1), -3); //Not enough stock
+  CU_ASSERT_EQUAL(add_to_cart(store, 1, strdup("Kunai"), 6), 1);
+  CU_ASSERT_EQUAL(add_to_cart(store, 1, strdup("Kaching"), 1), 1);
 
-    CU_ASSERT_TRUE(remove_cart(store, 1));
-    CU_ASSERT_EQUAL(add_to_cart(store, 2, strdup("Kunai"), 5), 1); //Now enough stock
-    CU_ASSERT_EQUAL(add_to_cart(store, 3, strdup("Kaching"), 1), 1); //Now enough stock
+  CU_ASSERT_EQUAL(add_to_cart(store, 2, strdup("Kunai"), 5), -3);   // Not enough stock
+  CU_ASSERT_EQUAL(add_to_cart(store, 3, strdup("Kaching"), 1), -3); // Not enough stock
 
-    destroy_store(store);
+  CU_ASSERT_TRUE(remove_cart(store, 1));
+  CU_ASSERT_EQUAL(add_to_cart(store, 2, strdup("Kunai"), 5), 1);   // Now enough stock
+  CU_ASSERT_EQUAL(add_to_cart(store, 3, strdup("Kaching"), 1), 1); // Now enough stock
+
+  destroy_store(store);
+}
+
+void test_remove_from_cart(void)
+{
+  store_t *store = create_store();
+
+  add_merch(store, create_merch(strdup("Kunai"), strdup("Sharp weapon"), 100));
+  replenish(store, strdup("Kunai"), 10, strdup("ABC"));
+
+  ioopm_add_cart(store);
+  ioopm_add_cart(store);
+
+  elem_t cart1_elem;
+  elem_t cart2_elem;
+  elem_t quantity_elem;
+  elem_t reserved_elem;
+
+  CU_ASSERT_TRUE(get_cart(store, 1, &cart1_elem));
+  CU_ASSERT_TRUE(get_cart(store, 2, &cart2_elem));
+
+  cart_t *cart1 = cart1_elem.p;
+
+  // removing merch which is not in the cart
+  CU_ASSERT_EQUAL(remove_from_cart(store, 1, strdup("Kunai"), 1), -2);
+
+  // add 6 Kunai in cart 1, (6 kunais reserved)
+  CU_ASSERT_EQUAL(add_to_cart(store, 1, strdup("Kunai"), 6), 1);
+
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(store->reserved_merchs, string_elem("Kunai"), &reserved_elem));
+  CU_ASSERT_EQUAL(reserved_elem.i, 6); // 6 kunais reserved
+
+  // cart 2 cannot reserve 5 because only 4 are available
+  CU_ASSERT_EQUAL(add_to_cart(store, 2, strdup("Kunai"), 5), -3);
+
+  // remove 2 Kunai from cart 1
+  CU_ASSERT_EQUAL(remove_from_cart(store, 1, strdup("Kunai"), 2), 1);
+
+  // cart 1 should now contain 4 Kunai.
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(cart1->merchandise, string_elem("Kunai"), &quantity_elem));
+  CU_ASSERT_EQUAL(quantity_elem.i, 4); // Should have 4 kunais in cart 1
+
+  // now only 4 kunais are reserved
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(store->reserved_merchs, string_elem("Kunai"), &reserved_elem));
+  CU_ASSERT_EQUAL(reserved_elem.i, 4);
+
+  // now we can add 5 kunais to cart 2
+  CU_ASSERT_EQUAL(add_to_cart(store, 2, strdup("Kunai"), 5), 1);
+
+  // there is not 5 kunais in cart 1
+  CU_ASSERT_EQUAL(remove_from_cart(store, 1, strdup("Kunai"), 5), -3);
+
+  // cart 1 should still only have 4 kunais
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(cart1->merchandise, string_elem("Kunai"), &quantity_elem));
+  CU_ASSERT_EQUAL(quantity_elem.i, 4);
+
+  CU_ASSERT_EQUAL(remove_from_cart(store, 1, strdup("Kunai"), 4), 1);
+
+  // no kuani in cart 1
+  CU_ASSERT_FALSE(ioopm_hash_table_lookup(cart1->merchandise, string_elem("Kunai"), &quantity_elem));
+
+  // cart 2 should still have its 5 Kunai reserved
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(store->reserved_merchs, string_elem("Kunai"), &reserved_elem));
+  CU_ASSERT_EQUAL(reserved_elem.i, 5);
+
+  // the cart is emepty so it shouldn't work
+  CU_ASSERT_EQUAL(remove_from_cart(store, 1, strdup("Kunai"), 1), -2);
+
+  // removing 5 kunais from cart 2
+  CU_ASSERT_EQUAL(remove_from_cart(store, 2, strdup("Kunai"), 5), 1);
+  CU_ASSERT_FALSE(ioopm_hash_table_lookup(store->reserved_merchs, string_elem("Kunai"), &reserved_elem));
+
+  destroy_store(store);
+}
+
+void test_checkout(void)
+{
+  store_t *store = create_store();
+
+  add_merch(store, create_merch(strdup("Kunai"), strdup("Sharp weapon"), 100));
+  add_merch(store, create_merch(strdup("Kaching"), strdup("Magic item"), 50));
+
+  replenish(store, strdup("Kunai"), 10, strdup("ABC"));
+  replenish(store, strdup("Kaching"), 8, strdup("DEF"));
+
+  ioopm_add_cart(store);
+  ioopm_add_cart(store);
+  ioopm_add_cart(store);
+  ioopm_add_cart(store);
+
+  elem_t merch_elem;
+  elem_t cart_elem;
+  elem_t reserved_elem;
+  elem_t quantity_elem;
+
+  get_merch(store, "Kunai", &merch_elem);
+  merch_t *kunai = merch_elem.p;
+
+  // Empty cart checkout
+  CU_ASSERT_EQUAL(checkout(store, 1), 0);
+  CU_ASSERT_FALSE(get_cart(store, 1, &cart_elem)); // Cart is removed after checkout
+
+  add_to_cart(store, 2, strdup("Kunai"), 2);
+  add_to_cart(store, 2, strdup("Kunai"), 2);
+  add_to_cart(store, 2, strdup("Kaching"), 3);
+
+  // 9 kunais are now reserve cart 2: 4 cart 3: 5
+  add_to_cart(store, 3, strdup("Kunai"), 5);
+
+  CU_ASSERT_EQUAL(calculate_cost(store, 2), 550); // the total cost of cart 2
+
+  // stock should be same
+  CU_ASSERT_EQUAL(kunai->stock, 10);
+
+  get_cart(store, 2, &cart_elem);
+  cart_t *cart2 = cart_elem.p;
+
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(store->reserved_merchs, string_elem("Kunai"), &reserved_elem));
+  CU_ASSERT_EQUAL(reserved_elem.i, 9);
+
+  // 5. Checkout cart 2: 4 Kunai + 3 Kaching = 550
+  CU_ASSERT_EQUAL(checkout(store, 2), 550);
+
+  //stock should have updated: 10 - 4 
+  CU_ASSERT_EQUAL(kunai->stock, 6); 
+
+  elem_t kaching_elem;
+  CU_ASSERT_TRUE(get_merch(store, "Kaching", &kaching_elem));
+  merch_t *kaching = kaching_elem.p;
+  //stock should have updated: 8 - 43
+  CU_ASSERT_EQUAL(kaching->stock, 5);  
+
+  //cart has been removed after checkout
+  CU_ASSERT_FALSE(get_cart(store, 2, &cart_elem));
+
+  // Cart 3s Kunai reservation must remain while cart 2s should have been removed
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(store->reserved_merchs, string_elem("Kunai"), &reserved_elem));
+  CU_ASSERT_EQUAL(reserved_elem.i, 5);
+
+  //Checkout cart 3
+  CU_ASSERT_EQUAL(checkout(store, 3), 500);
+  CU_ASSERT_EQUAL(kunai->stock, 1); //Now one kunai left
+
+  //Now there is no kunai reserved
+  CU_ASSERT_FALSE(ioopm_hash_table_lookup(store->reserved_merchs, string_elem("Kunai"), &reserved_elem));
+  CU_ASSERT_FALSE(get_cart(store, 3, &cart_elem));
+
+  CU_ASSERT_EQUAL(add_to_cart(store, 4, strdup("Kunai"), 1), 1);
+  CU_ASSERT_EQUAL(checkout(store, 4), 100);
+  CU_ASSERT_EQUAL(kunai->stock, 0);
+
+  CU_ASSERT_FALSE(ioopm_hash_table_lookup(store->reserved_merchs, string_elem("Kunai"), &reserved_elem));
+
+  destroy_store(store);
 }
 
 int main()
@@ -562,6 +714,8 @@ int main()
           CU_add_test(cart, "Adding cart", test_add_carts) == NULL ||
           CU_add_test(cart, "Add to cart", test_add_to_cart) == NULL ||
           CU_add_test(cart, "Remove cart", test_remove_cart) == NULL ||
+          CU_add_test(cart, "Remove from cart", test_remove_from_cart) == NULL ||
+          CU_add_test(cart, "Remove from cart", test_checkout) == NULL ||
           0))
   {
     // If adding any of the tests fails, we tear down CUnit and exit

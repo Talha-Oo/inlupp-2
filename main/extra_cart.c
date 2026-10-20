@@ -176,14 +176,44 @@ static void update_reserved_after_cart_rem(store_t *store, cart_t *cart)
     ioopm_hash_table_lookup(reserved_merchs, merch_name_elem, &reserved_num_elem);
     size_t reserved_num = reserved_num_elem.i;
 
-    size_t upd_reserved = reserved_num - in_cart_num;
+    int upd_reserved = reserved_num - in_cart_num;
 
-    ioopm_hash_table_insert(reserved_merchs, merch_name_elem, int_elem(upd_reserved));
+    elem_t dummy;
+    if (upd_reserved <= 0)
+    {
+      ioopm_hash_table_remove(reserved_merchs, merch_name_elem, &dummy);
+    }
+    else
+    {
+      ioopm_hash_table_insert(reserved_merchs, merch_name_elem, int_elem(upd_reserved));
+    }
 
     ioopm_hash_table_iterator_advance(it);
   }
 
   ioopm_hash_table_iterator_destroy(it);
+}
+
+static void update_reserved_after_merch_rem(store_t *store, char *merch_name, size_t to_remove)
+{
+  ioopm_hash_table_t *reserved_merchs = store->reserved_merchs;
+  elem_t key = string_elem(merch_name);
+
+  elem_t reserved_quantity_elem;
+  ioopm_hash_table_lookup(reserved_merchs, key, &reserved_quantity_elem);
+  size_t reserved_quantity = reserved_quantity_elem.i;
+
+  int new_reserved_quantity = reserved_quantity - to_remove;
+
+  elem_t dummy;
+  if (new_reserved_quantity <= 0)
+  {
+    ioopm_hash_table_remove(reserved_merchs, key, &dummy);
+  }
+  else
+  {
+    ioopm_hash_table_insert(reserved_merchs, key, int_elem(new_reserved_quantity));
+  }
 }
 
 bool remove_cart(store_t *store, size_t cart_id)
@@ -201,7 +231,111 @@ bool remove_cart(store_t *store, size_t cart_id)
   elem_t key = int_elem(cart->id);
 
   ioopm_hash_table_remove(all_carts, key, &cart_elem);
-  //ioopm_destroy_cart(cart);
+  // ioopm_destroy_cart(cart);
 
   return true;
+}
+
+int remove_from_cart(store_t *store, size_t cart_id, char *merch_name, size_t to_remove)
+{
+  elem_t cart_elem;
+  if (!get_cart(store, cart_id, &cart_elem))
+  {
+    free(merch_name);
+    return -1;
+  }
+  cart_t *cart = cart_elem.p;
+
+  ioopm_hash_table_t *merchs_in_carts = cart->merchandise;
+
+  elem_t key = string_elem(merch_name);
+  elem_t in_cart_elem;
+  if (!ioopm_hash_table_lookup(merchs_in_carts, key, &in_cart_elem))
+  {
+    free(merch_name);
+    return -2;
+  }
+  size_t in_cart = in_cart_elem.i;
+
+  if (in_cart < to_remove)
+  {
+    free(merch_name);
+    return -3;
+  }
+
+  update_reserved_after_merch_rem(store, merch_name, to_remove);
+
+  int new_quantity = in_cart - to_remove;
+  elem_t dummy;
+  if (new_quantity <= 0)
+  {
+    ioopm_hash_table_remove(merchs_in_carts, key, &dummy);
+  }
+  else
+  {
+    ioopm_hash_table_insert(merchs_in_carts, key, int_elem(new_quantity));
+  }
+
+  free(merch_name);
+  return 1;
+}
+
+long long merch_cost(store_t *store, elem_t merch_name_elem, elem_t quantity_elem, bool check_out)
+{
+  char *merch_name = merch_name_elem.s;
+  size_t quantity = quantity_elem.i;
+
+  elem_t merch_elem;
+  get_merch(store, merch_name, &merch_elem);
+  merch_t *merch = merch_elem.p;
+
+  if(check_out)
+  {
+    merch->stock -= quantity;
+  }
+  
+  size_t price = merch->price;
+
+  return price * quantity;
+}
+
+long long get_total(store_t *store, size_t cart_id, bool check_out)
+{
+  elem_t cart_elem;
+  if (!get_cart(store, cart_id, &cart_elem))
+  {
+    return -1;
+  }
+
+  cart_t *cart = cart_elem.p;
+  ioopm_hash_table_t *merchs_in_cart = cart->merchandise;
+  ioopm_hash_table_iterator_t *it = ioopm_hash_table_iterator_create(merchs_in_cart);
+  long long total = 0;
+
+  elem_t merch_name_elem;
+  elem_t quantity_elem;
+  while (!ioopm_hash_table_iterator_at_end(it))
+  {
+    merch_name_elem = ioopm_hash_table_iterator_current_key(it);
+    quantity_elem = ioopm_hash_table_iterator_current_value(it);
+    
+    total += merch_cost(store, merch_name_elem, quantity_elem, check_out);
+    ioopm_hash_table_iterator_advance(it);
+  }
+
+  ioopm_hash_table_iterator_destroy(it);
+
+  return total;
+}
+
+long long calculate_cost(store_t *store, size_t cart_id)
+{
+  return get_total(store, cart_id, false);
+}
+
+long long checkout(store_t *store, size_t cart_id)
+{
+  long long total = get_total(store, cart_id, true);
+  remove_cart(store, cart_id);
+  return total;
 }
