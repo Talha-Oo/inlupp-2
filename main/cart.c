@@ -55,7 +55,7 @@ cart_t *ioopm_create_cart(store_t *store)
   return cart;
 }
 
-bool get_cart(store_t *store, size_t cart_id, elem_t *lookup_res)
+bool ioopm_get_cart(store_t *store, size_t cart_id, elem_t *lookup_res)
 {
   elem_t key = int_elem(cart_id);
   bool res = ioopm_hash_table_lookup(store->all_carts, key, lookup_res);
@@ -125,17 +125,17 @@ static void update_cart(cart_t *cart, merch_t *merch, size_t quantity)
   }
 }
 
-int add_to_cart(store_t *store, size_t cart_id, char *merch_name, size_t quantity)
+int ioopm_add_to_cart(store_t *store, size_t cart_id, char *merch_name, size_t quantity)
 {
   elem_t merch_elem;
-  if (!get_merch(store, merch_name, &merch_elem))
+  if (!ioopm_get_merch(store, merch_name, &merch_elem))
   {
     free(merch_name);
     return -1;
   }
 
   elem_t cart_elem;
-  if (!get_cart(store, cart_id, &cart_elem))
+  if (!ioopm_get_cart(store, cart_id, &cart_elem))
   {
     free(merch_name);
     return -2;
@@ -216,10 +216,10 @@ static void update_reserved_after_merch_rem(store_t *store, char *merch_name, si
   }
 }
 
-bool remove_cart(store_t *store, size_t cart_id)
+bool ioopm_remove_cart(store_t *store, size_t cart_id)
 {
   elem_t cart_elem;
-  if (!get_cart(store, cart_id, &cart_elem))
+  if (!ioopm_get_cart(store, cart_id, &cart_elem))
   {
     return false;
   }
@@ -236,10 +236,10 @@ bool remove_cart(store_t *store, size_t cart_id)
   return true;
 }
 
-int remove_from_cart(store_t *store, size_t cart_id, char *merch_name, size_t to_remove)
+int ioopm_remove_from_cart(store_t *store, size_t cart_id, char *merch_name, size_t to_remove)
 {
   elem_t cart_elem;
-  if (!get_cart(store, cart_id, &cart_elem))
+  if (!ioopm_get_cart(store, cart_id, &cart_elem))
   {
     free(merch_name);
     return -1;
@@ -286,7 +286,7 @@ long long merch_cost(store_t *store, elem_t merch_name_elem, elem_t quantity_ele
   size_t quantity = quantity_elem.i;
 
   elem_t merch_elem;
-  get_merch(store, merch_name, &merch_elem);
+  ioopm_get_merch(store, merch_name, &merch_elem);
   merch_t *merch = merch_elem.p;
 
   if(check_out)
@@ -302,7 +302,7 @@ long long merch_cost(store_t *store, elem_t merch_name_elem, elem_t quantity_ele
 long long get_total(store_t *store, size_t cart_id, bool check_out)
 {
   elem_t cart_elem;
-  if (!get_cart(store, cart_id, &cart_elem))
+  if (!ioopm_get_cart(store, cart_id, &cart_elem))
   {
     return -1;
   }
@@ -328,14 +328,14 @@ long long get_total(store_t *store, size_t cart_id, bool check_out)
   return total;
 }
 
-long long calculate_cost(store_t *store, size_t cart_id)
+long long ioopm_calculate_cost(store_t *store, size_t cart_id)
 {
   return get_total(store, cart_id, false);
 }
 
-long long checkout(store_t *store, size_t cart_id)
+long long ioopm_checkout(store_t *store, size_t cart_id)
 {
   long long total = get_total(store, cart_id, true);
-  remove_cart(store, cart_id);
+  ioopm_remove_cart(store, cart_id);
   return total;
 }

@@ -7,12 +7,12 @@
 /// @brief Creates a new store.
 /// @return A pointer to the store
 /// @note The caller must eventually call destroy_store().
-store_t *create_store(void);
+store_t *ioopm_create_store(void);
 
 /// @brief Deletes a store and frees its memory.
 /// @param store Pointer to the store to delete.
 /// @note The store owns its merchandise and shelf data.
-void destroy_store(store_t *store);
+void ioopm_destroy_store(store_t *store);
 
 /// @brief Creates new merchandise.
 /// @param name Name of the merchandise. Ownership is transferred.
@@ -20,19 +20,19 @@ void destroy_store(store_t *store);
 /// @param price Price of the merchandise.
 /// @return A pointer to the new merchandise.
 /// @note The strings are not copied. Use heap-allocated strings.
-merch_t *create_merch(char *name, char *desc, const size_t price);
+merch_t *ioopm_create_merch(char *name, char *desc, const size_t price);
 
 /// @brief Deletes merchandise and frees its memory.
 /// @param merch Pointer to the merchandise to delete.
 /// @note Frees its name, description, shelf data, and list.
-void destroy_merch(merch_t *merch);
+void ioopm_destroy_merch(merch_t *merch);
 
 /// @brief Adds merchandise if its name does not already exist.
 /// @param store Store where the merchandise should be added.
 /// @param merch Merchandise to add.
 /// @return true if added, false otherwise.
 /// @note On success, the store owns merch. On failure, merch is destroyed.
-bool add_merch(store_t *store, merch_t *merch);
+bool ioopm_add_merch(store_t *store, merch_t *merch);
 
 /// @brief Looks up a shelf by its name.
 /// @param shelf_ht Hash table containing shelves.
@@ -40,7 +40,7 @@ bool add_merch(store_t *store, merch_t *merch);
 /// @param lookup_res Where the result is stored.
 /// @return true if found, false otherwise.
 /// @note The returned shelf pointer is borrowed. Do not free it.
-bool get_shelf(store_t *store, char *shelf_name, elem_t *lookup_res);
+bool ioopm_get_shelf(store_t *store, char *shelf_name, elem_t *lookup_res);
 
 /// @brief Looks up merchandise by its name.
 /// @param merch_ht Hash table containing merchandise.
@@ -48,7 +48,7 @@ bool get_shelf(store_t *store, char *shelf_name, elem_t *lookup_res);
 /// @param lookup_res Where the result is stored.
 /// @return true if found, false otherwise.
 /// @note The returned merchandise pointer is borrowed. Do not free it.
-bool get_merch(store_t *store, char *merch_name, elem_t *lookup_res);
+bool ioopm_get_merch(store_t *store, char *merch_name, elem_t *lookup_res);
 
 /// @brief Adds stock to a shelf.
 /// @param store Store containing the merchandise.
@@ -57,8 +57,8 @@ bool get_merch(store_t *store, char *merch_name, elem_t *lookup_res);
 /// @param shelf_name Name of the shelf.
 /// @return true if successful, false otherwise.
 /// @note Takes ownership of shelf_name, even if it fails.
-///       Do not free or use shelf_name afterward.
-bool replenish(store_t *store, char *name, size_t quantity, char *shelf_name);
+///Do not free or use shelf_name afterward.
+bool ioopm_replenish(store_t *store, char *name, size_t quantity, char *shelf_name);
 
 /// @brief Changes the name of merchandise.
 /// @param store Store containing the merchandise.
@@ -84,4 +84,4 @@ void edit_merch_price(merch_t *merch, size_t price);
 /// @param store Store containing the merchandise.
 /// @param name Name of the merchandise to remove.
 /// @return true if removed, false otherwise.
-bool remove_merch(store_t *store, char *name);
+bool ioopm_remove_merch(store_t *store, char *name);

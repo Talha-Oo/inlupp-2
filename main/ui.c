@@ -12,7 +12,7 @@ merch_t *creat_merch_user(void)
   char *desc = get_desc_io();
   int price = get_price_io();
 
-  return create_merch(name, desc, price);
+  return ioopm_create_merch(name, desc, price);
 }
 
 void print_merch(merch_t *merch)
@@ -136,7 +136,7 @@ void add_merchandise_to_store(store_t *store)
 
   merch_t *merch = creat_merch_user();
 
-  bool added = add_merch(store, merch);
+  bool added = ioopm_add_merch(store, merch);
   if (!added)
   {
     puts("\nA MERCHANDISE BY THIS NAME ALREADY EXISTS!!");
@@ -155,7 +155,7 @@ void remove_merchandise_from_store(store_t *store)
   puts("--------- REMOVING MERCH ---------");
 
   char *name = get_name_io();
-  bool removed = remove_merch(store, name);
+  bool removed = ioopm_remove_merch(store, name);
   if (!removed)
   {
     puts("\nA MERCHANDISE BY THIS NAME DOES NOT EXIST!!");
@@ -207,7 +207,7 @@ void edit_merchandise_in_store(store_t *store)
   char *name = get_name_io();
 
   elem_t merch_elem;
-  bool exists = get_merch(store, name, &merch_elem);
+  bool exists = ioopm_get_merch(store, name, &merch_elem);
   if (!exists)
   {
     puts("\nA MERCHANDISE BY THIS NAME DOES NOT EXIST!!");
@@ -232,7 +232,7 @@ void replenish_merchandise_in_store(store_t *store)
   char *merch_name = get_name_io();
 
   elem_t merch_elem;
-  bool exists = get_merch(store, merch_name, &merch_elem);
+  bool exists = ioopm_get_merch(store, merch_name, &merch_elem);
   if (!exists)
   {
     puts("\nA MERCHANDISE BY THIS NAME DOES NOT EXIST!!");
@@ -244,7 +244,7 @@ void replenish_merchandise_in_store(store_t *store)
   char *shelf_name = get_shelf_io();
   size_t quantity = get_quantity_io();
 
-  bool replenished = replenish(store, merch_name, quantity, shelf_name);
+  bool replenished = ioopm_replenish(store, merch_name, quantity, shelf_name);
   if (!replenished)
   {
     puts("YOU CAN ONLY STORE ON TYPE OF MERCHANDISE ON A SHELF!!");
@@ -298,7 +298,7 @@ void show_stock(store_t *store)
   char *merch_name = get_name_io();
 
   elem_t merch_elem;
-  bool exists = get_merch(store, merch_name, &merch_elem);
+  bool exists = ioopm_get_merch(store, merch_name, &merch_elem);
   if (!exists)
   {
     puts("\nA MERCHANDISE BY THIS NAME DOES NOT EXIST!!");
@@ -381,35 +381,35 @@ void add_to_cart_in_stpre(store_t *store)
 
 int main(void)
 {
-  store_t *store = create_store();
+  store_t *store = ioopm_create_store();
 
-  merch_t *milk = create_merch(strdup("Milk"), strdup("Whole milk 1L"), 15);
-  merch_t *bread = create_merch(strdup("Bread"), strdup("Wholegrain bread"), 25);
-  merch_t *eggs = create_merch(strdup("Eggs"), strdup("Pack of 12 eggs"), 35);
-  merch_t *apples = create_merch(strdup("Apples"), strdup("Red apples 1kg"), 20);
-  merch_t *coffee = create_merch(strdup("Coffee"), strdup("Ground coffee 500g"), 65);
+  merch_t *milk = ioopm_create_merch(strdup("Milk"), strdup("Whole milk 1L"), 15);
+  merch_t *bread = ioopm_create_merch(strdup("Bread"), strdup("Wholegrain bread"), 25);
+  merch_t *eggs = ioopm_create_merch(strdup("Eggs"), strdup("Pack of 12 eggs"), 35);
+  merch_t *apples = ioopm_create_merch(strdup("Apples"), strdup("Red apples 1kg"), 20);
+  merch_t *coffee = ioopm_create_merch(strdup("Coffee"), strdup("Ground coffee 500g"), 65);
 
-  add_merch(store, milk);
-  add_merch(store, bread);
-  add_merch(store, eggs);
-  add_merch(store, apples);
-  add_merch(store, coffee);
+  ioopm_add_merch(store, milk);
+  ioopm_add_merch(store, bread);
+  ioopm_add_merch(store, eggs);
+  ioopm_add_merch(store, apples);
+  ioopm_add_merch(store, coffee);
 
-  replenish(store, strdup("Milk"), 15, strdup("A20"));
-  replenish(store, strdup("Milk"), 10, strdup("B01"));
-  replenish(store, strdup("Milk"), 20, strdup("C10"));
+  ioopm_replenish(store, strdup("Milk"), 15, strdup("A20"));
+  ioopm_replenish(store, strdup("Milk"), 10, strdup("B01"));
+  ioopm_replenish(store, strdup("Milk"), 20, strdup("C10"));
 
-  replenish(store, strdup("Bread"), 8, strdup("A10"));
-  replenish(store, strdup("Bread"), 12, strdup("B05"));
+  ioopm_replenish(store, strdup("Bread"), 8, strdup("A10"));
+  ioopm_replenish(store, strdup("Bread"), 12, strdup("B05"));
 
-  replenish(store, strdup("Eggs"), 6, strdup("C01"));
-  replenish(store, strdup("Apples"), 25, strdup("A05"));
-  replenish(store, strdup("Coffee"), 10, strdup("D02"));
+  ioopm_replenish(store, strdup("Eggs"), 6, strdup("C01"));
+  ioopm_replenish(store, strdup("Apples"), 25, strdup("A05"));
+  ioopm_replenish(store, strdup("Coffee"), 10, strdup("D02"));
 
   list_merchandise(store);
 
   show_stock(store);
 
-  destroy_store(store);
+  ioopm_destroy_store(store);
   return 0;
 }
