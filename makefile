@@ -31,7 +31,7 @@ io: main/io.c main/io.h utilities/utils.h
 ui: main/ui.c main/db.c main/cart.c main/io.c $(UTIL_OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $@
 
-backend_tests: backend_tests.c main/db.c $(UTIL_OBJECTS)
+backend_tests: backend_tests.c main/db.c main/cart.c $(UTIL_OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $@ -lcunit	
 
 utilities/%.o: utilities/%.c
