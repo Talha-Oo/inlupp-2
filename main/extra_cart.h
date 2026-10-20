@@ -18,7 +18,11 @@ void ioopm_add_cart(store_t *store);
 /// @return true if the merchandise was added successfully, false otherwise
 int add_to_cart(store_t *store, size_t cart_id, char *merch_name, size_t quantity);
 
-
+/// @brief Removes a shopping cart from the container
+/// @param store pointer to the container holding all shopping carts
+/// @param id identifier of the shopping cart to remove
+/// @return true if the cart was removed successfully, false otherwise
+bool remove_cart(store_t *store, size_t chart_id);
 
 
 bool get_cart(store_t *store, size_t cart_id, elem_t *lookup_res);

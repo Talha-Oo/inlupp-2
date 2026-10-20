@@ -489,6 +489,44 @@ void test_add_to_cart(void)
   destroy_store(store);
 }
 
+void test_remove_cart(void)
+{
+    store_t *store = create_store();
+    ioopm_add_cart(store);
+    ioopm_add_cart(store);
+    ioopm_add_cart(store);
+    ioopm_add_cart(store);
+
+    elem_t cart_elem;
+    
+    // Removing a empty cart
+    CU_ASSERT_TRUE(get_cart(store, 4, &cart_elem));
+    CU_ASSERT_TRUE(remove_cart(store, 4));
+    CU_ASSERT_FALSE(get_cart(store, 4, &cart_elem));
+
+    //Removing a non-existent cart
+    CU_ASSERT_FALSE(get_cart(store, 999, &cart_elem));
+    CU_ASSERT_FALSE(remove_cart(store, 999));
+
+    add_merch(store, create_merch(strdup("Kunai"), strdup("Sharp weapon"), 100));
+    add_merch(store, create_merch(strdup("Kaching"), strdup("Another weapon"), 200));
+    replenish(store, strdup("Kunai"), 10, strdup("ABC"));
+    replenish(store, strdup("Kaching"), 1, strdup("XYZ"));
+
+    
+    CU_ASSERT_EQUAL(add_to_cart(store, 1, strdup("Kunai"), 6), 1);
+    CU_ASSERT_EQUAL(add_to_cart(store, 1, strdup("Kaching"), 1), 1);
+
+    CU_ASSERT_EQUAL(add_to_cart(store, 2, strdup("Kunai"), 5), -3); //Not enough stock
+    CU_ASSERT_EQUAL(add_to_cart(store, 3, strdup("Kaching"), 1), -3); //Not enough stock
+
+    CU_ASSERT_TRUE(remove_cart(store, 1));
+    CU_ASSERT_EQUAL(add_to_cart(store, 2, strdup("Kunai"), 5), 1); //Now enough stock
+    CU_ASSERT_EQUAL(add_to_cart(store, 3, strdup("Kaching"), 1), 1); //Now enough stock
+
+    destroy_store(store);
+}
+
 int main()
 {
   // First we try to set up CUnit, and exit if we fail
@@ -523,6 +561,7 @@ int main()
           CU_add_test(cart, "Create/destroy", test_create_destroy_cart) == NULL ||
           CU_add_test(cart, "Adding cart", test_add_carts) == NULL ||
           CU_add_test(cart, "Add to cart", test_add_to_cart) == NULL ||
+          CU_add_test(cart, "Remove cart", test_remove_cart) == NULL ||
           0))
   {
     // If adding any of the tests fails, we tear down CUnit and exit
