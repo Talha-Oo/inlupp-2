@@ -280,6 +280,41 @@ int ioopm_remove_from_cart(store_t *store, size_t cart_id, char *merch_name, siz
   return 1;
 }
 
+static void decrease_shelf_stock(store_t *store, merch_t *merch, size_t to_remove)
+{
+  ioopm_list_t *shelves = merch->locs;
+  ioopm_list_iterator_t *it = ioopm_list_iterator_create(shelves);
+
+  elem_t shelf_elem;
+  shelf_t *shelf;
+  while (to_remove > 0 && !ioopm_list_iterator_at_end(it))
+  {
+    ioopm_list_iterator_current(it, &shelf_elem);
+    shelf = shelf_elem.p;
+
+    if (shelf->quantity > to_remove)
+    {
+      shelf->quantity -= to_remove;
+      to_remove = 0;
+      ioopm_list_iterator_advance(it);
+    }
+    else
+    {
+      to_remove -= shelf->quantity;
+      char **name = shelf->merch_name;
+      elem_t key = string_elem(*name);
+
+      free(shelf->shelf_name);
+      free(shelf);
+      
+      ioopm_hash_table_remove(store->shelf_to_item, key, &shelf_elem);
+      ioopm_list_iterator_remove(it, &shelf_elem);
+    }
+  }
+
+  ioopm_list_iterator_destroy(it);
+}
+
 long long merch_cost(store_t *store, elem_t merch_name_elem, elem_t quantity_elem, bool check_out)
 {
   char *merch_name = merch_name_elem.s;
@@ -289,11 +324,12 @@ long long merch_cost(store_t *store, elem_t merch_name_elem, elem_t quantity_ele
   ioopm_get_merch(store, merch_name, &merch_elem);
   merch_t *merch = merch_elem.p;
 
-  if(check_out)
+  if (check_out)
   {
     merch->stock -= quantity;
+    decrease_shelf_stock(store, merch, quantity);
   }
-  
+
   size_t price = merch->price;
 
   return price * quantity;
@@ -318,7 +354,7 @@ long long get_total(store_t *store, size_t cart_id, bool check_out)
   {
     merch_name_elem = ioopm_hash_table_iterator_current_key(it);
     quantity_elem = ioopm_hash_table_iterator_current_value(it);
-    
+
     total += merch_cost(store, merch_name_elem, quantity_elem, check_out);
     ioopm_hash_table_iterator_advance(it);
   }

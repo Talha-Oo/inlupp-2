@@ -14,7 +14,7 @@ typedef struct shelf
 {
     char *shelf_name;
     char **merch_name;
-    int quantity;
+    size_t quantity;
 } shelf_t;
 
 typedef struct merch

@@ -24,7 +24,7 @@ void print_merch(merch_t *merch)
   printf("DESCRIPTION: %s\n", merch->desc);
   printf("Price: %ld\n", merch->price);
 
-  puts("----------------------------------");
+  puts("----------------------------------\n");
 }
 
 static int cmp_merch_name(const void *p1, const void *p2)
@@ -123,7 +123,7 @@ static void print_list_shelf(shelf_t *shelves[], size_t size, size_t *printed)
   for (i = *printed; i < *printed + 20 && i < size; i++)
   {
     shelf_t *shelf = shelves[i];
-    printf("%s: %d\n", shelf->shelf_name, shelf->quantity);
+    printf("%s: %ld\n", shelf->shelf_name, shelf->quantity);
   }
 
   *printed = i;
@@ -251,7 +251,7 @@ void replenish_merchandise_in_store(store_t *store)
   }
 
   free(merch_name);
-  puts("----------------------------------");
+  puts("----------------------------------\n");
 }
 
 void list_merchandise(store_t *store)
@@ -288,6 +288,8 @@ void list_merchandise(store_t *store)
       break;
     }
   }
+
+  puts("----------------------------------\n");
 }
 
 void show_stock(store_t *store)
@@ -304,6 +306,7 @@ void show_stock(store_t *store)
     puts("\nA MERCHANDISE BY THIS NAME DOES NOT EXIST!!");
 
     free(merch_name);
+    puts("----------------------------------\n");
     return;
   }
 
@@ -314,7 +317,10 @@ void show_stock(store_t *store)
 
   if (shelf_num == 0)
   {
+    free(merch_name);
     puts("NOTHIING TO LIST, THE MERCHANDISE HAS NO STOCK!!");
+    puts("----------------------------------\n");
+
     return;
   }
 
@@ -341,11 +347,19 @@ void show_stock(store_t *store)
   }
 
   free(merch_name);
+
+  puts("----------------------------------\n");
+
 }
 
-void create_cart_in_store(store_t *store)
+void add_cart_in_store(store_t *store)
 {
+  puts("----------------------------------");
+
   ioopm_add_cart(store);
+  puts("A CART HAS SUCCESSFULLY BEEN ADDED!!");
+  
+  puts("----------------------------------\n");
 }
 
 void remove_cart_from_store(store_t *store)
@@ -353,30 +367,105 @@ void remove_cart_from_store(store_t *store)
   puts("----------------------------------");
   puts("--------- REMOVE CART ------------");
 
-  int cart_id = get_cart_id_io();
-  ioopm_hash_table_t *all_carts = store->all_carts;
-
-  elem_t cart_elem;
-  if (!ioopm_hash_table_lookup(all_carts, int_elem(cart_id), &cart_elem))
-  {
-    puts("THE CART WAS NOT FOUND!!");
-    return;
-  }
+  size_t cart_id = get_cart_id_io();
 
   bool delete = is_confirmed_io();
   if (delete)
   {
-    cart_destroy(&cart_elem);
+    bool result = ioopm_remove_cart(store, cart_id);
+    if (!result)
+    {
+      puts("\nINVALID CART ID!!");
+    }
+    else
+    {
+      printf("CART %ld HAS SUCCESSFULLY DELETED!!\n", cart_id);
+    }
   }
+
+  puts("----------------------------------\n");
 }
 
-void add_to_cart_in_stpre(store_t *store)
+void add_to_cart_in_store(store_t *store)
 {
   puts("----------------------------------");
   puts("--------- ADDING TO CART ---------");
 
   char *merch_name = get_name_io();
+
+  size_t cart_id = get_cart_id_io();
+  size_t quantity = get_quantity_io();
+  puts("----------------------------------");
+
+  int res = ioopm_add_to_cart(store, cart_id, merch_name, quantity);
+  switch (res)
+  {
+  case -1:
+    printf("THERE IS NO SUCH MERCHANDISE IN THE STORE!!\n");
+    break;
+
+  case -2:
+    printf("INVALID CART ID!!\n");
+    break;
+
+  case -3:
+    printf("ENOUGH STOCK IS NOT AVAILABLE!!\n");
+    break;
+
+  default:
+    printf("ADDED TO THE CART %ld!!\n", cart_id);
+    break;
+  }
   
+  puts("----------------------------------\n");
+}
+
+void remove_cart_in_store(store_t *store)
+{
+  puts("----------------------------------");
+  puts("--------- REMOVING CART ----------");
+
+  size_t cart_id = get_cart_id_io();
+  puts("----------------------------------");
+
+  bool removed = ioopm_remove_cart(store, cart_id);
+  if(removed)
+  {
+    printf("CART %ld HAS BEEN REMOVED!!", cart_id);
+  }
+  else
+  {
+    printf("INVALID CART ID!!");
+  }
+  
+  puts("----------------------------------\n");
+}
+
+void calculate_cart_cost(store_t *store)
+{
+  puts("----------------------------------");
+  puts("--------- CALCULATE COST ---------");
+
+  size_t cart_id = get_cart_id_io();
+
+  long long cost = ioopm_calculate_cost(store, cart_id);
+  printf("THE TOTAL COST OF CART %ld is %lld\n", cart_id, cost);
+
+  puts("----------------------------------\n");
+}
+
+void checkout_cart(store_t *store)
+{
+  puts("----------------------------------");
+  puts("------------ CHECKOUT ------------");
+
+  size_t cart_id = get_cart_id_io();
+
+  long long cost = ioopm_checkout(store, cart_id);
+  printf("CART %ld HAS BEEN CHECKED OUT!!\n", cart_id);
+  printf("TOTAL: %lld!!\n", cost);
+
+  puts("----------------------------------\n");
 }
 
 int main(void)
@@ -384,30 +473,24 @@ int main(void)
   store_t *store = ioopm_create_store();
 
   merch_t *milk = ioopm_create_merch(strdup("Milk"), strdup("Whole milk 1L"), 15);
-  merch_t *bread = ioopm_create_merch(strdup("Bread"), strdup("Wholegrain bread"), 25);
-  merch_t *eggs = ioopm_create_merch(strdup("Eggs"), strdup("Pack of 12 eggs"), 35);
-  merch_t *apples = ioopm_create_merch(strdup("Apples"), strdup("Red apples 1kg"), 20);
-  merch_t *coffee = ioopm_create_merch(strdup("Coffee"), strdup("Ground coffee 500g"), 65);
+  // merch_t *bread = ioopm_create_merch(strdup("Bread"), strdup("Wholegrain bread"), 25);
+  // merch_t *eggs = ioopm_create_merch(strdup("Eggs"), strdup("Pack of 12 eggs"), 35);
+  // merch_t *apples = ioopm_create_merch(strdup("Apples"), strdup("Red apples 1kg"), 20);
+  // merch_t *coffee = ioopm_create_merch(strdup("Coffee"), strdup("Ground coffee 500g"), 65);
 
   ioopm_add_merch(store, milk);
-  ioopm_add_merch(store, bread);
-  ioopm_add_merch(store, eggs);
-  ioopm_add_merch(store, apples);
-  ioopm_add_merch(store, coffee);
+  // ioopm_add_merch(store, bread);
+  // ioopm_add_merch(store, eggs);
+  // ioopm_add_merch(store, apples);
+  // ioopm_add_merch(store, coffee);
 
   ioopm_replenish(store, strdup("Milk"), 15, strdup("A20"));
-  ioopm_replenish(store, strdup("Milk"), 10, strdup("B01"));
-  ioopm_replenish(store, strdup("Milk"), 20, strdup("C10"));
 
-  ioopm_replenish(store, strdup("Bread"), 8, strdup("A10"));
-  ioopm_replenish(store, strdup("Bread"), 12, strdup("B05"));
+  add_cart_in_store(store);
 
-  ioopm_replenish(store, strdup("Eggs"), 6, strdup("C01"));
-  ioopm_replenish(store, strdup("Apples"), 25, strdup("A05"));
-  ioopm_replenish(store, strdup("Coffee"), 10, strdup("D02"));
-
-  list_merchandise(store);
-
+  show_stock(store);
+  add_to_cart_in_store(store);
+  checkout_cart(store);
   show_stock(store);
 
   ioopm_destroy_store(store);
