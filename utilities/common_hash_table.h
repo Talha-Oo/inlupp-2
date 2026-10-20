@@ -7,19 +7,9 @@
 
 #include <stdbool.h>
 #include <stdlib.h>
+#include "common_elem.h"
 
-typedef union elem elem_t;
-union elem
-{
-  int i;
-  unsigned int u;
-  bool b;
-  float f;
-  void *p;
-  char *s;
-};
-
-#define No_Buckets 1000
+#define No_Buckets 17
 
 typedef struct entry entry_t;
 
@@ -39,6 +29,6 @@ struct hash_table
   entry_t buckets[No_Buckets];
   ioopm_hash_function *hash_fn;
   ioopm_eq_function *key_eq_fn;
-  ioopm_destroy_function *fn_destroy_fn;
+  ioopm_destroy_function *elem_destroy_fn;
   size_t size;
 };

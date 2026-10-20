@@ -7,14 +7,4 @@
 
 #include <stdbool.h>
 #include <stdlib.h>
-
-typedef union elem elem_t;
-union elem
-{
-  int i;
-  unsigned int u;
-  bool b;
-  float f;
-  void *p;
-  char *s;
-};
+#include "common_elem.h"

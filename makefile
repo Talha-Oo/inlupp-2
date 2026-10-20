@@ -1,65 +1,63 @@
-CC=gcc
-FLAGS=-Wall -Wextra -Wpedantic -g
-COV_FLAG = --coverage 
+CC = gcc
+CFLAGS = -Wall -Wextra -Wpedantic -g
+COV_FLAGS = --coverage
 
-HASH_OBJECTS=hash_table.o hash_table_iterator.o
-LIST_OBJECTS=linked_list.o linked_list_iterator.o
-FREQ_OBJECTS=hash_table.o hash_table_iterator.o freq_count.o
+UTIL_OBJECTS = utilities/hash_table.o \
+								utilities/hash_table_iterator.o \
+								utilities/linked_list.o \
+								utilities/linked_list_iterator.o \
+								utilities/utils.o
 
-COV_HASH_OBJECTS=hash_table.c hash_table_iterator.c
-COV_LIST_OBJECTS=linked_list.c linked_list_iterator.c
+COV_OBJECTS = utilities/hash_table.c \
+								utilities/hash_table_iterator.c \
+								utilities/linked_list.c \
+								utilities/linked_list_iterator.c \
+								utilities/utils.c
 
-all: hash_table_tests
-
-hash_table_tests: $(HASH_OBJECTS) hash_table_tests.c
-	$(CC) $(FLAGS) $^ -o $@ -lcunit
-
-linked_list_tests: $(LIST_OBJECTS) linked_list_tests.c
-	$(CC) $(FLAGS) $^ -o $@ -lcunit
+all: backend_tests
 
 %.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
+db: main/db.c main/db.h utilities/common.h
+	$(CC) $(CFLAGS) -c $< -o $@
 
-freq: $(FREQ_OBJECTS) 
-	$(CC) $(FLAGS) $^ -o freq_count
+cart: main/cart.c main/cart.h utilities/common.h
+	$(CC) $(CFLAGS) -c $< -o $@
 
-test: hash_table_tests linked_list_tests
-	./hash_table_tests 
-	./linked_list_tests
+io: main/io.c main/io.h utilities/utils.h
+	$(CC) $(CFLAGS) -c $< -o $@
+	
+ui: main/ui.c main/db.c main/cart.c main/io.c $(UTIL_OBJECTS)
+	$(CC) $(CFLAGS) $^ -o $@
 
-tests: hash_table_tests linked_list_tests
-	./hash_table_tests 
-	./linked_list_tests
+backend_tests: backend_tests.c main/db.c main/cart.c $(UTIL_OBJECTS)
+	$(CC) $(CFLAGS) $^ -o $@ -lcunit	
 
-memtest: hash_table_tests linked_list_tests
-	valgrind ./hash_table_tests
-	valgrind ./linked_list_tests
+utilities/%.o: utilities/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+test: backend_tests
+	./backend_tests
+
+mem: backend_tests
+	valgrind --leak-check=full ./backend_tests
+
+memu: ui
+	valgrind --leak-check=full ./ui
+
 
 cov:
-	$(CC) $(FLAGS) $(COV_FLAG) $(COV_HASH_OBJECTS) hash_table_tests.c -o hash_table_tests_cov -lcunit
-	./hash_table_tests_cov
-	gcov -abcf hash_table_tests_cov-hash_table.gcno
-	gcov -abcf hash_table_tests_cov-hash_table_iterator.gcno
-	gcovr -r .
+	$(CC) $(CFLAGS) $(COV_FLAGS) $(COV_OBJECTS) main/db.c backend_tests.c -o backend_tests_cov -lcunit
+	./backend_tests_cov
+	gcov -abcf backend_tests_cov-backend_tests.gcno
+	gcovr -r . --filter main/db\.c
 
-	$(CC) $(FLAGS) $(COV_FLAG) $(COV_LIST_OBJECTS) linked_list_tests.c -o linked_list_tests_cov -lcunit
-	./linked_list_tests_cov
-	gcov -abcf linked_list_tests_cov-linked_list.gcno
-	gcov -abcf linked_list_tests_cov-linked_list_iterator.gcno
-	gcovr -r .
-
-prof:
-	gcc -pg hash_table.c hash_table_iterator.c freq_count.c -o freq_count
-	./freq_count sample-texts/16k-words.txt
-	gprof freq_count gmon.out > profile.txt
-	more profile.txt
-
-massif:
-	valgrind --tool=massif ./freq_count tbontb.txt
-	
-clean:	
-	rm -f *.o *.gcda *.gcno
-	rm -f *.out a.out
-	rm -f hash_table_tests linked_list_tests freq_count
-	rm -f linked_list_tests_cov hash_table_tests_cov
+clean:
+	rm -f utilities/*.o
+	rm -f main/*.o
+	rm -f backend_tests db io ui cart
+	rm -f *.gcda *.gcno *.gcov
+	rm -f backend_tests_cov
+	rm -f cart
+	rm -f Doxyfile
