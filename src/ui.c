@@ -256,6 +256,8 @@ void replenish_merchandise_in_store(store_t *store)
 
     free(shelf_name);
     free(merch_name);
+    puts("----------------------------------\n");
+
     return;
   }
 
@@ -264,10 +266,11 @@ void replenish_merchandise_in_store(store_t *store)
   bool replenished = ioopm_replenish(store, merch_name, quantity, shelf_name);
   if (!replenished)
   {
-    puts("YOU CAN ONLY STORE ON TYPE OF MERCHANDISE ON A SHELF!!");
+    puts("YOU CAN ONLY STORE ONE TYPE OF MERCHANDISE ON A SHELF!!");
+    puts("----------------------------------\n");
   }
 
-  //free(merch_name);
+  printf("%s HAS BEEN ADDED TO %s!!", merch_name, shelf_name);
   puts("----------------------------------\n");
 }
 
@@ -551,7 +554,6 @@ bool confirm_quit(store_t *store)
 
 char get_action_choice(void)
 {
-  puts("----------------------------------");
   puts("");
 
   puts("[A] Add Merchandise");
@@ -578,6 +580,6 @@ char get_action_choice(void)
 
   char upper_action = toupper(action[0]);
   free(action);
-
+  puts("----------------------------------\n");
   return upper_action;
 }
