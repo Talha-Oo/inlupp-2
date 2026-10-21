@@ -1,0 +1,318 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls   s/call   s/call  name    
+ 43.50      1.21     1.21 138487435     0.00     0.00  find_previous_entry
+ 19.13      1.74     0.53 138499709     0.00     0.00  string_knr_hash
+ 10.83      2.04     0.30                             _init
+  7.22      2.23     0.20 92314917     0.00     0.00  ioopm_hash_table_lookup
+  4.69      2.37     0.13 171095501     0.00     0.00  str_eq_func
+  4.33      2.48     0.12 46166570     0.00     0.00  process_word
+  4.15      2.60     0.12        1     0.12     2.40  process_file
+  2.35      2.67     0.07    18223     0.00     0.00  destroy
+  1.08      2.69     0.03 46166570     0.00     0.00  ioopm_hash_table_has_key
+  1.08      2.73     0.03 46166570     0.00     0.00  ioopm_hash_table_insert
+  1.08      2.75     0.03     5948     0.00     0.00  get_new_capacity
+  0.36      2.77     0.01                             cmp_freq_words_reverse
+  0.18      2.77     0.01    30497     0.00     0.00  entry_create
+  0.00      2.77     0.00   211130     0.00     0.00  cmp_freq_words
+  0.00      2.77     0.00    61005     0.00     0.00  ioopm_hash_table_iterator_at_end
+  0.00      2.77     0.00    30508     0.00     0.00  skip_empty_buckets
+  0.00      2.77     0.00    30497     0.00     0.00  advance_iterator_state
+  0.00      2.77     0.00    30497     0.00     0.00  ioopm_hash_table_iterator_advance
+  0.00      2.77     0.00    30497     0.00     0.00  ioopm_hash_table_iterator_current_key
+  0.00      2.77     0.00    30497     0.00     0.00  ioopm_hash_table_iterator_current_value
+  0.00      2.77     0.00    18223     0.00     0.00  entry_destroy
+  0.00      2.77     0.00     5948     0.00     0.00  resize_hash_table
+  0.00      2.77     0.00       11     0.00     0.00  ioopm_hash_table_create_sized
+  0.00      2.77     0.00       11     0.00     0.00  ioopm_hash_table_iterator_create
+  0.00      2.77     0.00       11     0.00     0.00  ioopm_hash_table_iterator_destroy
+  0.00      2.77     0.00        1     0.00     0.00  ioopm_hash_table_create
+  0.00      2.77     0.00        1     0.00     0.07  ioopm_hash_table_destroy
+  0.00      2.77     0.00        1     0.00     0.00  ioopm_hash_table_size
+  0.00      2.77     0.00        1     0.00     0.00  sort_freq_words
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2026 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 4 byte(s) for 0.36% of 2.77 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     88.8    0.00    2.46                 main [1]
+                0.12    2.28       1/1           process_file [2]
+                0.00    0.07       1/1           ioopm_hash_table_destroy [13]
+                0.00    0.00   18224/61005       ioopm_hash_table_iterator_at_end [19]
+                0.00    0.00   18223/30497       ioopm_hash_table_iterator_current_key [23]
+                0.00    0.00   18223/30497       ioopm_hash_table_iterator_current_value [24]
+                0.00    0.00   18223/30497       ioopm_hash_table_iterator_advance [22]
+                0.00    0.00       1/1           ioopm_hash_table_create [28]
+                0.00    0.00       1/1           ioopm_hash_table_size [29]
+                0.00    0.00       1/11          ioopm_hash_table_iterator_create [26]
+                0.00    0.00       1/1           sort_freq_words [30]
+                0.00    0.00       1/11          ioopm_hash_table_iterator_destroy [27]
+-----------------------------------------------
+                0.12    2.28       1/1           main [1]
+[2]     86.5    0.12    2.28       1         process_file [2]
+                0.12    2.16 46166570/46166570     process_word [3]
+-----------------------------------------------
+                0.12    2.16 46166570/46166570     process_file [2]
+[3]     82.3    0.12    2.16 46166570         process_word [3]
+                0.03    0.72 46166570/46166570     ioopm_hash_table_has_key [6]
+                0.10    0.62 46148347/92314917     ioopm_hash_table_lookup [5]
+                0.03    0.66 46166570/46166570     ioopm_hash_table_insert [7]
+-----------------------------------------------
+                0.40    0.22 46172518/138487435     ioopm_hash_table_insert [7]
+                0.80    0.44 92314917/138487435     ioopm_hash_table_lookup [5]
+[4]     67.3    1.21    0.66 138487435         find_previous_entry [4]
+                0.53    0.00 138487435/138499709     string_knr_hash [8]
+                0.13    0.00 171095501/171095501     str_eq_func [10]
+-----------------------------------------------
+                0.10    0.62 46148347/92314917     process_word [3]
+                0.10    0.62 46166570/92314917     ioopm_hash_table_has_key [6]
+[5]     52.1    0.20    1.24 92314917         ioopm_hash_table_lookup [5]
+                0.80    0.44 92314917/138487435     find_previous_entry [4]
+-----------------------------------------------
+                0.03    0.72 46166570/46166570     process_word [3]
+[6]     27.1    0.03    0.72 46166570         ioopm_hash_table_has_key [6]
+                0.10    0.62 46166570/92314917     ioopm_hash_table_lookup [5]
+-----------------------------------------------
+                0.03    0.66 46166570/46166570     process_word [3]
+[7]     24.8    0.03    0.66 46166570         ioopm_hash_table_insert [7]
+                0.40    0.22 46172518/138487435     find_previous_entry [4]
+                0.00    0.03    5948/5948        resize_hash_table [14]
+                0.00    0.00   18223/30497       entry_create [17]
+-----------------------------------------------
+                0.00    0.00   12274/138499709     resize_hash_table [14]
+                0.53    0.00 138487435/138499709     find_previous_entry [4]
+[8]     19.1    0.53    0.00 138499709         string_knr_hash [8]
+-----------------------------------------------
+                                                 <spontaneous>
+[9]     10.8    0.30    0.00                 _init [9]
+-----------------------------------------------
+                0.13    0.00 171095501/171095501     find_previous_entry [4]
+[10]     4.7    0.13    0.00 171095501         str_eq_func [10]
+-----------------------------------------------
+                0.07    0.00   18223/18223       entry_destroy [12]
+[11]     2.3    0.07    0.00   18223         destroy [11]
+-----------------------------------------------
+                0.00    0.07   18223/18223       ioopm_hash_table_destroy [13]
+[12]     2.3    0.00    0.07   18223         entry_destroy [12]
+                0.07    0.00   18223/18223       destroy [11]
+-----------------------------------------------
+                0.00    0.07       1/1           main [1]
+[13]     2.3    0.00    0.07       1         ioopm_hash_table_destroy [13]
+                0.00    0.07   18223/18223       entry_destroy [12]
+-----------------------------------------------
+                0.00    0.03    5948/5948        ioopm_hash_table_insert [7]
+[14]     1.2    0.00    0.03    5948         resize_hash_table [14]
+                0.03    0.00    5948/5948        get_new_capacity [15]
+                0.00    0.00   12274/30497       entry_create [17]
+                0.00    0.00   12274/138499709     string_knr_hash [8]
+                0.00    0.00   12284/61005       ioopm_hash_table_iterator_at_end [19]
+                0.00    0.00   12274/30497       ioopm_hash_table_iterator_current_key [23]
+                0.00    0.00   12274/30497       ioopm_hash_table_iterator_current_value [24]
+                0.00    0.00   12274/30497       ioopm_hash_table_iterator_advance [22]
+                0.00    0.00      10/11          ioopm_hash_table_create_sized [25]
+                0.00    0.00      10/11          ioopm_hash_table_iterator_create [26]
+                0.00    0.00      10/11          ioopm_hash_table_iterator_destroy [27]
+-----------------------------------------------
+                0.03    0.00    5948/5948        resize_hash_table [14]
+[15]     1.1    0.03    0.00    5948         get_new_capacity [15]
+-----------------------------------------------
+                                                 <spontaneous>
+[16]     0.4    0.01    0.00                 cmp_freq_words_reverse [16]
+                0.00    0.00  211130/211130      cmp_freq_words [18]
+-----------------------------------------------
+                0.00    0.00   12274/30497       resize_hash_table [14]
+                0.00    0.00   18223/30497       ioopm_hash_table_insert [7]
+[17]     0.2    0.01    0.00   30497         entry_create [17]
+-----------------------------------------------
+                0.00    0.00  211130/211130      cmp_freq_words_reverse [16]
+[18]     0.0    0.00    0.00  211130         cmp_freq_words [18]
+-----------------------------------------------
+                0.00    0.00   12284/61005       resize_hash_table [14]
+                0.00    0.00   18224/61005       main [1]
+                0.00    0.00   30497/61005       ioopm_hash_table_iterator_advance [22]
+[19]     0.0    0.00    0.00   61005         ioopm_hash_table_iterator_at_end [19]
+-----------------------------------------------
+                0.00    0.00      11/30508       ioopm_hash_table_iterator_create [26]
+                0.00    0.00   30497/30508       ioopm_hash_table_iterator_advance [22]
+[20]     0.0    0.00    0.00   30508         skip_empty_buckets [20]
+-----------------------------------------------
+                0.00    0.00   30497/30497       ioopm_hash_table_iterator_advance [22]
+[21]     0.0    0.00    0.00   30497         advance_iterator_state [21]
+-----------------------------------------------
+                0.00    0.00   12274/30497       resize_hash_table [14]
+                0.00    0.00   18223/30497       main [1]
+[22]     0.0    0.00    0.00   30497         ioopm_hash_table_iterator_advance [22]
+                0.00    0.00   30497/61005       ioopm_hash_table_iterator_at_end [19]
+                0.00    0.00   30497/30497       advance_iterator_state [21]
+                0.00    0.00   30497/30508       skip_empty_buckets [20]
+-----------------------------------------------
+                0.00    0.00   12274/30497       resize_hash_table [14]
+                0.00    0.00   18223/30497       main [1]
+[23]     0.0    0.00    0.00   30497         ioopm_hash_table_iterator_current_key [23]
+-----------------------------------------------
+                0.00    0.00   12274/30497       resize_hash_table [14]
+                0.00    0.00   18223/30497       main [1]
+[24]     0.0    0.00    0.00   30497         ioopm_hash_table_iterator_current_value [24]
+-----------------------------------------------
+                0.00    0.00       1/11          ioopm_hash_table_create [28]
+                0.00    0.00      10/11          resize_hash_table [14]
+[25]     0.0    0.00    0.00      11         ioopm_hash_table_create_sized [25]
+-----------------------------------------------
+                0.00    0.00       1/11          main [1]
+                0.00    0.00      10/11          resize_hash_table [14]
+[26]     0.0    0.00    0.00      11         ioopm_hash_table_iterator_create [26]
+                0.00    0.00      11/30508       skip_empty_buckets [20]
+-----------------------------------------------
+                0.00    0.00       1/11          main [1]
+                0.00    0.00      10/11          resize_hash_table [14]
+[27]     0.0    0.00    0.00      11         ioopm_hash_table_iterator_destroy [27]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[28]     0.0    0.00    0.00       1         ioopm_hash_table_create [28]
+                0.00    0.00       1/11          ioopm_hash_table_create_sized [25]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[29]     0.0    0.00    0.00       1         ioopm_hash_table_size [29]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[30]     0.0    0.00    0.00       1         sort_freq_words [30]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2026 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+   [9] _init                  [25] ioopm_hash_table_create_sized [5] ioopm_hash_table_lookup
+  [21] advance_iterator_state (dp_hash_table_iterator.c) [13] ioopm_hash_table_destroy [29] ioopm_hash_table_size
+  [18] cmp_freq_words (freq_count.c) [6] ioopm_hash_table_has_key [2] process_file
+  [16] cmp_freq_words_reverse (freq_count.c) [7] ioopm_hash_table_insert [3] process_word
+  [11] destroy (freq_count.c) [22] ioopm_hash_table_iterator_advance [14] resize_hash_table (dp_hash_table.c)
+  [17] entry_create (dp_hash_table.c) [19] ioopm_hash_table_iterator_at_end [20] skip_empty_buckets (dp_hash_table_iterator.c)
+  [12] entry_destroy (dp_hash_table.c) [26] ioopm_hash_table_iterator_create [30] sort_freq_words
+   [4] find_previous_entry (dp_hash_table.c) [23] ioopm_hash_table_iterator_current_key [10] str_eq_func (freq_count.c)
+  [15] get_new_capacity (dp_hash_table.c) [24] ioopm_hash_table_iterator_current_value [8] string_knr_hash (freq_count.c)
+  [28] ioopm_hash_table_create [27] ioopm_hash_table_iterator_destroy

@@ -1,0 +1,634 @@
+--------------------------------------------------------------------------------
+Command:            ./main
+Massif arguments:   --massif-out-file=massif.file.out
+ms_print arguments: massif.file.out
+--------------------------------------------------------------------------------
+
+
+    MB
+7.757^                                                #                       
+     |                                                #                       
+     |                                                #:::::@::::@:::::       
+     |                                                #: :::@::::@:::::@      
+     |                                                #: :::@::::@:::::@:     
+     |                                                #: :::@::::@:::::@:::   
+     |                                                #: :::@::::@:::::@::::  
+     |                                                #: :::@::::@:::::@::::  
+     |                                                #: :::@::::@:::::@::::  
+     |                                                #: :::@::::@:::::@::::  
+     |                                                #: :::@::::@:::::@::::  
+     |                                                #: :::@::::@:::::@::::  
+     |                                                #: :::@::::@:::::@::::: 
+     |                                                #: :::@::::@:::::@::::: 
+     |                                                #: :::@::::@:::::@::::: 
+     |                                                #: :::@::::@:::::@::::: 
+     |                                                #: :::@::::@:::::@::::: 
+     |                                                #: :::@::::@:::::@::::: 
+     |                        :::::::@::@::::::@::::::#: :::@::::@:::::@::::: 
+     |      ::::::::@@:::::::::: ::::@: @::: ::@:: :::#: :::@::::@:::::@:::::@
+   0 +----------------------------------------------------------------------->Mi
+     0                                                                   105.3
+
+Number of snapshots: 77
+ Detailed snapshots: [12, 13, 27, 29, 35, 42 (peak), 47, 55, 65, 75]
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+  0              0                0                0             0            0
+  1      1,786,888          317,136          308,544         8,592            0
+  2      3,903,651          348,096          328,410        19,686            0
+  3      5,807,765          375,936          346,274        29,662            0
+  4      7,819,369          405,328          365,150        40,178            0
+  5      9,965,445          436,656          385,236        51,420            0
+  6     11,418,571          457,992          398,940        59,052            0
+  7     12,742,561          477,216          411,262        65,954            0
+  8     14,796,171          507,216          430,512        76,704            0
+  9     16,111,144          526,416          442,832        83,584            0
+ 10     18,556,313          561,936          465,633        96,303            0
+ 11     20,724,228          593,432          485,846       107,586            0
+ 12     22,106,953          613,536          498,734       114,802            0
+81.29% (498,734B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->46.96% (288,128B) 0x4004159: ioopm_hash_table_create (hash_table.c:12)
+| ->11.74% (72,032B) 0x4002B6B: ioopm_create_store (db.c:111)
+| | ->11.74% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+| |   ->11.74% (72,032B) 0x4001319: main (main.c:10)
+| |     
+| ->11.74% (72,032B) 0x4002B92: ioopm_create_store (db.c:112)
+| | ->11.74% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+| |   ->11.74% (72,032B) 0x4001319: main (main.c:10)
+| |     
+| ->11.74% (72,032B) 0x4002BBD: ioopm_create_store (db.c:115)
+| | ->11.74% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+| |   ->11.74% (72,032B) 0x4001319: main (main.c:10)
+| |     
+| ->11.74% (72,032B) 0x4002BE5: ioopm_create_store (db.c:116)
+|   ->11.74% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+|     ->11.74% (72,032B) 0x4001319: main (main.c:10)
+|       
+->10.87% (66,702B) 0x492496E: strdup (strdup.c:42)
+| ->10.87% (66,702B) 0x4005178: make_string (utils.c:86)
+|   ->10.87% (66,702B) 0x40052E1: ask_question (utils.c:117)
+|     ->10.87% (66,702B) 0x4005391: ask_question_string (utils.c:139)
+|       ->08.48% (52,026B) 0x4003FBA: get_desc_io (io.c:14)
+|       | ->08.48% (52,026B) 0x40014C5: create_merch_user (ui.c:18)
+|       |   ->08.48% (52,026B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|       |     ->08.48% (52,026B) 0x400136D: main (main.c:24)
+|       |       
+|       ->02.39% (14,674B) 0x4003F97: get_name_io (io.c:8)
+|       | ->02.39% (14,674B) 0x40014BC: create_merch_user (ui.c:17)
+|       |   ->02.39% (14,674B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|       |     ->02.39% (14,674B) 0x400136D: main (main.c:24)
+|       |       
+|       ->00.00% (2B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->08.70% (53,360B) 0x4002C84: ioopm_create_merch (db.c:133)
+| ->08.70% (53,360B) 0x40014EA: create_merch_user (ui.c:21)
+|   ->08.70% (53,360B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|     ->08.70% (53,360B) 0x400136D: main (main.c:24)
+|       
+->05.22% (32,016B) 0x400427C: entry_create (hash_table.c:49)
+| ->05.22% (32,016B) 0x400441F: ioopm_hash_table_insert (hash_table.c:87)
+|   ->05.22% (32,016B) 0x4002D47: ioopm_add_merch (db.c:155)
+|     ->05.22% (32,016B) 0x400196B: add_merchandise_to_store (ui.c:145)
+|       ->05.22% (32,016B) 0x400136D: main (main.c:24)
+|         
+->05.22% (32,016B) 0x40048A4: ioopm_list_create (linked_list.c:28)
+| ->05.22% (32,016B) 0x4002CBC: ioopm_create_merch (db.c:139)
+|   ->05.22% (32,016B) 0x40014EA: create_merch_user (ui.c:21)
+|     ->05.22% (32,016B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|       ->05.22% (32,016B) 0x400136D: main (main.c:24)
+|         
+->03.48% (21,344B) 0x40048B7: ioopm_list_create (linked_list.c:29)
+| ->03.48% (21,344B) 0x4002CBC: ioopm_create_merch (db.c:139)
+|   ->03.48% (21,344B) 0x40014EA: create_merch_user (ui.c:21)
+|     ->03.48% (21,344B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|       ->03.48% (21,344B) 0x400136D: main (main.c:24)
+|         
+->00.84% (5,168B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 13     23,859,944          638,976          515,058       123,918            0
+80.61% (515,058B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->45.09% (288,128B) 0x4004159: ioopm_hash_table_create (hash_table.c:12)
+| ->11.27% (72,032B) 0x4002B6B: ioopm_create_store (db.c:111)
+| | ->11.27% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+| |   ->11.27% (72,032B) 0x4001319: main (main.c:10)
+| |     
+| ->11.27% (72,032B) 0x4002B92: ioopm_create_store (db.c:112)
+| | ->11.27% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+| |   ->11.27% (72,032B) 0x4001319: main (main.c:10)
+| |     
+| ->11.27% (72,032B) 0x4002BBD: ioopm_create_store (db.c:115)
+| | ->11.27% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+| |   ->11.27% (72,032B) 0x4001319: main (main.c:10)
+| |     
+| ->11.27% (72,032B) 0x4002BE5: ioopm_create_store (db.c:116)
+|   ->11.27% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+|     ->11.27% (72,032B) 0x4001319: main (main.c:10)
+|       
+->11.27% (72,002B) 0x492496E: strdup (strdup.c:42)
+| ->11.27% (72,002B) 0x4005178: make_string (utils.c:86)
+|   ->11.27% (72,002B) 0x40052E1: ask_question (utils.c:117)
+|     ->11.27% (72,002B) 0x4005391: ask_question_string (utils.c:139)
+|       ->08.79% (56,160B) 0x4003FBA: get_desc_io (io.c:14)
+|       | ->08.79% (56,160B) 0x40014C5: create_merch_user (ui.c:18)
+|       |   ->08.79% (56,160B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|       |     ->08.79% (56,160B) 0x400136D: main (main.c:24)
+|       |       
+|       ->02.48% (15,840B) 0x4003F97: get_name_io (io.c:8)
+|       | ->02.48% (15,840B) 0x40014BC: create_merch_user (ui.c:17)
+|       |   ->02.48% (15,840B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|       |     ->02.48% (15,840B) 0x400136D: main (main.c:24)
+|       |       
+|       ->00.00% (2B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->09.01% (57,600B) 0x4002C84: ioopm_create_merch (db.c:133)
+| ->09.01% (57,600B) 0x40014EA: create_merch_user (ui.c:21)
+|   ->09.01% (57,600B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|     ->09.01% (57,600B) 0x400136D: main (main.c:24)
+|       
+->05.41% (34,560B) 0x400427C: entry_create (hash_table.c:49)
+| ->05.41% (34,560B) 0x400441F: ioopm_hash_table_insert (hash_table.c:87)
+|   ->05.41% (34,560B) 0x4002D47: ioopm_add_merch (db.c:155)
+|     ->05.41% (34,560B) 0x400196B: add_merchandise_to_store (ui.c:145)
+|       ->05.41% (34,560B) 0x400136D: main (main.c:24)
+|         
+->05.41% (34,560B) 0x40048A4: ioopm_list_create (linked_list.c:28)
+| ->05.41% (34,560B) 0x4002CBC: ioopm_create_merch (db.c:139)
+|   ->05.41% (34,560B) 0x40014EA: create_merch_user (ui.c:21)
+|     ->05.41% (34,560B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|       ->05.41% (34,560B) 0x400136D: main (main.c:24)
+|         
+->03.61% (23,040B) 0x40048B7: ioopm_list_create (linked_list.c:29)
+| ->03.61% (23,040B) 0x4002CBC: ioopm_create_merch (db.c:139)
+|   ->03.61% (23,040B) 0x40014EA: create_merch_user (ui.c:21)
+|     ->03.61% (23,040B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|       ->03.61% (23,040B) 0x400136D: main (main.c:24)
+|         
+->00.81% (5,168B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 14     25,000,902          655,536          525,684       129,852            0
+ 15     26,868,229          682,656          543,095       139,561            0
+ 16     28,798,501          710,736          561,113       149,623            0
+ 17     31,050,762          743,616          582,211       161,405            0
+ 18     32,348,929          762,576          594,377       168,199            0
+ 19     34,062,727          787,536          610,384       177,152            0
+ 20     35,721,839          811,536          625,784       185,752            0
+ 21     37,428,543          836,256          641,646       194,610            0
+ 22     39,786,340          870,336          663,514       206,822            0
+ 23     42,244,269          906,096          686,460       219,636            0
+ 24     43,501,089          924,336          698,173       226,163            0
+ 25     44,788,810          943,056          710,176       232,880            0
+ 26     46,763,109          971,856          728,665       243,191            0
+ 27     48,437,163          996,336          744,364       251,972            0
+74.71% (744,364B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->28.92% (288,128B) 0x4004159: ioopm_hash_table_create (hash_table.c:12)
+| ->07.23% (72,032B) 0x4002B6B: ioopm_create_store (db.c:111)
+| | ->07.23% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+| |   ->07.23% (72,032B) 0x4001319: main (main.c:10)
+| |     
+| ->07.23% (72,032B) 0x4002B92: ioopm_create_store (db.c:112)
+| | ->07.23% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+| |   ->07.23% (72,032B) 0x4001319: main (main.c:10)
+| |     
+| ->07.23% (72,032B) 0x4002BBD: ioopm_create_store (db.c:115)
+| | ->07.23% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+| |   ->07.23% (72,032B) 0x4001319: main (main.c:10)
+| |     
+| ->07.23% (72,032B) 0x4002BE5: ioopm_create_store (db.c:116)
+|   ->07.23% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+|     ->07.23% (72,032B) 0x4001319: main (main.c:10)
+|       
+->14.70% (146,452B) 0x492496E: strdup (strdup.c:42)
+| ->14.70% (146,452B) 0x4005178: make_string (utils.c:86)
+|   ->14.70% (146,452B) 0x40052E1: ask_question (utils.c:117)
+|     ->14.70% (146,452B) 0x4005391: ask_question_string (utils.c:139)
+|       ->11.47% (114,231B) 0x4003FBA: get_desc_io (io.c:14)
+|       | ->11.47% (114,231B) 0x40014C5: create_merch_user (ui.c:18)
+|       |   ->11.47% (114,231B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|       |     ->11.47% (114,231B) 0x400136D: main (main.c:24)
+|       |       
+|       ->03.23% (32,219B) 0x4003F97: get_name_io (io.c:8)
+|       | ->03.23% (32,219B) 0x40014BC: create_merch_user (ui.c:17)
+|       |   ->03.23% (32,219B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|       |     ->03.23% (32,219B) 0x400136D: main (main.c:24)
+|       |       
+|       ->00.00% (2B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->11.76% (117,160B) 0x4002C84: ioopm_create_merch (db.c:133)
+| ->11.76% (117,160B) 0x40014EA: create_merch_user (ui.c:21)
+|   ->11.76% (117,160B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|     ->11.76% (117,160B) 0x400136D: main (main.c:24)
+|       
+->07.06% (70,296B) 0x400427C: entry_create (hash_table.c:49)
+| ->07.06% (70,296B) 0x400441F: ioopm_hash_table_insert (hash_table.c:87)
+|   ->07.06% (70,296B) 0x4002D47: ioopm_add_merch (db.c:155)
+|     ->07.06% (70,296B) 0x400196B: add_merchandise_to_store (ui.c:145)
+|       ->07.06% (70,296B) 0x400136D: main (main.c:24)
+|         
+->07.06% (70,296B) 0x40048A4: ioopm_list_create (linked_list.c:28)
+| ->07.06% (70,296B) 0x4002CBC: ioopm_create_merch (db.c:139)
+|   ->07.06% (70,296B) 0x40014EA: create_merch_user (ui.c:21)
+|     ->07.06% (70,296B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|       ->07.06% (70,296B) 0x400136D: main (main.c:24)
+|         
+->04.70% (46,864B) 0x40048B7: ioopm_list_create (linked_list.c:29)
+| ->04.70% (46,864B) 0x4002CBC: ioopm_create_merch (db.c:139)
+|   ->04.70% (46,864B) 0x40014EA: create_merch_user (ui.c:21)
+|     ->04.70% (46,864B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|       ->04.70% (46,864B) 0x400136D: main (main.c:24)
+|         
+->00.52% (5,168B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 28     50,114,449        1,013,352          755,296       258,056            0
+ 29     52,257,920        1,037,360          779,296       258,064            0
+75.12% (779,296B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->27.78% (288,128B) 0x4004159: ioopm_hash_table_create (hash_table.c:12)
+| ->06.94% (72,032B) 0x4002B6B: ioopm_create_store (db.c:111)
+| | ->06.94% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+| |   ->06.94% (72,032B) 0x4001319: main (main.c:10)
+| |     
+| ->06.94% (72,032B) 0x4002B92: ioopm_create_store (db.c:112)
+| | ->06.94% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+| |   ->06.94% (72,032B) 0x4001319: main (main.c:10)
+| |     
+| ->06.94% (72,032B) 0x4002BBD: ioopm_create_store (db.c:115)
+| | ->06.94% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+| |   ->06.94% (72,032B) 0x4001319: main (main.c:10)
+| |     
+| ->06.94% (72,032B) 0x4002BE5: ioopm_create_store (db.c:116)
+|   ->06.94% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+|     ->06.94% (72,032B) 0x4001319: main (main.c:10)
+|       
+->14.46% (150,000B) 0x492496E: strdup (strdup.c:42)
+| ->14.46% (150,000B) 0x4005178: make_string (utils.c:86)
+|   ->14.46% (150,000B) 0x40052E1: ask_question (utils.c:117)
+|     ->14.46% (150,000B) 0x4005391: ask_question_string (utils.c:139)
+|       ->11.28% (117,000B) 0x4003FBA: get_desc_io (io.c:14)
+|       | ->11.28% (117,000B) 0x40014C5: create_merch_user (ui.c:18)
+|       |   ->11.28% (117,000B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|       |     ->11.28% (117,000B) 0x400136D: main (main.c:24)
+|       |       
+|       ->03.18% (33,000B) 0x4003F97: get_name_io (io.c:8)
+|       | ->03.18% (33,000B) 0x40014BC: create_merch_user (ui.c:17)
+|       |   ->03.18% (33,000B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|       |     ->03.18% (33,000B) 0x400136D: main (main.c:24)
+|       |       
+|       ->00.00% (0B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->11.57% (120,000B) 0x4002C84: ioopm_create_merch (db.c:133)
+| ->11.57% (120,000B) 0x40014EA: create_merch_user (ui.c:21)
+|   ->11.57% (120,000B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|     ->11.57% (120,000B) 0x400136D: main (main.c:24)
+|       
+->06.94% (72,000B) 0x400427C: entry_create (hash_table.c:49)
+| ->06.94% (72,000B) 0x400441F: ioopm_hash_table_insert (hash_table.c:87)
+|   ->06.94% (72,000B) 0x4002D47: ioopm_add_merch (db.c:155)
+|     ->06.94% (72,000B) 0x400196B: add_merchandise_to_store (ui.c:145)
+|       ->06.94% (72,000B) 0x400136D: main (main.c:24)
+|         
+->06.94% (72,000B) 0x40048A4: ioopm_list_create (linked_list.c:28)
+| ->06.94% (72,000B) 0x4002CBC: ioopm_create_merch (db.c:139)
+|   ->06.94% (72,000B) 0x40014EA: create_merch_user (ui.c:21)
+|     ->06.94% (72,000B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|       ->06.94% (72,000B) 0x400136D: main (main.c:24)
+|         
+->04.63% (48,000B) 0x40048B7: ioopm_list_create (linked_list.c:29)
+| ->04.63% (48,000B) 0x4002CBC: ioopm_create_merch (db.c:139)
+|   ->04.63% (48,000B) 0x40014EA: create_merch_user (ui.c:21)
+|     ->04.63% (48,000B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|       ->04.63% (48,000B) 0x400136D: main (main.c:24)
+|         
+->02.31% (24,000B) 0x48B420C: qsort_r_malloc (qsort.c:377)
+| ->02.31% (24,000B) 0x48B420C: qsort_r (qsort.c:413)
+|   ->02.31% (24,000B) 0x4001685: sort_merch (ui.c:66)
+|     ->02.31% (24,000B) 0x4001EC8: list_merchandise (ui.c:293)
+|       ->02.31% (24,000B) 0x4001384: main (main.c:28)
+|         
+->00.50% (5,168B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 30     53,859,384        1,013,160          755,155       258,005            0
+ 31     56,000,324          984,816          736,981       247,835            0
+ 32     58,129,526          956,736          718,963       237,773            0
+ 33     60,252,758          928,872          701,083       227,789            0
+ 34     61,851,790          907,776          687,538       220,238            0
+ 35     62,915,366          893,880          678,617       215,263            0
+75.92% (678,617B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->32.23% (288,128B) 0x4004159: ioopm_hash_table_create (hash_table.c:12)
+| ->08.06% (72,032B) 0x4002B6B: ioopm_create_store (db.c:111)
+| | ->08.06% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+| |   ->08.06% (72,032B) 0x4001319: main (main.c:10)
+| |     
+| ->08.06% (72,032B) 0x4002B92: ioopm_create_store (db.c:112)
+| | ->08.06% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+| |   ->08.06% (72,032B) 0x4001319: main (main.c:10)
+| |     
+| ->08.06% (72,032B) 0x4002BBD: ioopm_create_store (db.c:115)
+| | ->08.06% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+| |   ->08.06% (72,032B) 0x4001319: main (main.c:10)
+| |     
+| ->08.06% (72,032B) 0x4002BE5: ioopm_create_store (db.c:116)
+|   ->08.06% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+|     ->08.06% (72,032B) 0x4001319: main (main.c:10)
+|       
+->14.00% (125,113B) 0x492496E: strdup (strdup.c:42)
+| ->14.00% (125,113B) 0x4005178: make_string (utils.c:86)
+|   ->14.00% (125,113B) 0x40052E1: ask_question (utils.c:117)
+|     ->14.00% (125,113B) 0x4005391: ask_question_string (utils.c:139)
+|       ->10.92% (97,578B) 0x4003FBA: get_desc_io (io.c:14)
+|       | ->10.92% (97,578B) 0x40014C5: create_merch_user (ui.c:18)
+|       |   ->10.92% (97,578B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|       |     ->10.92% (97,578B) 0x400136D: main (main.c:24)
+|       |       
+|       ->03.08% (27,533B) 0x4003F97: get_name_io (io.c:8)
+|       | ->03.08% (27,522B) 0x40014BC: create_merch_user (ui.c:17)
+|       | | ->03.08% (27,522B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|       | |   ->03.08% (27,522B) 0x400136D: main (main.c:24)
+|       | |     
+|       | ->00.00% (11B) in 1+ places, all below ms_print's threshold (01.00%)
+|       | 
+|       ->00.00% (2B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->11.20% (100,080B) 0x4002C84: ioopm_create_merch (db.c:133)
+| ->11.20% (100,080B) 0x40014EA: create_merch_user (ui.c:21)
+|   ->11.20% (100,080B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|     ->11.20% (100,080B) 0x400136D: main (main.c:24)
+|       
+->06.72% (60,048B) 0x400427C: entry_create (hash_table.c:49)
+| ->06.72% (60,048B) 0x400441F: ioopm_hash_table_insert (hash_table.c:87)
+|   ->06.72% (60,048B) 0x4002D47: ioopm_add_merch (db.c:155)
+|     ->06.72% (60,048B) 0x400196B: add_merchandise_to_store (ui.c:145)
+|       ->06.72% (60,048B) 0x400136D: main (main.c:24)
+|         
+->06.72% (60,048B) 0x40048A4: ioopm_list_create (linked_list.c:28)
+| ->06.72% (60,048B) 0x4002CBC: ioopm_create_merch (db.c:139)
+|   ->06.72% (60,048B) 0x40014EA: create_merch_user (ui.c:21)
+|     ->06.72% (60,048B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|       ->06.72% (60,048B) 0x400136D: main (main.c:24)
+|         
+->04.48% (40,032B) 0x40048B7: ioopm_list_create (linked_list.c:29)
+| ->04.48% (40,032B) 0x4002CBC: ioopm_create_merch (db.c:139)
+|   ->04.48% (40,032B) 0x40014EA: create_merch_user (ui.c:21)
+|     ->04.48% (40,032B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|       ->04.48% (40,032B) 0x400136D: main (main.c:24)
+|         
+->00.58% (5,168B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 36     64,506,476          873,000          665,219       207,781            0
+ 37     66,098,777          852,120          651,821       200,299            0
+ 38     67,165,429          837,936          642,724       195,212            0
+ 39     69,289,803          859,432          655,997       203,435            0
+ 40     70,886,277          882,816          670,492       212,324            0
+ 41     72,488,754          906,336          685,094       221,242            0
+ 42     74,697,437        8,133,776        7,902,873       230,903            0
+97.16% (7,902,873B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->92.10% (7,491,328B) 0x4004159: ioopm_hash_table_create (hash_table.c:12)
+| ->88.56% (7,203,200B) 0x400339E: ioopm_create_cart (cart.c:50)
+| | ->88.56% (7,203,200B) 0x4003436: ioopm_add_cart (cart.c:68)
+| |   ->88.56% (7,203,200B) 0x40021A9: add_cart_in_store (ui.c:378)
+| |     ->88.56% (7,203,200B) 0x40013F7: main (main.c:48)
+| |       
+| ->03.54% (288,128B) in 4 places, all below massif's threshold (1.00%)
+|   
+->02.18% (177,168B) in 9 places, all below massif's threshold (1.00%)
+| 
+->01.59% (129,377B) 0x492496E: strdup (strdup.c:42)
+| ->01.59% (129,377B) 0x4005178: make_string (utils.c:86)
+|   ->01.59% (129,377B) 0x40052E1: ask_question (utils.c:117)
+|     ->01.59% (129,377B) 0x4005391: ask_question_string (utils.c:139)
+|       ->01.23% (99,750B) 0x4003FBA: get_desc_io (io.c:14)
+|       | ->01.23% (99,750B) 0x40014C5: create_merch_user (ui.c:18)
+|       |   ->01.23% (99,750B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|       |     ->01.23% (99,750B) 0x400136D: main (main.c:24)
+|       |       
+|       ->00.36% (29,627B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->01.29% (105,000B) 0x4002C84: ioopm_create_merch (db.c:133)
+  ->01.29% (105,000B) 0x40014EA: create_merch_user (ui.c:21)
+    ->01.29% (105,000B) 0x4001954: add_merchandise_to_store (ui.c:143)
+      ->01.29% (105,000B) 0x400136D: main (main.c:24)
+        
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 43     76,506,647        7,629,024        7,398,367       230,657            0
+ 44     79,045,748        7,422,392        7,187,299       235,093            0
+ 45     80,749,581        7,422,888        7,187,587       235,301            0
+ 46     81,602,455        7,423,128        7,187,731       235,397            0
+ 47     83,304,539        7,423,528        7,187,971       235,557            0
+96.83% (7,187,971B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->91.21% (6,771,008B) 0x4004159: ioopm_hash_table_create (hash_table.c:12)
+| ->87.33% (6,482,880B) 0x400339E: ioopm_create_cart (cart.c:50)
+| | ->87.33% (6,482,880B) 0x4003436: ioopm_add_cart (cart.c:68)
+| |   ->87.33% (6,482,880B) 0x40021A9: add_cart_in_store (ui.c:378)
+| |     ->87.33% (6,482,880B) 0x40013F7: main (main.c:48)
+| |       
+| ->03.88% (288,128B) in 4 places, all below massif's threshold (1.00%)
+|   
+->02.46% (182,288B) in 11 places, all below massif's threshold (1.00%)
+| 
+->01.75% (129,675B) 0x492496E: strdup (strdup.c:42)
+| ->01.75% (129,675B) 0x4005178: make_string (utils.c:86)
+|   ->01.75% (129,675B) 0x40052E1: ask_question (utils.c:117)
+|     ->01.74% (129,375B) 0x4005391: ask_question_string (utils.c:139)
+|     | ->01.34% (99,750B) 0x4003FBA: get_desc_io (io.c:14)
+|     | | ->01.34% (99,750B) 0x40014C5: create_merch_user (ui.c:18)
+|     | |   ->01.34% (99,750B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|     | |     ->01.34% (99,750B) 0x400136D: main (main.c:24)
+|     | |       
+|     | ->00.40% (29,625B) in 1+ places, all below ms_print's threshold (01.00%)
+|     | 
+|     ->00.00% (300B) in 1+ places, all below ms_print's threshold (01.00%)
+|     
+->01.41% (105,000B) 0x4002C84: ioopm_create_merch (db.c:133)
+  ->01.41% (105,000B) 0x40014EA: create_merch_user (ui.c:21)
+    ->01.41% (105,000B) 0x4001954: add_merchandise_to_store (ui.c:143)
+      ->01.41% (105,000B) 0x400136D: main (main.c:24)
+        
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 48     85,010,281        7,424,008        7,188,259       235,749            0
+ 49     86,716,061        7,424,488        7,188,547       235,941            0
+ 50     87,569,049        7,424,728        7,188,691       236,037            0
+ 51     88,421,939        7,424,968        7,188,835       236,133            0
+ 52     89,274,829        7,425,208        7,188,979       236,229            0
+ 53     90,127,852        7,425,448        7,189,123       236,325            0
+ 54     90,986,805        7,425,632        7,189,221       236,411            0
+ 55     91,839,695        7,425,872        7,189,365       236,507            0
+96.82% (7,189,365B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->91.18% (6,771,008B) 0x4004159: ioopm_hash_table_create (hash_table.c:12)
+| ->87.30% (6,482,880B) 0x400339E: ioopm_create_cart (cart.c:50)
+| | ->87.30% (6,482,880B) 0x4003436: ioopm_add_cart (cart.c:68)
+| |   ->87.30% (6,482,880B) 0x40021A9: add_cart_in_store (ui.c:378)
+| |     ->87.30% (6,482,880B) 0x40013F7: main (main.c:48)
+| |       
+| ->03.88% (288,128B) in 4 places, all below massif's threshold (1.00%)
+|   
+->02.47% (183,680B) in 11 places, all below massif's threshold (1.00%)
+| 
+->01.75% (129,677B) 0x492496E: strdup (strdup.c:42)
+| ->01.75% (129,677B) 0x4005178: make_string (utils.c:86)
+|   ->01.75% (129,677B) 0x40052E1: ask_question (utils.c:117)
+|     ->01.74% (129,377B) 0x4005391: ask_question_string (utils.c:139)
+|     | ->01.34% (99,750B) 0x4003FBA: get_desc_io (io.c:14)
+|     | | ->01.34% (99,750B) 0x40014C5: create_merch_user (ui.c:18)
+|     | |   ->01.34% (99,750B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|     | |     ->01.34% (99,750B) 0x400136D: main (main.c:24)
+|     | |       
+|     | ->00.40% (29,627B) in 1+ places, all below ms_print's threshold (01.00%)
+|     | 
+|     ->00.00% (300B) in 1+ places, all below ms_print's threshold (01.00%)
+|     
+->01.41% (105,000B) 0x4002C84: ioopm_create_merch (db.c:133)
+  ->01.41% (105,000B) 0x40014EA: create_merch_user (ui.c:21)
+    ->01.41% (105,000B) 0x4001954: add_merchandise_to_store (ui.c:143)
+      ->01.41% (105,000B) 0x400136D: main (main.c:24)
+        
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 56     92,692,585        7,426,112        7,189,509       236,603            0
+ 57     93,545,475        7,426,352        7,189,653       236,699            0
+ 58     94,398,365        7,426,592        7,189,797       236,795            0
+ 59     95,251,239        7,426,832        7,189,941       236,891            0
+ 60     96,104,129        7,427,072        7,190,085       236,987            0
+ 61     96,957,019        7,427,312        7,190,229       237,083            0
+ 62     97,809,909        7,427,552        7,190,373       237,179            0
+ 63     98,760,740        7,355,304        7,118,227       237,077            0
+ 64     99,616,673        7,138,896        6,901,941       236,955            0
+ 65    100,586,621        6,994,504        6,757,699       236,805            0
+96.61% (6,757,699B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->90.63% (6,338,816B) 0x4004159: ioopm_hash_table_create (hash_table.c:12)
+| ->86.51% (6,050,688B) 0x400339E: ioopm_create_cart (cart.c:50)
+| | ->86.51% (6,050,688B) 0x4003436: ioopm_add_cart (cart.c:68)
+| |   ->86.51% (6,050,688B) 0x40021A9: add_cart_in_store (ui.c:378)
+| |     ->86.51% (6,050,688B) 0x40013F7: main (main.c:48)
+| |       
+| ->01.03% (72,032B) 0x4002B6B: ioopm_create_store (db.c:111)
+| | ->01.03% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+| |   ->01.03% (72,032B) 0x4001319: main (main.c:10)
+| |     
+| ->01.03% (72,032B) 0x4002B92: ioopm_create_store (db.c:112)
+| | ->01.03% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+| |   ->01.03% (72,032B) 0x4001319: main (main.c:10)
+| |     
+| ->01.03% (72,032B) 0x4002BBD: ioopm_create_store (db.c:115)
+| | ->01.03% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+| |   ->01.03% (72,032B) 0x4001319: main (main.c:10)
+| |     
+| ->01.03% (72,032B) 0x4002BE5: ioopm_create_store (db.c:116)
+|   ->01.03% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+|     ->01.03% (72,032B) 0x4001319: main (main.c:10)
+|       
+->02.63% (184,208B) in 11 places, all below massif's threshold (1.00%)
+| 
+->01.85% (129,675B) 0x492496E: strdup (strdup.c:42)
+| ->01.85% (129,675B) 0x4005178: make_string (utils.c:86)
+|   ->01.85% (129,675B) 0x40052E1: ask_question (utils.c:117)
+|     ->01.85% (129,375B) 0x4005391: ask_question_string (utils.c:139)
+|     | ->01.43% (99,750B) 0x4003FBA: get_desc_io (io.c:14)
+|     | | ->01.43% (99,750B) 0x40014C5: create_merch_user (ui.c:18)
+|     | |   ->01.43% (99,750B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|     | |     ->01.43% (99,750B) 0x400136D: main (main.c:24)
+|     | |       
+|     | ->00.42% (29,625B) in 1+ places, all below ms_print's threshold (01.00%)
+|     | 
+|     ->00.00% (300B) in 1+ places, all below ms_print's threshold (01.00%)
+|     
+->01.50% (105,000B) 0x4002C84: ioopm_create_merch (db.c:133)
+  ->01.50% (105,000B) 0x40014EA: create_merch_user (ui.c:21)
+    ->01.50% (105,000B) 0x4001954: add_merchandise_to_store (ui.c:143)
+      ->01.50% (105,000B) 0x400136D: main (main.c:24)
+        
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 66    101,553,766        6,850,176        6,613,483       236,693            0
+ 67    102,409,714        6,633,768        6,397,197       236,571            0
+ 68    103,380,352        6,489,376        6,252,955       236,421            0
+ 69    104,346,792        6,345,048        6,108,739       236,309            0
+ 70    105,204,319        6,128,560        5,892,405       236,155            0
+ 71    106,060,987        5,909,208        5,674,379       234,829            0
+ 72    106,929,027        4,610,880        4,376,811       234,069            0
+ 73    107,797,130        3,312,488        3,079,203       233,285            0
+ 74    108,665,201        2,014,096        1,781,595       232,501            0
+ 75    109,518,102          769,104          544,075       225,029            0
+70.74% (544,075B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->18.73% (144,064B) 0x4004159: ioopm_hash_table_create (hash_table.c:12)
+| ->09.37% (72,032B) 0x4002B6B: ioopm_create_store (db.c:111)
+| | ->09.37% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+| |   ->09.37% (72,032B) 0x4001319: main (main.c:10)
+| |     
+| ->09.37% (72,032B) 0x4002BE5: ioopm_create_store (db.c:116)
+| | ->09.37% (72,032B) 0x40014A9: ioopm_make_store (ui.c:12)
+| |   ->09.37% (72,032B) 0x4001319: main (main.c:10)
+| |     
+| ->00.00% (0B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->16.36% (125,795B) 0x492496E: strdup (strdup.c:42)
+| ->16.36% (125,795B) 0x4005178: make_string (utils.c:86)
+|   ->16.36% (125,795B) 0x40052E1: ask_question (utils.c:117)
+|     ->16.32% (125,495B) 0x4005391: ask_question_string (utils.c:139)
+|     | ->12.58% (96,736B) 0x4003FBA: get_desc_io (io.c:14)
+|     | | ->12.58% (96,736B) 0x40014C5: create_merch_user (ui.c:18)
+|     | |   ->12.58% (96,736B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|     | |     ->12.58% (96,736B) 0x400136D: main (main.c:24)
+|     | |       
+|     | ->03.74% (28,759B) 0x4003F97: get_name_io (io.c:8)
+|     | | ->03.74% (28,759B) 0x40014BC: create_merch_user (ui.c:17)
+|     | | | ->03.74% (28,759B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|     | | |   ->03.74% (28,759B) 0x400136D: main (main.c:24)
+|     | | |     
+|     | | ->00.00% (0B) in 1+ places, all below ms_print's threshold (01.00%)
+|     | | 
+|     | ->00.00% (0B) in 1+ places, all below ms_print's threshold (01.00%)
+|     | 
+|     ->00.04% (300B) in 1+ places, all below ms_print's threshold (01.00%)
+|     
+->13.25% (101,880B) 0x4002C84: ioopm_create_merch (db.c:133)
+| ->13.25% (101,880B) 0x40014EA: create_merch_user (ui.c:21)
+|   ->13.25% (101,880B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|     ->13.25% (101,880B) 0x400136D: main (main.c:24)
+|       
+->08.10% (62,328B) 0x400427C: entry_create (hash_table.c:49)
+| ->08.10% (62,328B) 0x400441F: ioopm_hash_table_insert (hash_table.c:87)
+|   ->07.95% (61,128B) 0x4002D47: ioopm_add_merch (db.c:155)
+|   | ->07.95% (61,128B) 0x400196B: add_merchandise_to_store (ui.c:145)
+|   |   ->07.95% (61,128B) 0x400136D: main (main.c:24)
+|   |     
+|   ->00.16% (1,200B) in 1+ places, all below ms_print's threshold (01.00%)
+|   
+->07.94% (61,104B) 0x40048A4: ioopm_list_create (linked_list.c:28)
+| ->07.94% (61,104B) 0x4002CBC: ioopm_create_merch (db.c:139)
+|   ->07.94% (61,104B) 0x40014EA: create_merch_user (ui.c:21)
+|     ->07.94% (61,104B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|       ->07.94% (61,104B) 0x400136D: main (main.c:24)
+|         
+->05.30% (40,736B) 0x40048B7: ioopm_list_create (linked_list.c:29)
+| ->05.30% (40,736B) 0x4002CBC: ioopm_create_merch (db.c:139)
+|   ->05.30% (40,736B) 0x40014EA: create_merch_user (ui.c:21)
+|     ->05.30% (40,736B) 0x4001954: add_merchandise_to_store (ui.c:143)
+|       ->05.30% (40,736B) 0x400136D: main (main.c:24)
+|         
+->01.06% (8,168B) in 8 places, all below massif's threshold (1.00%)
+  
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 76    110,370,995          314,288          254,347        59,941            0

@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include "common_elem.h"
 
-#define No_Buckets 17
+#define No_Buckets 3000
 
 typedef struct entry entry_t;
 
