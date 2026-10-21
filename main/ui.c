@@ -155,6 +155,15 @@ void remove_merchandise_from_store(store_t *store)
   puts("--------- REMOVING MERCH ---------");
 
   char *name = get_name_io();
+
+  bool to_remove = is_confirmed_io();
+  if (!to_remove)
+  {
+    free(name);
+    puts("----------------------------------\n");
+    return;
+  }
+
   bool removed = ioopm_remove_merch(store, name);
   if (!removed)
   {
@@ -165,8 +174,8 @@ void remove_merchandise_from_store(store_t *store)
     printf("\n%s HAS BEEN REMOVED FROM THE STORE!!\n", name);
   }
 
-  puts("----------------------------------\n");
   free(name);
+  puts("----------------------------------\n");
 }
 
 static void update_merch_info(store_t *store, merch_t *merch)
@@ -229,6 +238,8 @@ void replenish_merchandise_in_store(store_t *store)
   puts("----------------------------------");
   puts("---------- REPLENSISH ------------");
 
+  char *shelf_name = get_shelf_io();
+
   char *merch_name = get_name_io();
 
   elem_t merch_elem;
@@ -237,11 +248,11 @@ void replenish_merchandise_in_store(store_t *store)
   {
     puts("\nA MERCHANDISE BY THIS NAME DOES NOT EXIST!!");
 
+    free(shelf_name);
     free(merch_name);
     return;
   }
 
-  char *shelf_name = get_shelf_io();
   size_t quantity = get_quantity_io();
 
   bool replenished = ioopm_replenish(store, merch_name, quantity, shelf_name);
@@ -250,7 +261,7 @@ void replenish_merchandise_in_store(store_t *store)
     puts("YOU CAN ONLY STORE ON TYPE OF MERCHANDISE ON A SHELF!!");
   }
 
-  free(merch_name);
+  //free(merch_name);
   puts("----------------------------------\n");
 }
 
@@ -349,7 +360,6 @@ void show_stock(store_t *store)
   free(merch_name);
 
   puts("----------------------------------\n");
-
 }
 
 void add_cart_in_store(store_t *store)
@@ -358,7 +368,7 @@ void add_cart_in_store(store_t *store)
 
   ioopm_add_cart(store);
   puts("A CART HAS SUCCESSFULLY BEEN ADDED!!");
-  
+
   puts("----------------------------------\n");
 }
 
@@ -391,9 +401,8 @@ void add_to_cart_in_store(store_t *store)
   puts("----------------------------------");
   puts("--------- ADDING TO CART ---------");
 
-  char *merch_name = get_name_io();
-
   size_t cart_id = get_cart_id_io();
+  char *merch_name = get_name_io();
   size_t quantity = get_quantity_io();
   puts("----------------------------------");
 
@@ -416,7 +425,40 @@ void add_to_cart_in_store(store_t *store)
     printf("ADDED TO THE CART %ld!!\n", cart_id);
     break;
   }
-  
+
+  puts("----------------------------------\n");
+}
+
+void remove_from_cart_in_store(store_t *store)
+{
+  puts("----------------------------------");
+  puts("------- REMOVING FROM CART -------");
+
+  size_t cart_id = get_cart_id_io();
+  char *merch_name = get_name_io();
+  size_t quantity = get_quantity_io();
+  puts("----------------------------------");
+
+  int res = ioopm_remove_from_cart(store, cart_id, merch_name, quantity);
+  switch (res)
+  {
+  case -1:
+    printf("INVALID CART ID!!\n");
+    break;
+
+  case -2:
+    printf("THERE IS NO SUCH MERCHANDISE IN THE STORE!!\n");
+    break;
+
+  case -3:
+    printf("QUANTITY EXCEEDS THE AMOUNT IN THE CART!!\n");
+    break;
+
+  default:
+    printf("MERCHANDISE HAS BEEN REMOVED FROM CART %ld!!\n", cart_id);
+    break;
+  }
+
   puts("----------------------------------\n");
 }
 
@@ -429,7 +471,7 @@ void remove_cart_in_store(store_t *store)
   puts("----------------------------------");
 
   bool removed = ioopm_remove_cart(store, cart_id);
-  if(removed)
+  if (removed)
   {
     printf("CART %ld HAS BEEN REMOVED!!", cart_id);
   }
@@ -437,7 +479,7 @@ void remove_cart_in_store(store_t *store)
   {
     printf("INVALID CART ID!!");
   }
-  
+
   puts("----------------------------------\n");
 }
 
@@ -449,6 +491,13 @@ void calculate_cart_cost(store_t *store)
   size_t cart_id = get_cart_id_io();
 
   long long cost = ioopm_calculate_cost(store, cart_id);
+  if (cost == -1)
+  {
+    printf("CART %ld DOES NOT EXIST!!\n", cart_id);
+    puts("----------------------------------\n");
+    return;
+  }
+
   printf("THE TOTAL COST OF CART %ld is %lld\n", cart_id, cost);
 
   puts("----------------------------------\n");
@@ -462,37 +511,15 @@ void checkout_cart(store_t *store)
   size_t cart_id = get_cart_id_io();
 
   long long cost = ioopm_checkout(store, cart_id);
+  if (cost == -1)
+  {
+    printf("CART %ld DOES NOT EXIST!!\n", cart_id);
+    puts("----------------------------------\n");
+    return;
+  }
+
   printf("CART %ld HAS BEEN CHECKED OUT!!\n", cart_id);
   printf("TOTAL: %lld!!\n", cost);
 
   puts("----------------------------------\n");
-}
-
-int main(void)
-{
-  store_t *store = ioopm_create_store();
-
-  merch_t *milk = ioopm_create_merch(strdup("Milk"), strdup("Whole milk 1L"), 15);
-  // merch_t *bread = ioopm_create_merch(strdup("Bread"), strdup("Wholegrain bread"), 25);
-  // merch_t *eggs = ioopm_create_merch(strdup("Eggs"), strdup("Pack of 12 eggs"), 35);
-  // merch_t *apples = ioopm_create_merch(strdup("Apples"), strdup("Red apples 1kg"), 20);
-  // merch_t *coffee = ioopm_create_merch(strdup("Coffee"), strdup("Ground coffee 500g"), 65);
-
-  ioopm_add_merch(store, milk);
-  // ioopm_add_merch(store, bread);
-  // ioopm_add_merch(store, eggs);
-  // ioopm_add_merch(store, apples);
-  // ioopm_add_merch(store, coffee);
-
-  ioopm_replenish(store, strdup("Milk"), 15, strdup("A20"));
-
-  add_cart_in_store(store);
-
-  show_stock(store);
-  add_to_cart_in_store(store);
-  checkout_cart(store);
-  show_stock(store);
-
-  ioopm_destroy_store(store);
-  return 0;
 }
