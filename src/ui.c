@@ -270,7 +270,7 @@ void replenish_merchandise_in_store(store_t *store)
     puts("----------------------------------\n");
   }
 
-  printf("%s HAS BEEN ADDED TO %s!!", merch_name, shelf_name);
+  printf("THER MERCHANDISE HAS BEEN ADDED TO %s!!", shelf_name);
   puts("----------------------------------\n");
 }
 
