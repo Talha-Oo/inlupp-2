@@ -1,0 +1,588 @@
+----------------------------------
+------- STORE MANAGEMENT!! -------
+----------------------------------
+
+----------------------------------
+
+[A] Add Merchandise
+[L] List Merchandise
+[D] Remove Merchandise
+[E] Edit Merchandise
+[S] Show Stock
+[P] Replenish Stock
+
+[C] Create Cart
+[R] Remove Cart
+[+] Add To Cart
+[-] Remove From Cart
+[=] Calculate Cart Cost
+[O] Checkout Cart
+
+[Q] Quit
+
+----------------------------------
+ENTER: ----------------------------------
+---------- ADDING MERCH ----------
+MERCHANDISE NAME: DESCRIPTION: PRICE: 
+CCZ HAS BEEN ADDED TO THE STORE!!
+----------------------------------
+
+----------------------------------
+
+[A] Add Merchandise
+[L] List Merchandise
+[D] Remove Merchandise
+[E] Edit Merchandise
+[S] Show Stock
+[P] Replenish Stock
+
+[C] Create Cart
+[R] Remove Cart
+[+] Add To Cart
+[-] Remove From Cart
+[=] Calculate Cart Cost
+[O] Checkout Cart
+
+[Q] Quit
+
+----------------------------------
+ENTER: ----------------------------------
+---------- ADDING MERCH ----------
+MERCHANDISE NAME: DESCRIPTION: PRICE: 
+Glass HAS BEEN ADDED TO THE STORE!!
+----------------------------------
+
+----------------------------------
+
+[A] Add Merchandise
+[L] List Merchandise
+[D] Remove Merchandise
+[E] Edit Merchandise
+[S] Show Stock
+[P] Replenish Stock
+
+[C] Create Cart
+[R] Remove Cart
+[+] Add To Cart
+[-] Remove From Cart
+[=] Calculate Cart Cost
+[O] Checkout Cart
+
+[Q] Quit
+
+----------------------------------
+ENTER: ----------------------------------
+--------- EDITING MERCH ----------
+
+ WHICH MERCH DO YOU WANT TO EDIT? 
+MERCHANDISE NAME: 
+----------------------------------
+NEW MERCHANDISE NAME: NEW DESCRIPTION: NEW PRICE: ----------------------------------
+ARE YOU SURE YOU WANT TO PROCEED?
+(Y/N): ----------------------------------
+------------- MERCH --------------
+NAME: CCZ
+DESCRIPTION: Coca Cola Zero
+Price: 10
+----------------------------------
+
+----------------------------------
+
+----------------------------------
+
+[A] Add Merchandise
+[L] List Merchandise
+[D] Remove Merchandise
+[E] Edit Merchandise
+[S] Show Stock
+[P] Replenish Stock
+
+[C] Create Cart
+[R] Remove Cart
+[+] Add To Cart
+[-] Remove From Cart
+[=] Calculate Cart Cost
+[O] Checkout Cart
+
+[Q] Quit
+
+----------------------------------
+ENTER: ----------------------------------
+------- LIST MERCHANDISE ---------
+----------------------------------
+------------- MERCH --------------
+NAME: CCZ
+DESCRIPTION: Coca Cola Zero
+Price: 10
+----------------------------------
+
+----------------------------------
+------------- MERCH --------------
+NAME: Glass
+DESCRIPTION: En liter glass
+Price: 15
+----------------------------------
+
+----------------------------------
+
+----------------------------------
+
+[A] Add Merchandise
+[L] List Merchandise
+[D] Remove Merchandise
+[E] Edit Merchandise
+[S] Show Stock
+[P] Replenish Stock
+
+[C] Create Cart
+[R] Remove Cart
+[+] Add To Cart
+[-] Remove From Cart
+[=] Calculate Cart Cost
+[O] Checkout Cart
+
+[Q] Quit
+
+----------------------------------
+ENTER: ----------------------------------
+---------- SHOW STOCK ------------
+MERCHANDISE NAME: NOTHIING TO LIST, THE MERCHANDISE HAS NO STOCK!!
+----------------------------------
+
+----------------------------------
+
+[A] Add Merchandise
+[L] List Merchandise
+[D] Remove Merchandise
+[E] Edit Merchandise
+[S] Show Stock
+[P] Replenish Stock
+
+[C] Create Cart
+[R] Remove Cart
+[+] Add To Cart
+[-] Remove From Cart
+[=] Calculate Cart Cost
+[O] Checkout Cart
+
+[Q] Quit
+
+----------------------------------
+ENTER: ----------------------------------
+---------- REPLENSISH ------------
+SHELF: MERCHANDISE NAME: QUANTITY: ----------------------------------
+
+----------------------------------
+
+[A] Add Merchandise
+[L] List Merchandise
+[D] Remove Merchandise
+[E] Edit Merchandise
+[S] Show Stock
+[P] Replenish Stock
+
+[C] Create Cart
+[R] Remove Cart
+[+] Add To Cart
+[-] Remove From Cart
+[=] Calculate Cart Cost
+[O] Checkout Cart
+
+[Q] Quit
+
+----------------------------------
+ENTER: ----------------------------------
+---------- REPLENSISH ------------
+SHELF: MERCHANDISE NAME: QUANTITY: ----------------------------------
+
+----------------------------------
+
+[A] Add Merchandise
+[L] List Merchandise
+[D] Remove Merchandise
+[E] Edit Merchandise
+[S] Show Stock
+[P] Replenish Stock
+
+[C] Create Cart
+[R] Remove Cart
+[+] Add To Cart
+[-] Remove From Cart
+[=] Calculate Cart Cost
+[O] Checkout Cart
+
+[Q] Quit
+
+----------------------------------
+ENTER: ----------------------------------
+---------- SHOW STOCK ------------
+MERCHANDISE NAME: C95: 50
+----------------------------------
+
+----------------------------------
+
+[A] Add Merchandise
+[L] List Merchandise
+[D] Remove Merchandise
+[E] Edit Merchandise
+[S] Show Stock
+[P] Replenish Stock
+
+[C] Create Cart
+[R] Remove Cart
+[+] Add To Cart
+[-] Remove From Cart
+[=] Calculate Cart Cost
+[O] Checkout Cart
+
+[Q] Quit
+
+----------------------------------
+ENTER: ----------------------------------
+A CART HAS SUCCESSFULLY BEEN ADDED!!
+----------------------------------
+
+----------------------------------
+
+[A] Add Merchandise
+[L] List Merchandise
+[D] Remove Merchandise
+[E] Edit Merchandise
+[S] Show Stock
+[P] Replenish Stock
+
+[C] Create Cart
+[R] Remove Cart
+[+] Add To Cart
+[-] Remove From Cart
+[=] Calculate Cart Cost
+[O] Checkout Cart
+
+[Q] Quit
+
+----------------------------------
+ENTER: ----------------------------------
+--------- REMOVE CART ------------
+CART ID: ARE YOU SURE YOU WANT TO PROCEED?
+(Y/N): CART 1 HAS SUCCESSFULLY DELETED!!
+----------------------------------
+
+----------------------------------
+
+[A] Add Merchandise
+[L] List Merchandise
+[D] Remove Merchandise
+[E] Edit Merchandise
+[S] Show Stock
+[P] Replenish Stock
+
+[C] Create Cart
+[R] Remove Cart
+[+] Add To Cart
+[-] Remove From Cart
+[=] Calculate Cart Cost
+[O] Checkout Cart
+
+[Q] Quit
+
+----------------------------------
+ENTER: ----------------------------------
+A CART HAS SUCCESSFULLY BEEN ADDED!!
+----------------------------------
+
+----------------------------------
+
+[A] Add Merchandise
+[L] List Merchandise
+[D] Remove Merchandise
+[E] Edit Merchandise
+[S] Show Stock
+[P] Replenish Stock
+
+[C] Create Cart
+[R] Remove Cart
+[+] Add To Cart
+[-] Remove From Cart
+[=] Calculate Cart Cost
+[O] Checkout Cart
+
+[Q] Quit
+
+----------------------------------
+ENTER: ----------------------------------
+A CART HAS SUCCESSFULLY BEEN ADDED!!
+----------------------------------
+
+----------------------------------
+
+[A] Add Merchandise
+[L] List Merchandise
+[D] Remove Merchandise
+[E] Edit Merchandise
+[S] Show Stock
+[P] Replenish Stock
+
+[C] Create Cart
+[R] Remove Cart
+[+] Add To Cart
+[-] Remove From Cart
+[=] Calculate Cart Cost
+[O] Checkout Cart
+
+[Q] Quit
+
+----------------------------------
+ENTER: ----------------------------------
+--------- ADDING TO CART ---------
+CART ID: MERCHANDISE NAME: QUANTITY: ----------------------------------
+ADDED TO THE CART 2!!
+----------------------------------
+
+----------------------------------
+
+[A] Add Merchandise
+[L] List Merchandise
+[D] Remove Merchandise
+[E] Edit Merchandise
+[S] Show Stock
+[P] Replenish Stock
+
+[C] Create Cart
+[R] Remove Cart
+[+] Add To Cart
+[-] Remove From Cart
+[=] Calculate Cart Cost
+[O] Checkout Cart
+
+[Q] Quit
+
+----------------------------------
+ENTER: ----------------------------------
+------- REMOVING FROM CART -------
+CART ID: MERCHANDISE NAME: QUANTITY: ----------------------------------
+MERCHANDISE HAS BEEN REMOVED FROM CART 2!!
+----------------------------------
+
+----------------------------------
+
+[A] Add Merchandise
+[L] List Merchandise
+[D] Remove Merchandise
+[E] Edit Merchandise
+[S] Show Stock
+[P] Replenish Stock
+
+[C] Create Cart
+[R] Remove Cart
+[+] Add To Cart
+[-] Remove From Cart
+[=] Calculate Cart Cost
+[O] Checkout Cart
+
+[Q] Quit
+
+----------------------------------
+ENTER: ----------------------------------
+--------- REMOVING MERCH ---------
+MERCHANDISE NAME: ARE YOU SURE YOU WANT TO PROCEED?
+(Y/N): 
+CCZ HAS BEEN REMOVED FROM THE STORE!!
+----------------------------------
+
+----------------------------------
+
+[A] Add Merchandise
+[L] List Merchandise
+[D] Remove Merchandise
+[E] Edit Merchandise
+[S] Show Stock
+[P] Replenish Stock
+
+[C] Create Cart
+[R] Remove Cart
+[+] Add To Cart
+[-] Remove From Cart
+[=] Calculate Cart Cost
+[O] Checkout Cart
+
+[Q] Quit
+
+----------------------------------
+ENTER: ----------------------------------
+---------- ADDING MERCH ----------
+MERCHANDISE NAME: DESCRIPTION: PRICE: 
+CC HAS BEEN ADDED TO THE STORE!!
+----------------------------------
+
+----------------------------------
+
+[A] Add Merchandise
+[L] List Merchandise
+[D] Remove Merchandise
+[E] Edit Merchandise
+[S] Show Stock
+[P] Replenish Stock
+
+[C] Create Cart
+[R] Remove Cart
+[+] Add To Cart
+[-] Remove From Cart
+[=] Calculate Cart Cost
+[O] Checkout Cart
+
+[Q] Quit
+
+----------------------------------
+ENTER: ----------------------------------
+---------- REPLENSISH ------------
+SHELF: MERCHANDISE NAME: QUANTITY: ----------------------------------
+
+----------------------------------
+
+[A] Add Merchandise
+[L] List Merchandise
+[D] Remove Merchandise
+[E] Edit Merchandise
+[S] Show Stock
+[P] Replenish Stock
+
+[C] Create Cart
+[R] Remove Cart
+[+] Add To Cart
+[-] Remove From Cart
+[=] Calculate Cart Cost
+[O] Checkout Cart
+
+[Q] Quit
+
+----------------------------------
+ENTER: ----------------------------------
+--------- ADDING TO CART ---------
+CART ID: MERCHANDISE NAME: QUANTITY: ----------------------------------
+ADDED TO THE CART 2!!
+----------------------------------
+
+----------------------------------
+
+[A] Add Merchandise
+[L] List Merchandise
+[D] Remove Merchandise
+[E] Edit Merchandise
+[S] Show Stock
+[P] Replenish Stock
+
+[C] Create Cart
+[R] Remove Cart
+[+] Add To Cart
+[-] Remove From Cart
+[=] Calculate Cart Cost
+[O] Checkout Cart
+
+[Q] Quit
+
+----------------------------------
+ENTER: ----------------------------------
+--------- CALCULATE COST ---------
+CART ID: THE TOTAL COST OF CART 2 is 120
+----------------------------------
+
+----------------------------------
+
+[A] Add Merchandise
+[L] List Merchandise
+[D] Remove Merchandise
+[E] Edit Merchandise
+[S] Show Stock
+[P] Replenish Stock
+
+[C] Create Cart
+[R] Remove Cart
+[+] Add To Cart
+[-] Remove From Cart
+[=] Calculate Cart Cost
+[O] Checkout Cart
+
+[Q] Quit
+
+----------------------------------
+ENTER: ----------------------------------
+------------ CHECKOUT ------------
+CART ID: CART 2 HAS BEEN CHECKED OUT!!
+TOTAL: 120!!
+----------------------------------
+
+----------------------------------
+
+[A] Add Merchandise
+[L] List Merchandise
+[D] Remove Merchandise
+[E] Edit Merchandise
+[S] Show Stock
+[P] Replenish Stock
+
+[C] Create Cart
+[R] Remove Cart
+[+] Add To Cart
+[-] Remove From Cart
+[=] Calculate Cart Cost
+[O] Checkout Cart
+
+[Q] Quit
+
+----------------------------------
+ENTER: ----------------------------------
+---------- SHOW STOCK ------------
+MERCHANDISE NAME: A01: 15
+----------------------------------
+
+----------------------------------
+
+[A] Add Merchandise
+[L] List Merchandise
+[D] Remove Merchandise
+[E] Edit Merchandise
+[S] Show Stock
+[P] Replenish Stock
+
+[C] Create Cart
+[R] Remove Cart
+[+] Add To Cart
+[-] Remove From Cart
+[=] Calculate Cart Cost
+[O] Checkout Cart
+
+[Q] Quit
+
+----------------------------------
+ENTER: ----------------------------------
+---------- SHOW STOCK ------------
+MERCHANDISE NAME: C95: 48
+----------------------------------
+
+----------------------------------
+
+[A] Add Merchandise
+[L] List Merchandise
+[D] Remove Merchandise
+[E] Edit Merchandise
+[S] Show Stock
+[P] Replenish Stock
+
+[C] Create Cart
+[R] Remove Cart
+[+] Add To Cart
+[-] Remove From Cart
+[=] Calculate Cart Cost
+[O] Checkout Cart
+
+[Q] Quit
+
+----------------------------------
+ENTER: ----------------------------------
+------------- QUIT?! -------------
+ARE YOU SURE YOU WANT TO PROCEED?
+(Y/N): ------------- BYE!! --------------
+----------------------------------
+
+----------------------------------
+

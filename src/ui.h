@@ -4,7 +4,9 @@
 #include <stddef.h>
 #include "../utilities/common.h"
 
-merch_t *creat_merch_user(void);
+store_t *ioopm_make_store(void);
+
+merch_t *create_merch_user(void);
 
 void add_merchandise_to_store(store_t *store);
 
@@ -31,3 +33,8 @@ void remove_cart_in_store(store_t *store);
 void calculate_cart_cost(store_t *store);
 
 void checkout_cart(store_t *store);
+
+bool confirm_quit(store_t *store);
+
+char get_action_choice(void);
+

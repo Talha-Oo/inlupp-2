@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -6,7 +7,12 @@
 #include "cart.h"
 #include "io.h"
 
-merch_t *creat_merch_user(void)
+store_t *ioopm_make_store(void)
+{
+  return ioopm_create_store();
+}
+
+merch_t *create_merch_user(void)
 {
   char *name = get_name_io();
   char *desc = get_desc_io();
@@ -134,7 +140,7 @@ void add_merchandise_to_store(store_t *store)
   puts("----------------------------------");
   puts("---------- ADDING MERCH ----------");
 
-  merch_t *merch = creat_merch_user();
+  merch_t *merch = create_merch_user();
 
   bool added = ioopm_add_merch(store, merch);
   if (!added)
@@ -522,4 +528,56 @@ void checkout_cart(store_t *store)
   printf("TOTAL: %lld!!\n", cost);
 
   puts("----------------------------------\n");
+}
+
+bool confirm_quit(store_t *store)
+{
+  puts("----------------------------------");
+  puts("------------- QUIT?! -------------");
+
+  bool quit = is_confirmed_io();
+  if(quit)
+  {
+    ioopm_destroy_store(store);
+
+    puts("------------- BYE!! --------------");
+    puts("----------------------------------\n");
+  }
+
+  puts("----------------------------------\n");
+
+  return quit;
+}
+
+char get_action_choice(void)
+{
+  puts("----------------------------------");
+  puts("");
+
+  puts("[A] Add Merchandise");
+  puts("[L] List Merchandise");
+  puts("[D] Remove Merchandise");
+  puts("[E] Edit Merchandise");
+  puts("[S] Show Stock");
+  puts("[P] Replenish Stock");
+  puts("");
+
+  puts("[C] Create Cart");
+  puts("[R] Remove Cart");
+  puts("[+] Add To Cart");
+  puts("[-] Remove From Cart");
+  puts("[=] Calculate Cart Cost");
+  puts("[O] Checkout Cart");
+  puts("");
+
+  puts("[Q] Quit");
+  puts("");
+
+  puts("----------------------------------");
+  char *action = ask_question_string("ENTER: ", "");
+
+  char upper_action = toupper(action[0]);
+  free(action);
+
+  return upper_action;
 }

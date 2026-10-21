@@ -34,6 +34,9 @@ ui: src/ui.c src/db.c src/cart.c src/io.c $(UTIL_OBJECTS)
 backend_tests: backend_tests.c src/db.c src/cart.c $(UTIL_OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $@ -lcunit	
 
+main: main.c src/ui.c src/db.c src/cart.c src/io.c $(UTIL_OBJECTS)
+	$(CC) $(CFLAGS) $^ -o $@
+
 utilities/%.o: utilities/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
