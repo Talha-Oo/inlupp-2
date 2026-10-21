@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Wpedantic -g
 COV_FLAGS = --coverage
-INPUT_FILE = webstoretest_big.txt
+INPUT_FILE = webstoretest.txt
 
 DP_UTIL_OBJECTS = utilities/hash_table.o \
 								utilities/hash_table_iterator.o \
@@ -62,14 +62,11 @@ mem: backend_tests
 memu: ui
 	valgrind --leak-check=full ./ui
 
-
-cov:
-
 cov:
 	$(CC) $(CFLAGS) $(COV_FLAGS) $(DP_COV_OBJECTS) src/db.c src/cart.c backend_tests.c -o backend_tests_cov -lcunit
 	./backend_tests_cov
 	gcov -abcf backend_tests_cov-backend_tests.gcno
-	gcovr -r . --filter 'src/db\.c' --filter 'src/cart\.c' --print-summary
+	gcovr -r . --filter 'src/db\.c' --filter 'src/cart\.c'
 
 
 run-main: main
@@ -95,13 +92,8 @@ prof: main
 	more profs/profile.txt
 	
 prof_freq:
-	rm -f gmon.out
-	gcc -Wall -Wextra -Wpedantic -g -pg \
-	    utilities/hash_table.c \
-	    utilities/hash_table_iterator.c \
-	    utilities/freq_count.c \
-	    -o freq_count
-	./freq_count sample-texts/YAP.txt
+	gcc -Wall -Wextra -Wpedantic -g -pg utilities/hash_table.c utilities/hash_table_iterator.c utilities/freq_count.c -o freq_count 
+	./freq_count sample-texts/1k-long-words.txt
 	gprof freq_count gmon.out > profile.txt
 	more profile.txt
 
