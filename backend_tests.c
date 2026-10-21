@@ -1,6 +1,6 @@
 #include "utilities/common.h"
-#include "main/db.h"
-#include "main/cart.h"
+#include "src/db.h"
+#include "src/cart.h"
 
 #include <stdbool.h>
 #include <string.h>
@@ -700,13 +700,13 @@ int main()
   // the test in question. If you want to add another test, just
   // copy a line below and change the information
   if ((
-          // CU_add_test(db, "Create/destroy", test_create_destroy_store) == NULL ||
-          // CU_add_test(db, "Create merch", test_make_destroy_merch) == NULL ||
-          // CU_add_test(db, "Adding merchs", test_add_merchs) == NULL ||
-          // CU_add_test(db, "Replenish merchs", test_replenish_merchs) == NULL ||
-          // CU_add_test(db, "Edit desc and price", test_edit_desc_price) == NULL ||
-          // CU_add_test(db, "Edit name", test_edit_merch_name) == NULL ||
-          // CU_add_test(db, "Remove merch", test_remove_merch) == NULL ||
+          CU_add_test(db, "Create/destroy", test_create_destroy_store) == NULL ||
+          CU_add_test(db, "Create merch", test_make_destroy_merch) == NULL ||
+          CU_add_test(db, "Adding merchs", test_add_merchs) == NULL ||
+          CU_add_test(db, "Replenish merchs", test_replenish_merchs) == NULL ||
+          CU_add_test(db, "Edit desc and price", test_edit_desc_price) == NULL ||
+          CU_add_test(db, "Edit name", test_edit_merch_name) == NULL ||
+          CU_add_test(db, "Remove merch", test_remove_merch) == NULL ||
           //////////////////////////// CART /////////////////////////////////
           CU_add_test(cart, "Create/destroy", test_create_destroy_cart) == NULL ||
           CU_add_test(cart, "Adding cart", test_add_carts) == NULL ||
