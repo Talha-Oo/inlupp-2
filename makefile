@@ -94,6 +94,17 @@ prof: main
 	gprof main_prof gmon.out > profs/profile.txt
 	more profs/profile.txt
 	
+prof_freq:
+	rm -f gmon.out
+	gcc -Wall -Wextra -Wpedantic -g -pg \
+	    utilities/hash_table.c \
+	    utilities/hash_table_iterator.c \
+	    utilities/freq_count.c \
+	    -o freq_count
+	./freq_count sample-texts/YAP.txt
+	gprof freq_count gmon.out > profile.txt
+	more profile.txt
+
 clean:
 	rm -f utilities/*.o
 	rm -f src/*.o
