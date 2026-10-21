@@ -1,31 +1,15 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Wpedantic -g
 COV_FLAGS = --coverage
-INPUT_FILE = webstoretest.txt
+INPUT_FILE = sample-texts/webstoretest.txt
 
-DP_UTIL_OBJECTS = utilities/hash_table.o \
-								utilities/hash_table_iterator.o \
-               	utilities/linked_list.o \
-               	utilities/linked_list_iterator.o \
-               	utilities/utils.o
+DP_UTIL_OBJECTS = utilities/hash_table.o utilities/hash_table_iterator.o utilities/linked_list.o utilities/linked_list_iterator.o utilities/utils.o
 
-DP_COV_OBJECTS = utilities/hash_table.c \
-              	utilities/hash_table_iterator.c \
-              	utilities/linked_list.c \
-              	utilities/linked_list_iterator.c \
-              	utilities/utils.c
+DP_COV_OBJECTS = utilities/hash_table.c utilities/hash_table_iterator.c utilities/linked_list.c utilities/linked_list_iterator.c utilities/utils.c
 
-DP_UTIL_OBJECTS = utilities/dp_ht/dp_hash_table.o \
-								utilities/dp_ht/dp_hash_table_iterator.o \
-               	utilities/linked_list.o \
-               	utilities/linked_list_iterator.o \
-               	utilities/utils.o
+DP_UTIL_OBJECTS = utilities/dp_ht/dp_hash_table.o utilities/dp_ht/dp_hash_table_iterator.o utilities/linked_list.o utilities/linked_list_iterator.o utilities/utils.o
 
-DP_COV_OBJECTS = utilities/dp_ht/dp_hash_table.c \
-              	utilities/dp_ht/dp_hash_table_iterator.c \
-              	utilities/linked_list.c \
-              	utilities/linked_list_iterator.c \
-              	utilities/utils.c
+DP_COV_OBJECTS = utilities/dp_ht/dp_hash_table.c utilities/dp_ht/dp_hash_table_iterator.c utilities/linked_list.c utilities/linked_list_iterator.c utilities/utils.c
 
 all: backend_tests
 
@@ -76,13 +60,10 @@ run-file: main
 	./main < $(INPUT_FILE)
 
 mem-file: main
-	valgrind --leak-check=full \
-	         ./main < $(INPUT_FILE)
+	valgrind --leak-check=full ./main < $(INPUT_FILE)
 
 massif: main
-	valgrind --tool=massif \
-	         --massif-out-file=massif.file.out \
-	         ./main < $(INPUT_FILE)
+	valgrind --tool=massif  --massif-out-file=massif.file.out ./main < $(INPUT_FILE)
 	ms_print massif.file.out > profs/YOO_MEM.txt
 
 prof: main
