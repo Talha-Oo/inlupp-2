@@ -19,19 +19,19 @@ all: backend_tests
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-db: main/db.c main/db.h utilities/common.h
+db: src/db.c src/db.h utilities/common.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
-cart: main/cart.c main/cart.h utilities/common.h
+cart: src/cart.c src/cart.h utilities/common.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
-io: main/io.c main/io.h utilities/utils.h
+io: src/io.c src/io.h utilities/utils.h
 	$(CC) $(CFLAGS) -c $< -o $@
 	
-ui: main/ui.c main/db.c main/cart.c main/io.c $(UTIL_OBJECTS)
-	$(CC) $(CFLAGS) $^ -o $@
+ui: src/ui.c src/db.c src/cart.c src/io.c $(UTIL_OBJECTS)
+	$(CC) $(CFLAGS) -c $^ -o $@
 
-backend_tests: backend_tests.c main/db.c main/cart.c $(UTIL_OBJECTS)
+backend_tests: backend_tests.c src/db.c src/cart.c $(UTIL_OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $@ -lcunit	
 
 utilities/%.o: utilities/%.c
@@ -48,14 +48,14 @@ memu: ui
 
 
 cov:
-	$(CC) $(CFLAGS) $(COV_FLAGS) $(COV_OBJECTS) main/db.c backend_tests.c -o backend_tests_cov -lcunit
+	$(CC) $(CFLAGS) $(COV_FLAGS) $(COV_OBJECTS) src/db.c backend_tests.c -o backend_tests_cov -lcunit
 	./backend_tests_cov
 	gcov -abcf backend_tests_cov-backend_tests.gcno
-	gcovr -r . --filter main/db\.c
+	gcovr -r . --filter src/db\.c
 
 clean:
 	rm -f utilities/*.o
-	rm -f main/*.o
+	rm -f src/*.o
 	rm -f backend_tests db io ui cart
 	rm -f *.gcda *.gcno *.gcov
 	rm -f backend_tests_cov
