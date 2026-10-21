@@ -304,11 +304,11 @@ static void decrease_shelf_stock(store_t *store, merch_t *merch, size_t to_remov
       char **name = shelf->merch_name;
       elem_t key = string_elem(*name);
 
-      free(shelf->shelf_name);
-      free(shelf);
-      
       ioopm_hash_table_remove(store->shelf_to_item, key, &shelf_elem);
       ioopm_list_iterator_remove(it, &shelf_elem);
+
+      free(shelf->shelf_name);
+      free(shelf);
     }
   }
 
