@@ -3,9 +3,9 @@ CFLAGS = -Wall -Wextra -Wpedantic -g
 COV_FLAGS = --coverage
 INPUT_FILE = sample-texts/webstoretest.txt
 
-DP_UTIL_OBJECTS = utilities/hash_table.o utilities/hash_table_iterator.o utilities/linked_list.o utilities/linked_list_iterator.o utilities/utils.o
+UTIL_OBJECTS = utilities/hash_table.o utilities/hash_table_iterator.o utilities/linked_list.o utilities/linked_list_iterator.o utilities/utils.o
 
-DP_COV_OBJECTS = utilities/hash_table.c utilities/hash_table_iterator.c utilities/linked_list.c utilities/linked_list_iterator.c utilities/utils.c
+COV_OBJECTS = utilities/hash_table.c utilities/hash_table_iterator.c utilities/linked_list.c utilities/linked_list_iterator.c utilities/utils.c
 
 DP_UTIL_OBJECTS = utilities/dp_ht/dp_hash_table.o utilities/dp_ht/dp_hash_table_iterator.o utilities/linked_list.o utilities/linked_list_iterator.o utilities/utils.o
 
@@ -25,13 +25,13 @@ cart: src/cart.c src/cart.h utilities/common.h
 io: src/io.c src/io.h utilities/utils.h
 	$(CC) $(CFLAGS) -c $< -o $@
 	
-ui: src/ui.c src/db.c src/cart.c src/io.c $(DP_UTIL_OBJECTS)
+ui: src/ui.c src/db.c src/cart.c src/io.c $(UTIL_OBJECTS)
 	$(CC) $(CFLAGS) -c $^ -o $@
 
-backend_tests: backend_tests.c src/db.c src/cart.c $(DP_UTIL_OBJECTS)
+backend_tests: backend_tests.c src/db.c src/cart.c $(UTIL_OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $@ -lcunit	
 
-main: main.c src/ui.c src/db.c src/cart.c src/io.c $(DP_UTIL_OBJECTS)
+main: main.c src/ui.c src/db.c src/cart.c src/io.c $(UTIL_OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $@
 
 utilities/%.o: utilities/%.c
@@ -47,7 +47,7 @@ memu: ui
 	valgrind --leak-check=full ./ui
 
 cov:
-	$(CC) $(CFLAGS) $(COV_FLAGS) $(DP_COV_OBJECTS) src/db.c src/cart.c backend_tests.c -o backend_tests_cov -lcunit
+	$(CC) $(CFLAGS) $(COV_FLAGS) $(COV_OBJECTS) src/db.c src/cart.c backend_tests.c -o backend_tests_cov -lcunit
 	./backend_tests_cov
 	gcov -abcf backend_tests_cov-backend_tests.gcno
 	gcovr -r . --filter 'src/db\.c' --filter 'src/cart\.c'
@@ -67,7 +67,7 @@ massif: main
 	ms_print massif.file.out > profs/YOO_MEM.txt
 
 prof: main
-	gcc $(CFLAGS) -pg main.c src/ui.c src/db.c src/cart.c src/io.c $(DP_COV_OBJECTS) -o main_prof
+	gcc $(CFLAGS) -pg main.c src/ui.c src/db.c src/cart.c src/io.c $(COV_OBJECTS) -o main_prof
 	./main_prof < $(INPUT_FILE)
 	gprof main_prof gmon.out > profs/profile.txt
 	more profs/profile.txt
@@ -78,8 +78,12 @@ prof_freq:
 	gprof freq_count gmon.out > profile.txt
 	more profile.txt
 
+cache: main
+	valgrind --tool=cachegrind --cache-sim=yes --cachegrind-out-file=store.cachegrind ./main < $(INPUT_FILE)
+	cg_annotate store.cachegrind > store_cache.txt
+
 clean:
-	rm -f utilities/*.o
+	rm -f utilities/*.
 	rm -f src/*.o
 	rm -f utilities/dp_ht/*.o
 	rm -f utilities/dp_ht/dp_hash_table_tests

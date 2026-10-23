@@ -12,7 +12,7 @@ store_t *ioopm_make_store(void)
   return ioopm_create_store();
 }
 
-merch_t *create_merch_user(void)
+static merch_t *create_merch_user(void)
 {
   char *name = get_name_io();
   char *desc = get_desc_io();
