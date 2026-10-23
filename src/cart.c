@@ -312,6 +312,7 @@ static void decrease_shelf_stock(store_t *store, merch_t *merch, size_t to_remov
     }
   }
 
+  
   ioopm_list_iterator_destroy(it);
 }
 
