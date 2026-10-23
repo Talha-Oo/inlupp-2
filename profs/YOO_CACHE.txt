@@ -1,0 +1,2035 @@
+--------------------------------------------------------------------------------
+-- Metadata
+--------------------------------------------------------------------------------
+Invocation:       /usr/bin/cg_annotate store.cachegrind
+Command:          ./main
+Events recorded:  Ir
+Events shown:     Ir
+Event sort order: Ir
+Threshold:        0.1%
+Annotation:       on
+
+--------------------------------------------------------------------------------
+-- Summary
+--------------------------------------------------------------------------------
+Ir_________________ 
+
+91,038,010 (100.0%)  PROGRAM TOTALS
+
+--------------------------------------------------------------------------------
+-- File:function summary
+--------------------------------------------------------------------------------
+  Ir_______________________  file:function
+
+< 31,066,798 (34.1%, 34.1%)  ./libio/./libio/fileops.c:
+  14,830,170 (16.3%)           _IO_file_xsputn@@GLIBC_2.2.5
+   6,247,961  (6.9%)           _IO_do_write@@GLIBC_2.2.5
+   5,299,909  (5.8%)           _IO_file_overflow@@GLIBC_2.2.5
+   4,685,967  (5.1%)           _IO_file_write@@GLIBC_2.2.5
+
+<  9,316,417 (10.2%, 44.4%)  ./malloc/./malloc/malloc.c:
+   2,789,472  (3.1%)           _int_malloc
+   1,946,425  (2.1%)           _int_free_merge_chunk
+   1,172,736  (1.3%)           free
+     773,780  (0.8%)           __libc_calloc2
+     662,406  (0.7%)           calloc
+     586,072  (0.6%)           _int_free_maybe_trim
+     461,092  (0.5%)           _int_free_chunk
+     440,714  (0.5%)           unlink_chunk.isra.0
+     331,574  (0.4%)           malloc
+     136,395  (0.1%)           __libc_malloc2
+
+<  6,269,814  (6.9%, 51.2%)  /home/talha/ioopm/inlupp-2/utilities/utils.c:
+   3,599,446  (4.0%)           read_string
+   1,379,577  (1.5%)           ask_question
+     428,164  (0.5%)           print
+     246,879  (0.3%)           is_number
+     188,062  (0.2%)           ask_question_string
+     162,396  (0.2%)           make_string
+     135,330  (0.1%)           not_empty
+
+<  5,900,775  (6.5%, 57.7%)  ./libio/./libio/ioputs.c:puts
+
+<  4,252,127  (4.7%, 62.4%)  ./libio/./libio/getchar.c:getchar
+
+<  3,317,386  (3.6%, 66.0%)  ./libio/./libio/libioP.h:
+   1,685,936  (1.9%)           puts
+     656,370  (0.7%)           __overflow
+     600,765  (0.7%)           _IO_do_write@@GLIBC_2.2.5
+     284,933  (0.3%)           putchar
+
+<  3,136,786  (3.4%, 69.5%)  ./stdio-common/./stdio-common/vfprintf-internal.c:
+   2,059,129  (2.3%)           __printf_buffer
+   1,077,657  (1.2%)           __vfprintf_internal
+
+<  2,730,965  (3.0%, 72.5%)  /home/talha/ioopm/inlupp-2/src/db.c:
+   2,042,685  (2.2%)           string_knr_hash
+     155,250  (0.2%)           ioopm_add_merch
+     106,350  (0.1%)           destroy_merch_shelves
+      94,500  (0.1%)           ioopm_create_merch
+      92,265  (0.1%)           str_eq_func
+
+<  2,348,718  (2.6%, 75.1%)  ./string/../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:
+   1,820,475  (2.0%)           __memcpy_avx_unaligned_erms
+     433,100  (0.5%)           __mempcpy_avx_unaligned_erms
+
+<  2,244,798  (2.5%, 77.5%)  ./string/../sysdeps/x86_64/multiarch/strlen-avx2.S:__strlen_avx2
+
+<  2,043,451  (2.2%, 79.8%)  ./nptl/./nptl/cancellation.c:__syscall_cancel
+
+<  1,756,749  (1.9%, 81.7%)  ./stdio-common/./stdio-common/Xprintf_buffer_write.c:__printf_buffer_write
+
+<  1,672,078  (1.8%, 83.5%)  ???:
+   1,672,045  (1.8%)           ???
+
+<  1,463,597  (1.6%, 85.2%)  /home/talha/ioopm/inlupp-2/src/ui.c:
+     774,619  (0.9%)           cmp_merch_name
+     376,988  (0.4%)           get_action_choice
+     121,500  (0.1%)           add_merchandise_to_store
+
+<  1,441,836  (1.6%, 86.7%)  ./io/../sysdeps/unix/sysv/linux/write.c:write
+
+<  1,399,979  (1.5%, 88.3%)  /home/talha/ioopm/inlupp-2/utilities/dp_ht/dp_hash_table.c:
+     408,348  (0.4%)           find_previous_entry
+     281,625  (0.3%)           resize_hash_table
+     205,812  (0.2%)           ioopm_hash_table_insert
+     163,001  (0.2%)           entry_create
+     131,454  (0.1%)           ioopm_hash_table_destroy
+     118,459  (0.1%)           ioopm_hash_table_lookup
+
+<  1,341,573  (1.5%, 89.7%)  ./stdio-common/./stdio-common/printf_buffer_to_file.c:
+     747,762  (0.8%)           __printf_buffer_to_file_done
+     483,846  (0.5%)           __printf_buffer_to_file_switch
+     109,965  (0.1%)           __printf_buffer_to_file_init
+
+<    935,935  (1.0%, 90.8%)  /home/talha/ioopm/inlupp-2/utilities/dp_ht/dp_hash_table_iterator.c:
+     328,288  (0.4%)           skip_empty_buckets
+     210,728  (0.2%)           advance_iterator_state
+     171,119  (0.2%)           ioopm_hash_table_iterator_at_end
+     130,040  (0.1%)           ioopm_hash_table_iterator_advance
+
+<    880,702  (1.0%, 91.7%)  ./libio/./libio/putchar.c:putchar
+
+<    845,454  (0.9%, 92.7%)  ./string/../sysdeps/x86_64/multiarch/strchr-avx2.S:__strchrnul_avx2
+
+<    808,002  (0.9%, 93.6%)  ./libio/./libio/genops.c:
+     787,644  (0.9%)           __overflow
+
+<    807,158  (0.9%, 94.4%)  ./string/../sysdeps/x86_64/multiarch/strcmp-avx2.S:__strcmp_avx2
+
+<    703,776  (0.8%, 95.2%)  ./stdio-common/./stdio-common/printf.c:printf
+
+<    686,630  (0.8%, 96.0%)  ./stdio-common/./stdio-common/vfprintf-process-arg.c:__printf_buffer
+
+<    526,731  (0.6%, 96.6%)  ./stdlib/./stdlib/qsort.c:
+     526,617  (0.6%)           msort_with_tmp.part.0
+
+<    472,080  (0.5%, 97.1%)  ./stdlib/../stdlib/strtol_l.c:____strtol_l_internal
+
+<    395,874  (0.4%, 97.5%)  ./stdio-common/./stdio-common/Xprintf_buffer_done.c:__printf_buffer_done
+
+<    222,928  (0.2%, 97.7%)  ./malloc/../sysdeps/generic/calloc-clear-memory.h:
+     173,234  (0.2%)           __libc_calloc2
+
+<    204,877  (0.2%, 98.0%)  /home/talha/ioopm/inlupp-2/utilities/linked_list.c:
+      91,875  (0.1%)           ioopm_list_destroy
+
+<    203,046  (0.2%, 98.2%)  ./string/./string/strdup.c:strdup
+
+<    198,810  (0.2%, 98.4%)  /home/talha/ioopm/inlupp-2/utilities/linked_list_iterator.c:
+      99,360  (0.1%)           ioopm_list_iterator_create
+
+<    198,297  (0.2%, 98.6%)  ./stdio-common/./stdio-common/printf-parse.h:__printf_buffer
+
+<    133,478  (0.1%, 98.8%)  ./stdio-common/../include/printf_buffer.h:
+     131,958  (0.1%)           __printf_buffer_to_file_init
+
+<    131,958  (0.1%, 98.9%)  ./stdio-common/../libio/libioP.h:__printf_buffer_to_file_done
+
+<     93,699  (0.1%, 99.0%)  ./stdio-common/../string/bits/string_fortified.h:__printf_buffer_write
+
+--------------------------------------------------------------------------------
+-- Function:file summary
+--------------------------------------------------------------------------------
+  Ir_______________________  function:file
+
+> 14,914,296 (16.4%, 16.4%)  _IO_file_xsputn@@GLIBC_2.2.5:
+  14,830,170 (16.3%)           ./libio/./libio/fileops.c
+
+>  7,586,711  (8.3%, 24.7%)  puts:
+   5,900,775  (6.5%)           ./libio/./libio/ioputs.c
+   1,685,936  (1.9%)           ./libio/./libio/libioP.h
+
+>  6,848,726  (7.5%, 32.2%)  _IO_do_write@@GLIBC_2.2.5:
+   6,247,961  (6.9%)           ./libio/./libio/fileops.c
+     600,765  (0.7%)           ./libio/./libio/libioP.h
+
+>  5,299,909  (5.8%, 38.1%)  _IO_file_overflow@@GLIBC_2.2.5:./libio/./libio/fileops.c
+
+>  4,685,967  (5.1%, 43.2%)  _IO_file_write@@GLIBC_2.2.5:./libio/./libio/fileops.c
+
+>  4,252,127  (4.7%, 47.9%)  getchar:./libio/./libio/getchar.c
+
+>  3,599,446  (4.0%, 51.8%)  read_string:/home/talha/ioopm/inlupp-2/utilities/utils.c
+
+>  2,945,576  (3.2%, 55.1%)  __printf_buffer:
+   2,059,129  (2.3%)           ./stdio-common/./stdio-common/vfprintf-internal.c
+     686,630  (0.8%)           ./stdio-common/./stdio-common/vfprintf-process-arg.c
+     198,297  (0.2%)           ./stdio-common/./stdio-common/printf-parse.h
+
+>  2,789,472  (3.1%, 58.1%)  _int_malloc:./malloc/./malloc/malloc.c
+
+>  2,244,798  (2.5%, 60.6%)  __strlen_avx2:./string/../sysdeps/x86_64/multiarch/strlen-avx2.S
+
+>  2,089,710  (2.3%, 62.9%)  string_knr_hash:
+   2,042,685  (2.2%)           /home/talha/ioopm/inlupp-2/src/db.c
+
+>  2,043,451  (2.2%, 65.1%)  __syscall_cancel:./nptl/./nptl/cancellation.c
+
+>  1,946,425  (2.1%, 67.3%)  _int_free_merge_chunk:./malloc/./malloc/malloc.c
+
+>  1,850,448  (2.0%, 69.3%)  __printf_buffer_write:
+   1,756,749  (1.9%)           ./stdio-common/./stdio-common/Xprintf_buffer_write.c
+      93,699  (0.1%)           ./stdio-common/../string/bits/string_fortified.h
+
+>  1,820,475  (2.0%, 71.3%)  __memcpy_avx_unaligned_erms:./string/../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S
+
+>  1,726,177  (1.9%, 73.2%)  ???:
+   1,672,045  (1.8%)           ???
+
+>  1,444,014  (1.6%, 74.8%)  __overflow:
+     787,644  (0.9%)           ./libio/./libio/genops.c
+     656,370  (0.7%)           ./libio/./libio/libioP.h
+
+>  1,441,836  (1.6%, 76.4%)  write:./io/../sysdeps/unix/sysv/linux/write.c
+
+>  1,379,577  (1.5%, 77.9%)  ask_question:/home/talha/ioopm/inlupp-2/utilities/utils.c
+
+>  1,245,540  (1.4%, 79.3%)  free:
+   1,172,736  (1.3%)           ./malloc/./malloc/malloc.c
+
+>  1,165,635  (1.3%, 80.5%)  putchar:
+     880,702  (1.0%)           ./libio/./libio/putchar.c
+     284,933  (0.3%)           ./libio/./libio/libioP.h
+
+>  1,077,657  (1.2%, 81.7%)  __vfprintf_internal:./stdio-common/./stdio-common/vfprintf-internal.c
+
+>    978,942  (1.1%, 82.8%)  __libc_calloc2:
+     773,780  (0.8%)           ./malloc/./malloc/malloc.c
+     173,234  (0.2%)           ./malloc/../sysdeps/generic/calloc-clear-memory.h
+
+>    879,720  (1.0%, 83.8%)  __printf_buffer_to_file_done:
+     747,762  (0.8%)           ./stdio-common/./stdio-common/printf_buffer_to_file.c
+     131,958  (0.1%)           ./stdio-common/../libio/libioP.h
+
+>    845,454  (0.9%, 84.7%)  __strchrnul_avx2:./string/../sysdeps/x86_64/multiarch/strchr-avx2.S
+
+>    807,158  (0.9%, 85.6%)  __strcmp_avx2:./string/../sysdeps/x86_64/multiarch/strcmp-avx2.S
+
+>    774,619  (0.9%, 86.4%)  cmp_merch_name:/home/talha/ioopm/inlupp-2/src/ui.c
+
+>    718,972  (0.8%, 87.2%)  calloc:
+     662,406  (0.7%)           ./malloc/./malloc/malloc.c
+
+>    703,776  (0.8%, 88.0%)  printf:./stdio-common/./stdio-common/printf.c
+
+>    586,072  (0.6%, 88.6%)  _int_free_maybe_trim:./malloc/./malloc/malloc.c
+
+>    540,093  (0.6%, 89.2%)  msort_with_tmp.part.0:
+     526,617  (0.6%)           ./stdlib/./stdlib/qsort.c
+
+>    483,846  (0.5%, 89.8%)  __printf_buffer_to_file_switch:./stdio-common/./stdio-common/printf_buffer_to_file.c
+
+>    472,080  (0.5%, 90.3%)  ____strtol_l_internal:./stdlib/../stdlib/strtol_l.c
+
+>    461,092  (0.5%, 90.8%)  _int_free_chunk:./malloc/./malloc/malloc.c
+
+>    440,714  (0.5%, 91.3%)  unlink_chunk.isra.0:./malloc/./malloc/malloc.c
+
+>    433,100  (0.5%, 91.7%)  __mempcpy_avx_unaligned_erms:./string/../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S
+
+>    428,164  (0.5%, 92.2%)  print:/home/talha/ioopm/inlupp-2/utilities/utils.c
+
+>    408,348  (0.4%, 92.7%)  find_previous_entry:/home/talha/ioopm/inlupp-2/utilities/dp_ht/dp_hash_table.c
+
+>    395,874  (0.4%, 93.1%)  __printf_buffer_done:./stdio-common/./stdio-common/Xprintf_buffer_done.c
+
+>    376,988  (0.4%, 93.5%)  get_action_choice:/home/talha/ioopm/inlupp-2/src/ui.c
+
+>    331,574  (0.4%, 93.9%)  malloc:./malloc/./malloc/malloc.c
+
+>    328,288  (0.4%, 94.2%)  skip_empty_buckets:/home/talha/ioopm/inlupp-2/utilities/dp_ht/dp_hash_table_iterator.c
+
+>    281,625  (0.3%, 94.5%)  resize_hash_table:/home/talha/ioopm/inlupp-2/utilities/dp_ht/dp_hash_table.c
+
+>    270,717  (0.3%, 94.8%)  strdup:
+     203,046  (0.2%)           ./string/./string/strdup.c
+
+>    246,879  (0.3%, 95.1%)  is_number:/home/talha/ioopm/inlupp-2/utilities/utils.c
+
+>    241,923  (0.3%, 95.4%)  __printf_buffer_to_file_init:
+     131,958  (0.1%)           ./stdio-common/../include/printf_buffer.h
+     109,965  (0.1%)           ./stdio-common/./stdio-common/printf_buffer_to_file.c
+
+>    210,728  (0.2%, 95.6%)  advance_iterator_state:/home/talha/ioopm/inlupp-2/utilities/dp_ht/dp_hash_table_iterator.c
+
+>    205,812  (0.2%, 95.8%)  ioopm_hash_table_insert:/home/talha/ioopm/inlupp-2/utilities/dp_ht/dp_hash_table.c
+
+>    188,062  (0.2%, 96.0%)  ask_question_string:/home/talha/ioopm/inlupp-2/utilities/utils.c
+
+>    171,119  (0.2%, 96.2%)  ioopm_hash_table_iterator_at_end:/home/talha/ioopm/inlupp-2/utilities/dp_ht/dp_hash_table_iterator.c
+
+>    163,001  (0.2%, 96.4%)  entry_create:/home/talha/ioopm/inlupp-2/utilities/dp_ht/dp_hash_table.c
+
+>    162,396  (0.2%, 96.6%)  make_string:/home/talha/ioopm/inlupp-2/utilities/utils.c
+
+>    155,250  (0.2%, 96.8%)  ioopm_add_merch:/home/talha/ioopm/inlupp-2/src/db.c
+
+>    149,385  (0.2%, 96.9%)  __libc_malloc2:
+     136,395  (0.1%)           ./malloc/./malloc/malloc.c
+
+>    135,330  (0.1%, 97.1%)  not_empty:/home/talha/ioopm/inlupp-2/utilities/utils.c
+
+>    131,454  (0.1%, 97.2%)  ioopm_hash_table_destroy:/home/talha/ioopm/inlupp-2/utilities/dp_ht/dp_hash_table.c
+
+>    130,040  (0.1%, 97.4%)  ioopm_hash_table_iterator_advance:/home/talha/ioopm/inlupp-2/utilities/dp_ht/dp_hash_table_iterator.c
+
+>    121,500  (0.1%, 97.5%)  add_merchandise_to_store:/home/talha/ioopm/inlupp-2/src/ui.c
+
+>    118,459  (0.1%, 97.6%)  ioopm_hash_table_lookup:/home/talha/ioopm/inlupp-2/utilities/dp_ht/dp_hash_table.c
+
+>    106,350  (0.1%, 97.7%)  destroy_merch_shelves:/home/talha/ioopm/inlupp-2/src/db.c
+
+>     99,360  (0.1%, 97.9%)  ioopm_list_iterator_create:/home/talha/ioopm/inlupp-2/utilities/linked_list_iterator.c
+
+>     94,500  (0.1%, 98.0%)  ioopm_create_merch:/home/talha/ioopm/inlupp-2/src/db.c
+
+>     94,215  (0.1%, 98.1%)  str_eq_func:
+      92,265  (0.1%)           /home/talha/ioopm/inlupp-2/src/db.c
+
+>     91,875  (0.1%, 98.2%)  ioopm_list_destroy:/home/talha/ioopm/inlupp-2/utilities/linked_list.c
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./io/../sysdeps/unix/sysv/linux/write.c
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./io/../sysdeps/unix/sysv/linux/write.c
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./libio/./libio/fileops.c
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./libio/./libio/fileops.c
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./libio/./libio/genops.c
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./libio/./libio/genops.c
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./libio/./libio/getchar.c
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./libio/./libio/getchar.c
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./libio/./libio/ioputs.c
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./libio/./libio/ioputs.c
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./libio/./libio/libioP.h
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./libio/./libio/libioP.h
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./libio/./libio/putchar.c
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./libio/./libio/putchar.c
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./malloc/../sysdeps/generic/calloc-clear-memory.h
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./malloc/../sysdeps/generic/calloc-clear-memory.h
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./malloc/./malloc/malloc.c
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./malloc/./malloc/malloc.c
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./nptl/./nptl/cancellation.c
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./nptl/./nptl/cancellation.c
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./stdio-common/../include/printf_buffer.h
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./stdio-common/../include/printf_buffer.h
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./stdio-common/../libio/libioP.h
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./stdio-common/../libio/libioP.h
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./stdio-common/../string/bits/string_fortified.h
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./stdio-common/../string/bits/string_fortified.h
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./stdio-common/./stdio-common/Xprintf_buffer_done.c
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./stdio-common/./stdio-common/Xprintf_buffer_done.c
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./stdio-common/./stdio-common/Xprintf_buffer_write.c
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./stdio-common/./stdio-common/Xprintf_buffer_write.c
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./stdio-common/./stdio-common/printf-parse.h
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./stdio-common/./stdio-common/printf-parse.h
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./stdio-common/./stdio-common/printf.c
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./stdio-common/./stdio-common/printf.c
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./stdio-common/./stdio-common/printf_buffer_to_file.c
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./stdio-common/./stdio-common/printf_buffer_to_file.c
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./stdio-common/./stdio-common/vfprintf-internal.c
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./stdio-common/./stdio-common/vfprintf-internal.c
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./stdio-common/./stdio-common/vfprintf-process-arg.c
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./stdio-common/./stdio-common/vfprintf-process-arg.c
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./stdlib/../stdlib/strtol_l.c
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./stdlib/../stdlib/strtol_l.c
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./stdlib/./stdlib/qsort.c
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./stdlib/./stdlib/qsort.c
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./string/../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./string/../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./string/../sysdeps/x86_64/multiarch/strchr-avx2.S
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./string/../sysdeps/x86_64/multiarch/strchr-avx2.S
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./string/../sysdeps/x86_64/multiarch/strcmp-avx2.S
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./string/../sysdeps/x86_64/multiarch/strcmp-avx2.S
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./string/../sysdeps/x86_64/multiarch/strlen-avx2.S
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./string/../sysdeps/x86_64/multiarch/strlen-avx2.S
+
+--------------------------------------------------------------------------------
+-- Annotated source file: ./string/./string/strdup.c
+--------------------------------------------------------------------------------
+Unannotated because one or more of these original files are unreadable:
+- ./string/./string/strdup.c
+
+--------------------------------------------------------------------------------
+-- Annotated source file: /home/talha/ioopm/inlupp-2/src/db.c
+--------------------------------------------------------------------------------
+Ir______________ 
+
+-- line 2 ----------------------------------------
+        .         #include "cart.h"
+        .         
+        .         #include <string.h>
+        .         #include <stdbool.h>
+        .         #include <stdio.h>
+        .         
+        .         // Functions required to make a hashtable which uses string as key and elem_t as object and destroy funcs
+        .         void destroy_merch_shelves(ioopm_list_t *list)
+   27,000 (0.0%)  {
+   13,500 (0.0%)    ioopm_list_iterator_t *it = ioopm_list_iterator_create(list);
+        .         
+        .           elem_t shelf_elem;
+        .           shelf_t *shelf;
+   24,075 (0.0%)    while (!ioopm_list_iterator_at_end(it))
+        .           {
+      375 (0.0%)      ioopm_list_iterator_current(it, &shelf_elem);
+      150 (0.0%)      shelf = shelf_elem.p;
+        .         
+      300 (0.0%)      free(shelf->shelf_name);
+      225 (0.0%)      free(shelf);
+        .         
+      225 (0.0%)      ioopm_list_iterator_advance(it);
+        .           }
+        .         
+   10,125 (0.0%)    ioopm_list_iterator_destroy(it);
+   10,125 (0.0%)    ioopm_list_destroy(list);
+   20,250 (0.0%)  }
+        .         
+        .         void remove_merch_shelf_ht(store_t *store, ioopm_list_t *list)
+    6,750 (0.0%)  {
+    3,000 (0.0%)    ioopm_list_iterator_t *it = ioopm_list_iterator_create(list);
+    2,250 (0.0%)    ioopm_hash_table_t *ht = store->shelf_to_item;
+        .         
+        .           elem_t shelf_elem;
+        .           shelf_t *shelf;
+        .         
+        .           char *name;
+        .           elem_t dummy;
+    5,250 (0.0%)    while (!ioopm_list_iterator_at_end(it))
+        .           {
+        .             ioopm_list_iterator_current(it, &shelf_elem);
+        .             shelf = shelf_elem.p;
+        .             name = shelf->shelf_name;
+        .         
+        .             ioopm_hash_table_remove(ht, string_elem(name), &dummy);
+        .             ioopm_list_iterator_advance(it);
+        .           }
+        .         
+    2,250 (0.0%)    ioopm_list_iterator_destroy(it);
+    4,500 (0.0%)  }
+        .         
+        .         void ioopm_destroy_merch(merch_t *merch)
+   16,875 (0.0%)  {
+   10,125 (0.0%)    ioopm_list_t *list = merch->locs;
+        .         
+   10,125 (0.0%)    destroy_merch_shelves(list);
+        .         
+   13,500 (0.0%)    free(merch->name);
+   13,500 (0.0%)    free(merch->desc);
+        .         
+   10,125 (0.0%)    free(merch);
+   10,125 (0.0%)  }
+        .         
+        .         static void name_to_item_destroy(entry_t *entry)
+   16,875 (0.0%)  {
+   13,500 (0.0%)    ioopm_destroy_merch(entry->value.p);
+   10,125 (0.0%)    free(entry);
+   10,125 (0.0%)  }
+        .         
+        .         static void simple_entry_destroy(entry_t *entry)
+      700 (0.0%)  {
+      420 (0.0%)    free(entry);
+      420 (0.0%)  }
+        .         
+        .         static size_t string_knr_hash(const elem_t elem)
+   49,580 (0.1%)  {
+   12,395 (0.0%)    size_t result = 2;
+        .         
+   24,790 (0.0%)    char *str = elem.s;
+  557,111 (0.6%)    while (*str != '\0')
+        .           {
+1,237,840 (1.4%)      result = result * 31 + ((unsigned char)*str);
+  123,784 (0.1%)      str++;
+        .           }
+        .         
+   12,395 (0.0%)    return result;
+   24,790 (0.0%)  }
+        .         
+        .         static bool str_eq_func(const elem_t elem1, const elem_t elem2)
+   36,906 (0.0%)  {
+   43,057 (0.0%)    return strcmp(elem1.s, elem2.s) == 0;
+   12,302 (0.0%)  }
+        .         
+        .         static size_t int_hash(const elem_t elem)
+    2,436 (0.0%)  {
+    1,218 (0.0%)    return elem.i;
+    1,218 (0.0%)  }
+        .         
+        .         static bool int_eq_func(const elem_t elem1, const elem_t elem2)
+    1,625 (0.0%)  {
+    1,300 (0.0%)    return elem1.i == elem2.i;
+      650 (0.0%)  }
+        .         
+        .         
+        .         // Store functions
+        .         store_t *ioopm_create_store(void)
+        4 (0.0%)  {
+        4 (0.0%)    store_t *store = calloc(1, sizeof(store_t));
+        .         
+        8 (0.0%)    store->name_to_item = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &name_to_item_destroy);
+        8 (0.0%)    store->shelf_to_item = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &simple_entry_destroy);
+        .         
+        .           // TODO: Make the destroy func for all_carts hashtable
+        9 (0.0%)    store->all_carts = ioopm_hash_table_create(&int_hash, &int_eq_func, &all_cart_destroyer);
+        8 (0.0%)    store->reserved_merchs = ioopm_hash_table_create(&string_knr_hash, &str_eq_func, &simple_entry_destroy);
+        2 (0.0%)    store->merch_num = 0;
+        .         
+        1 (0.0%)    return store;
+        2 (0.0%)  }
+        .         
+        .         void ioopm_destroy_store(store_t *store)
+        5 (0.0%)  {
+        4 (0.0%)    ioopm_hash_table_destroy(store->shelf_to_item);
+        4 (0.0%)    ioopm_hash_table_destroy(store->all_carts);
+        4 (0.0%)    ioopm_hash_table_destroy(store->name_to_item);
+        4 (0.0%)    ioopm_hash_table_destroy(store->reserved_merchs);
+        3 (0.0%)    free(store);
+        3 (0.0%)  }
+        .         
+        .         merch_t *ioopm_create_merch(char *name, char *desc, const size_t price)
+   23,625 (0.0%)  {
+   13,500 (0.0%)    merch_t *merch = calloc(1, sizeof(merch_t));
+        .         
+   10,125 (0.0%)    merch->name = name;
+   10,125 (0.0%)    merch->desc = desc;
+   10,125 (0.0%)    merch->price = price;
+    6,750 (0.0%)    merch->stock = 0;
+   10,125 (0.0%)    merch->locs = ioopm_list_create();
+        .         
+    3,375 (0.0%)    return merch;
+    6,750 (0.0%)  }
+        .         
+        .         bool ioopm_add_merch(store_t *store, merch_t *merch)
+   30,375 (0.0%)  {
+   10,125 (0.0%)    ioopm_hash_table_t *ht = store->name_to_item;
+   10,125 (0.0%)    elem_t key = string_elem(merch->name);
+    6,750 (0.0%)    elem_t value = ptr_elem(merch);
+        .         
+        .           elem_t lookedup_value;
+   23,625 (0.0%)    bool result = ioopm_hash_table_lookup(ht, key, &lookedup_value);
+        .         
+   13,500 (0.0%)    if (!result)
+        .           {
+   20,250 (0.0%)      ioopm_hash_table_insert(ht, key, value);
+   16,875 (0.0%)      store->merch_num++;
+    6,750 (0.0%)      return true;
+        .           }
+        .           else
+        .           {
+        .             ioopm_destroy_merch(merch);
+        .             return false;
+        .           }
+   16,875 (0.0%)  }
+        .         
+        .         static shelf_t *create_shelf(char *shelf_name, char **merch_name, size_t quantity)
+      525 (0.0%)  {
+      300 (0.0%)    shelf_t *shelf = calloc(1, sizeof(shelf_t));
+        .         
+      225 (0.0%)    shelf->merch_name = merch_name;
+      225 (0.0%)    shelf->shelf_name = shelf_name;
+      225 (0.0%)    shelf->quantity = quantity;
+        .         
+       75 (0.0%)    return shelf;
+      150 (0.0%)  }
+        .         
+        .         bool ioopm_get_shelf(store_t *store, char *shelf_name, elem_t *lookup_res)
+      525 (0.0%)  {
+      150 (0.0%)    elem_t elem_name = string_elem(shelf_name);
+      525 (0.0%)    return ioopm_hash_table_lookup(store->shelf_to_item, elem_name, lookup_res);
+      150 (0.0%)  }
+        .         
+        .         bool ioopm_get_merch(store_t *store, char *merch_name, elem_t *lookup_res)
+    8,498 (0.0%)  {
+    2,428 (0.0%)    elem_t elem_name = string_elem(merch_name);
+    9,712 (0.0%)    bool res = ioopm_hash_table_lookup(store->name_to_item, elem_name, lookup_res);
+        .         
+    1,214 (0.0%)    return res;
+    2,428 (0.0%)  }
+        .         
+        .         static bool update_shelf(elem_t shelf_elem, merch_t *merch, size_t quantity)
+        .         {
+        .           shelf_t *shelf = shelf_elem.p;
+        .         
+        .           // if the merch stored in the shelf is the same we are addding
+        .           if (strcmp(*(shelf->merch_name), merch->name) == 0)
+        .           {
+-- line 197 ----------------------------------------
+-- line 202 ----------------------------------------
+        .           else
+        .           {
+        .             // trying to store a new type of merch on a shelf which already stores a merch
+        .             return false;
+        .           }
+        .         }
+        .         
+        .         static void add_new_shelf(ioopm_hash_table_t *ht, elem_t merch_elem, elem_t shelf_name, size_t quantity)
+      600 (0.0%)  {
+      150 (0.0%)    merch_t *merch = merch_elem.p;
+      225 (0.0%)    ioopm_list_t *shelves_list = merch->locs;
+        .         
+      525 (0.0%)    shelf_t *shelf = create_shelf(shelf_name.s, &(merch->name), quantity);
+      150 (0.0%)    elem_t shelf_elem = ptr_elem(shelf);
+        .         
+      375 (0.0%)    ioopm_list_prepend(shelves_list, shelf_elem);
+      450 (0.0%)    ioopm_hash_table_insert(ht, shelf_name, shelf_elem);
+        .         
+      450 (0.0%)    merch->stock += quantity;
+      225 (0.0%)  }
+        .         
+        .         bool ioopm_replenish(store_t *store, char *name, size_t quantity, char *shelf_name)
+      825 (0.0%)  {
+      150 (0.0%)    elem_t shelf_name_elem = string_elem(shelf_name);
+        .         
+      225 (0.0%)    ioopm_hash_table_t *shelf_ht = store->shelf_to_item;
+        .         
+        .           elem_t looked_up_elem_merch;
+      600 (0.0%)    if (ioopm_get_merch(store, name, &looked_up_elem_merch))
+        .           {
+      225 (0.0%)      free(name);
+        .         
+        .             elem_t looked_up_elem_shelf;
+      600 (0.0%)      if (ioopm_get_shelf(store, shelf_name, &looked_up_elem_shelf))
+        .             {
+        .               // Shelf exits
+        .               merch_t *merch = looked_up_elem_merch.p;
+        .         
+        .               free(shelf_name);
+        .               return update_shelf(looked_up_elem_shelf, merch, quantity);
+        .             }
+        .             else
+        .             {
+        .               // shelf doesn't exist
+      450 (0.0%)        add_new_shelf(shelf_ht, looked_up_elem_merch, shelf_name_elem, quantity);
+      150 (0.0%)        return true;
+        .             }
+        .           }
+        .           else
+        .           {
+        .             free(name);
+        .             free(shelf_name);
+        .             return false;
+        .           }
+      375 (0.0%)  }
+        .         
+        .         /// TODO: Maybe support char *merch_name instead of merch_t *merch for edit functions
+        .         void edit_merch_desc(merch_t *merch, char *desc)
+        .         {
+        .           free(merch->desc);
+        .           merch->desc = desc;
+        .         }
+        .         
+-- line 264 ----------------------------------------
+-- line 291 ----------------------------------------
+        .           else // if a merch with the new_name exists
+        .           {
+        .             free(new_name);
+        .             return false;
+        .           }
+        .         }
+        .         
+        .         bool ioopm_remove_merch(store_t *store, char *name)
+    6,750 (0.0%)  {
+        .           elem_t merch_elem;
+    5,250 (0.0%)    bool res = ioopm_get_merch(store, name, &merch_elem);
+    1,500 (0.0%)    merch_t *merch = merch_elem.p;
+        .         
+    3,000 (0.0%)    if (!res)
+        .           {
+        .             //free(name);
+        .             return res;
+        .           }
+        .         
+    4,500 (0.0%)    remove_merch_shelf_ht(store, merch->locs);
+    6,000 (0.0%)    res = ioopm_hash_table_remove(store->name_to_item, string_elem(name), &merch_elem);
+        .         
+    1,500 (0.0%)    if(res)
+        .           {
+    3,750 (0.0%)      store->merch_num--;
+        .           }
+        .         
+        .           //free(name);
+      750 (0.0%)    return res;
+    3,750 (0.0%)  }
+
+--------------------------------------------------------------------------------
+-- Annotated source file: /home/talha/ioopm/inlupp-2/src/ui.c
+--------------------------------------------------------------------------------
+Ir____________ 
+
+-- line 3 ----------------------------------------
+      .         #include <string.h>
+      .         
+      .         #include "../utilities/utils.h"
+      .         #include "db.h"
+      .         #include "cart.h"
+      .         #include "io.h"
+      .         
+      .         store_t *ioopm_make_store(void)
+      3 (0.0%)  {
+      1 (0.0%)    return ioopm_create_store();
+      2 (0.0%)  }
+      .         
+      .         merch_t *create_merch_user(void)
+ 13,500 (0.0%)  {
+  6,750 (0.0%)    char *name = get_name_io();
+  6,750 (0.0%)    char *desc = get_desc_io();
+  6,750 (0.0%)    int price = get_price_io();
+      .         
+ 23,625 (0.0%)    return ioopm_create_merch(name, desc, price);
+  6,750 (0.0%)  }
+      .         
+      .         void print_merch(merch_t *merch)
+    100 (0.0%)  {
+     60 (0.0%)    puts("----------------------------------");
+     60 (0.0%)    puts("------------- MERCH --------------");
+      .         
+    140 (0.0%)    printf("NAME: %s\n", merch->name);
+    140 (0.0%)    printf("DESCRIPTION: %s\n", merch->desc);
+    140 (0.0%)    printf("Price: %ld\n", merch->price);
+      .         
+     60 (0.0%)    puts("----------------------------------\n");
+     60 (0.0%)  }
+      .         
+      .         static int cmp_merch_name(const void *p1, const void *p2)
+160,266 (0.2%)  {
+ 53,422 (0.1%)    merch_t *const *merch1_ptr = p1;
+ 53,422 (0.1%)    merch_t *const *merch2_ptr = p2;
+      .         
+ 80,133 (0.1%)    merch_t *merch1 = *merch1_ptr;
+ 80,133 (0.1%)    merch_t *merch2 = *merch2_ptr;
+      .         
+ 80,133 (0.1%)    const char *name1 = merch1->name;
+ 80,133 (0.1%)    const char *name2 = merch2->name;
+      .         
+133,555 (0.1%)    return strcmp(name1, name2);
+ 53,422 (0.1%)  }
+      .         
+      .         static int cmp_shelf_name(const void *p1, const void *p2)
+      .         {
+      .           shelf_t *const *shelf1_ptr = p1;
+      .           shelf_t *const *shelf2_ptr = p2;
+      .         
+      .           shelf_t *shelf1 = *shelf1_ptr;
+      .           shelf_t *shelf2 = *shelf2_ptr;
+-- line 56 ----------------------------------------
+-- line 57 ----------------------------------------
+      .         
+      .           const char *name1 = shelf1->shelf_name;
+      .           const char *name2 = shelf2->shelf_name;
+      .         
+      .           return strcmp(name1, name2);
+      .         }
+      .         
+      .         static void sort_merch(merch_t *all_merch[], size_t merch_num)
+      6 (0.0%)  {
+      7 (0.0%)    qsort(all_merch, merch_num, sizeof(merch_t *), cmp_merch_name);
+      3 (0.0%)  }
+      .         
+      .         static void sort_shelf(shelf_t *shelves[], size_t shelf_num)
+      .         {
+      .           qsort(shelves, shelf_num, sizeof(shelf_t *), cmp_shelf_name);
+      .         }
+      .         
+      .         static void put_merch_in_arr(store_t *store, merch_t *merchs[])
+      6 (0.0%)  {
+      3 (0.0%)    ioopm_hash_table_t *ht = store->name_to_item;
+      4 (0.0%)    ioopm_hash_table_iterator_t *it = ioopm_hash_table_iterator_create(ht);
+      .         
+      1 (0.0%)    size_t i = 0;
+ 18,007 (0.0%)    while (!ioopm_hash_table_iterator_at_end(it))
+      .           {
+ 12,000 (0.0%)      elem_t merch_elem = ioopm_hash_table_iterator_current_value(it);
+  6,000 (0.0%)      merch_t *merch = merch_elem.p;
+      .         
+ 18,000 (0.0%)      merchs[i] = merch;
+  3,000 (0.0%)      i++;
+      .         
+  9,000 (0.0%)      ioopm_hash_table_iterator_advance(it);
+      .           }
+      .         
+      3 (0.0%)    ioopm_hash_table_iterator_destroy(it);
+      3 (0.0%)  }
+      .         
+      .         static void put_shelf_in_arr(ioopm_list_t *list, shelf_t *shelves[])
+      .         {
+      .           ioopm_list_iterator_t *it = ioopm_list_iterator_create(list);
+      .         
+      .           size_t i = 0;
+      .           while (!ioopm_list_iterator_at_end(it))
+      .           {
+-- line 100 ----------------------------------------
+-- line 107 ----------------------------------------
+      .         
+      .             ioopm_list_iterator_advance(it);
+      .           }
+      .         
+      .           ioopm_list_iterator_destroy(it);
+      .         }
+      .         
+      .         static void print_list_merch(merch_t *merchs[], size_t size, size_t *printed)
+      7 (0.0%)  {
+      .           size_t i;
+    189 (0.0%)    for (i = *printed; i < *printed + 20 && i < size; i++)
+      .           {
+    120 (0.0%)      merch_t *merch = merchs[i];
+     60 (0.0%)      print_merch(merch);
+      .           }
+      .         
+      3 (0.0%)    *printed = i;
+      3 (0.0%)  }
+      .         
+      .         static void print_list_shelf(shelf_t *shelves[], size_t size, size_t *printed)
+      .         {
+      .           size_t i;
+      .           for (i = *printed; i < *printed + 20 && i < size; i++)
+      .           {
+      .             shelf_t *shelf = shelves[i];
+      .             printf("%s: %ld\n", shelf->shelf_name, shelf->quantity);
+      .           }
+      .         
+      .           *printed = i;
+      .         }
+      .         
+      .         void add_merchandise_to_store(store_t *store)
+ 16,875 (0.0%)  {
+ 10,125 (0.0%)    puts("----------------------------------");
+ 10,125 (0.0%)    puts("---------- ADDING MERCH ----------");
+      .         
+  6,750 (0.0%)    merch_t *merch = create_merch_user();
+      .         
+ 20,250 (0.0%)    bool added = ioopm_add_merch(store, merch);
+ 13,500 (0.0%)    if (!added)
+      .           {
+      .             puts("\nA MERCHANDISE BY THIS NAME ALREADY EXISTS!!");
+      .           }
+      .           else
+      .           {
+ 23,625 (0.0%)      printf("\n%s HAS BEEN ADDED TO THE STORE!!\n", merch->name);
+      .           }
+      .         
+ 10,125 (0.0%)    puts("----------------------------------\n");
+ 10,125 (0.0%)  }
+      .         
+      .         void remove_merchandise_from_store(store_t *store)
+  3,750 (0.0%)  {
+  2,250 (0.0%)    puts("----------------------------------");
+  2,250 (0.0%)    puts("--------- REMOVING MERCH ---------");
+      .         
+  1,500 (0.0%)    char *name = get_name_io();
+      .         
+  1,500 (0.0%)    bool to_remove = is_confirmed_io();
+  3,000 (0.0%)    if (!to_remove)
+      .           {
+      .             free(name);
+      .             puts("----------------------------------\n");
+      .             return;
+      .           }
+      .         
+  4,500 (0.0%)    bool removed = ioopm_remove_merch(store, name);
+  3,000 (0.0%)    if (!removed)
+      .           {
+      .             puts("\nA MERCHANDISE BY THIS NAME DOES NOT EXIST!!");
+      .           }
+      .           else
+      .           {
+  4,500 (0.0%)      printf("\n%s HAS BEEN REMOVED FROM THE STORE!!\n", name);
+      .           }
+      .         
+  2,250 (0.0%)    free(name);
+  2,250 (0.0%)    puts("----------------------------------\n");
+  1,500 (0.0%)  }
+      .         
+      .         static void update_merch_info(store_t *store, merch_t *merch)
+      .         {
+      .           puts("\n----------------------------------");
+      .           printf("NEW ");
+      .           char *new_name = get_name_io();
+      .         
+      .           printf("NEW ");
+-- line 193 ----------------------------------------
+-- line 235 ----------------------------------------
+      .             print_merch(merch);
+      .           }
+      .         
+      .           free(name);
+      .           puts("----------------------------------\n");
+      .         }
+      .         
+      .         void replenish_merchandise_in_store(store_t *store)
+    800 (0.0%)  {
+    300 (0.0%)    puts("----------------------------------");
+    300 (0.0%)    puts("---------- REPLENSISH ------------");
+      .         
+    200 (0.0%)    char *shelf_name = get_shelf_io();
+      .         
+    200 (0.0%)    char *merch_name = get_name_io();
+      .         
+      .           elem_t merch_elem;
+    700 (0.0%)    bool exists = ioopm_get_merch(store, merch_name, &merch_elem);
+    400 (0.0%)    if (!exists)
+      .           {
+     75 (0.0%)      puts("\nA MERCHANDISE BY THIS NAME DOES NOT EXIST!!");
+      .         
+     75 (0.0%)      free(shelf_name);
+     75 (0.0%)      free(merch_name);
+    100 (0.0%)      puts("----------------------------------\n");
+      .         
+      .             return;
+      .           }
+      .         
+    225 (0.0%)    size_t quantity = get_quantity_io();
+      .         
+    525 (0.0%)    bool replenished = ioopm_replenish(store, merch_name, quantity, shelf_name);
+    300 (0.0%)    if (!replenished)
+      .           {
+      .             puts("YOU CAN ONLY STORE ONE TYPE OF MERCHANDISE ON A SHELF!!");
+      .             puts("----------------------------------\n");
+      .           }
+      .         
+    450 (0.0%)    printf("THER MERCHANDISE HAS BEEN ADDED TO %s!!", shelf_name);
+    225 (0.0%)    puts("----------------------------------\n");
+    500 (0.0%)  }
+      .         
+      .         void list_merchandise(store_t *store)
+     11 (0.0%)  {
+      3 (0.0%)    puts("----------------------------------");
+      3 (0.0%)    puts("------- LIST MERCHANDISE ---------");
+      .         
+      3 (0.0%)    size_t merch_num = store->merch_num;
+      .         
+      2 (0.0%)    if (merch_num == 0)
+      .           {
+      .             puts("NOTHIING TO LIST, PLEASE ADD MERCHANDISE TO THE STORE FIRST!!");
+      .             return;
+      .           }
+      .         
+     59 (0.0%)    merch_t *merchs[merch_num];
+      .         
+      5 (0.0%)    put_merch_in_arr(store, merchs);
+      5 (0.0%)    sort_merch(merchs, merch_num);
+      .         
+      1 (0.0%)    size_t printed = 0;
+      1 (0.0%)    bool to_continue = true;
+      .         
+      8 (0.0%)    while (to_continue && printed < merch_num)
+      .           {
+      6 (0.0%)      print_list_merch(merchs, merch_num, &printed);
+      .         
+      3 (0.0%)      if (printed < merch_num)
+      .             {
+      2 (0.0%)        to_continue = should_continue_listing_io();
+      .             }
+      .             else
+      .             {
+      .               break;
+      .             }
+      .           }
+      .         
+      4 (0.0%)    puts("----------------------------------\n");
+      6 (0.0%)  }
+      .         
+      .         void show_stock(store_t *store)
+  1,309 (0.0%)  {
+    357 (0.0%)    puts("----------------------------------");
+    357 (0.0%)    puts("---------- SHOW STOCK ------------");
+      .         
+    238 (0.0%)    char *merch_name = get_name_io();
+      .         
+      .           elem_t merch_elem;
+    833 (0.0%)    bool exists = ioopm_get_merch(store, merch_name, &merch_elem);
+    476 (0.0%)    if (!exists)
+      .           {
+      .             puts("\nA MERCHANDISE BY THIS NAME DOES NOT EXIST!!");
+      .         
+      .             free(merch_name);
+      .             puts("----------------------------------\n");
+    119 (0.0%)      return;
+      .           }
+      .         
+    238 (0.0%)    merch_t *merch = merch_elem.p;
+      .         
+    357 (0.0%)    ioopm_list_t *shelf_list = merch->locs;
+    476 (0.0%)    size_t shelf_num = ioopm_list_size(shelf_list);
+      .         
+    238 (0.0%)    if (shelf_num == 0)
+      .           {
+    357 (0.0%)      free(merch_name);
+    357 (0.0%)      puts("NOTHIING TO LIST, THE MERCHANDISE HAS NO STOCK!!");
+    357 (0.0%)      puts("----------------------------------\n");
+      .         
+    119 (0.0%)      return;
+      .           }
+      .         
+      .           shelf_t *shelves[shelf_num];
+      .         
+      .           put_shelf_in_arr(shelf_list, shelves);
+      .           sort_shelf(shelves, shelf_num);
+      .         
+      .           size_t printed = 0;
+-- line 352 ----------------------------------------
+-- line 364 ----------------------------------------
+      .             {
+      .               break;
+      .             }
+      .           }
+      .         
+      .           free(merch_name);
+      .         
+      .           puts("----------------------------------\n");
+    714 (0.0%)  }
+      .         
+      .         void add_cart_in_store(store_t *store)
+    500 (0.0%)  {
+    300 (0.0%)    puts("----------------------------------");
+      .         
+    300 (0.0%)    ioopm_add_cart(store);
+    300 (0.0%)    puts("A CART HAS SUCCESSFULLY BEEN ADDED!!");
+      .         
+    300 (0.0%)    puts("----------------------------------\n");
+    300 (0.0%)  }
+      .         
+      .         void remove_cart_from_store(store_t *store)
+     50 (0.0%)  {
+     30 (0.0%)    puts("----------------------------------");
+     30 (0.0%)    puts("--------- REMOVE CART ------------");
+      .         
+     30 (0.0%)    size_t cart_id = get_cart_id_io();
+      .         
+     20 (0.0%)    bool delete = is_confirmed_io();
+     20 (0.0%)    if (delete)
+      .           {
+     60 (0.0%)      bool result = ioopm_remove_cart(store, cart_id);
+     40 (0.0%)      if (!result)
+      .             {
+      .               puts("\nINVALID CART ID!!");
+      .             }
+      .             else
+      .             {
+     60 (0.0%)        printf("CART %ld HAS SUCCESSFULLY DELETED!!\n", cart_id);
+      .             }
+      .           }
+      .         
+     30 (0.0%)    puts("----------------------------------\n");
+     30 (0.0%)  }
+      .         
+      .         void add_to_cart_in_store(store_t *store)
+    450 (0.0%)  {
+    270 (0.0%)    puts("----------------------------------");
+    270 (0.0%)    puts("--------- ADDING TO CART ---------");
+      .         
+    270 (0.0%)    size_t cart_id = get_cart_id_io();
+    180 (0.0%)    char *merch_name = get_name_io();
+    270 (0.0%)    size_t quantity = get_quantity_io();
+    270 (0.0%)    puts("----------------------------------");
+      .         
+    630 (0.0%)    int res = ioopm_add_to_cart(store, cart_id, merch_name, quantity);
+    310 (0.0%)    switch (res)
+      .           {
+      .           case -1:
+     75 (0.0%)      printf("THERE IS NO SUCH MERCHANDISE IN THE STORE!!\n");
+     25 (0.0%)      break;
+      .         
+      .           case -2:
+      .             printf("INVALID CART ID!!\n");
+      .             break;
+      .         
+      .           case -3:
+      .             printf("ENOUGH STOCK IS NOT AVAILABLE!!\n");
+      .             break;
+      .         
+      .           default:
+    390 (0.0%)      printf("ADDED TO THE CART %ld!!\n", cart_id);
+     65 (0.0%)      break;
+      .           }
+      .         
+    270 (0.0%)    puts("----------------------------------\n");
+    270 (0.0%)  }
+      .         
+      .         void remove_from_cart_in_store(store_t *store)
+    450 (0.0%)  {
+    270 (0.0%)    puts("----------------------------------");
+    270 (0.0%)    puts("------- REMOVING FROM CART -------");
+      .         
+    270 (0.0%)    size_t cart_id = get_cart_id_io();
+    180 (0.0%)    char *merch_name = get_name_io();
+    270 (0.0%)    size_t quantity = get_quantity_io();
+    270 (0.0%)    puts("----------------------------------");
+      .         
+    630 (0.0%)    int res = ioopm_remove_from_cart(store, cart_id, merch_name, quantity);
+    460 (0.0%)    switch (res)
+      .           {
+      .           case -1:
+      .             printf("INVALID CART ID!!\n");
+      .             break;
+      .         
+      .           case -2:
+     75 (0.0%)      printf("THERE IS NO SUCH MERCHANDISE IN THE STORE!!\n");
+     25 (0.0%)      break;
+      .         
+      .           case -3:
+      .             printf("QUANTITY EXCEEDS THE AMOUNT IN THE CART!!\n");
+      .             break;
+      .         
+      .           default:
+    390 (0.0%)      printf("MERCHANDISE HAS BEEN REMOVED FROM CART %ld!!\n", cart_id);
+     65 (0.0%)      break;
+      .           }
+      .         
+    270 (0.0%)    puts("----------------------------------\n");
+    270 (0.0%)  }
+      .         
+      .         void remove_cart_in_store(store_t *store)
+      .         {
+      .           puts("----------------------------------");
+      .           puts("--------- REMOVING CART ----------");
+      .         
+      .           size_t cart_id = get_cart_id_io();
+      .           puts("----------------------------------");
+-- line 480 ----------------------------------------
+-- line 488 ----------------------------------------
+      .           {
+      .             printf("INVALID CART ID!!");
+      .           }
+      .         
+      .           puts("----------------------------------\n");
+      .         }
+      .         
+      .         void calculate_cart_cost(store_t *store)
+    450 (0.0%)  {
+    270 (0.0%)    puts("----------------------------------");
+    270 (0.0%)    puts("--------- CALCULATE COST ---------");
+      .         
+    270 (0.0%)    size_t cart_id = get_cart_id_io();
+      .         
+    540 (0.0%)    long long cost = ioopm_calculate_cost(store, cart_id);
+    180 (0.0%)    if (cost == -1)
+      .           {
+      .             printf("CART %ld DOES NOT EXIST!!\n", cart_id);
+      .             puts("----------------------------------\n");
+      .             return;
+      .           }
+      .         
+    630 (0.0%)    printf("THE TOTAL COST OF CART %ld is %lld\n", cart_id, cost);
+      .         
+    270 (0.0%)    puts("----------------------------------\n");
+    180 (0.0%)  }
+      .         
+      .         void checkout_cart(store_t *store)
+    100 (0.0%)  {
+     60 (0.0%)    puts("----------------------------------");
+     60 (0.0%)    puts("------------ CHECKOUT ------------");
+      .         
+     60 (0.0%)    size_t cart_id = get_cart_id_io();
+      .         
+    120 (0.0%)    long long cost = ioopm_checkout(store, cart_id);
+     40 (0.0%)    if (cost == -1)
+      .           {
+      .             printf("CART %ld DOES NOT EXIST!!\n", cart_id);
+      .             puts("----------------------------------\n");
+      .             return;
+      .           }
+      .         
+    120 (0.0%)    printf("CART %ld HAS BEEN CHECKED OUT!!\n", cart_id);
+    120 (0.0%)    printf("TOTAL: %lld!!\n", cost);
+      .         
+     60 (0.0%)    puts("----------------------------------\n");
+     40 (0.0%)  }
+      .         
+      .         bool confirm_quit(store_t *store)
+      5 (0.0%)  {
+      3 (0.0%)    puts("----------------------------------");
+      3 (0.0%)    puts("------------- QUIT?! -------------");
+      .         
+      2 (0.0%)    bool quit = is_confirmed_io();
+      2 (0.0%)    if(quit)
+      .           {
+      3 (0.0%)      ioopm_destroy_store(store);
+      .         
+      3 (0.0%)      puts("------------- BYE!! --------------");
+      3 (0.0%)      puts("----------------------------------\n");
+      .           }
+      .         
+      3 (0.0%)    puts("----------------------------------\n");
+      .         
+      1 (0.0%)    return quit;
+      2 (0.0%)  }
+      .         
+      .         char get_action_choice(void)
+ 19,088 (0.0%)  {
+ 14,316 (0.0%)    puts("");
+      .         
+ 14,316 (0.0%)    puts("[A] Add Merchandise");
+ 14,316 (0.0%)    puts("[L] List Merchandise");
+ 14,316 (0.0%)    puts("[D] Remove Merchandise");
+ 14,316 (0.0%)    puts("[E] Edit Merchandise");
+ 14,316 (0.0%)    puts("[S] Show Stock");
+ 14,316 (0.0%)    puts("[P] Replenish Stock");
+ 14,316 (0.0%)    puts("");
+      .         
+ 14,316 (0.0%)    puts("[C] Create Cart");
+ 14,316 (0.0%)    puts("[R] Remove Cart");
+ 14,316 (0.0%)    puts("[+] Add To Cart");
+ 14,316 (0.0%)    puts("[-] Remove From Cart");
+ 14,316 (0.0%)    puts("[=] Calculate Cart Cost");
+ 14,316 (0.0%)    puts("[O] Checkout Cart");
+ 14,316 (0.0%)    puts("");
+      .         
+ 14,316 (0.0%)    puts("[Q] Quit");
+ 14,316 (0.0%)    puts("");
+      .         
+ 14,316 (0.0%)    puts("----------------------------------");
+ 28,632 (0.0%)    char *action = ask_question_string("ENTER: ", "");
+      .         
+ 28,632 (0.0%)    char upper_action = toupper(action[0]);
+ 14,316 (0.0%)    free(action);
+ 14,316 (0.0%)    puts("----------------------------------\n");
+  4,772 (0.0%)    return upper_action;
+  9,544 (0.0%)  }
+
+--------------------------------------------------------------------------------
+-- Annotated source file: /home/talha/ioopm/inlupp-2/utilities/dp_ht/dp_hash_table.c
+--------------------------------------------------------------------------------
+Ir____________ 
+
+-- line 4 ----------------------------------------
+      .         #include <stdio.h>
+      .         #include <string.h>
+      .         
+      .         #include "dp_common_hash_table.h"
+      .         #include "dp_hash_table.h"
+      .         #include "dp_hash_table_iterator.h"
+      .         
+      .         ioopm_hash_table_t *ioopm_hash_table_create(ioopm_hash_function *hash_fn, ioopm_eq_function *key_eq_fn, ioopm_destroy_function *fn_destroy_fn)
+    728 (0.0%)  {
+    832 (0.0%)    return ioopm_hash_table_create_sized(hash_fn, key_eq_fn, fn_destroy_fn, 17, 0.75);
+    208 (0.0%)  }
+      .         
+      .         ioopm_hash_table_t *ioopm_hash_table_create_sized(ioopm_hash_function *hash_fn, ioopm_eq_function *key_eq_fn, ioopm_destroy_function *fn_destroy_fn, size_t initial_capacity, float load_factor)
+  1,098 (0.0%)  {
+    488 (0.0%)    ioopm_hash_table_t *ht = calloc(1, sizeof(ioopm_hash_table_t));
+      .         
+    366 (0.0%)    ht->hash_fn = hash_fn;
+    366 (0.0%)    ht->key_eq_fn = key_eq_fn;
+    366 (0.0%)    ht->fn_destroy_fn = fn_destroy_fn;
+    244 (0.0%)    ht->size = 0;
+    366 (0.0%)    ht->capacity = initial_capacity;
+    366 (0.0%)    ht->load_factor = load_factor;
+      .         
+    854 (0.0%)    ht->buckets = calloc(initial_capacity, sizeof(entry_t *));
+      .         
+    122 (0.0%)    return ht;
+    244 (0.0%)  }
+      .         
+      .         static void entry_destroy(ioopm_hash_table_t *ht, entry_t *entry)
+ 22,080 (0.0%)  {
+ 18,400 (0.0%)    ht->fn_destroy_fn(entry);
+ 11,040 (0.0%)  }
+      .         
+      .         void ioopm_hash_table_destroy(ioopm_hash_table_t *ht)
+    520 (0.0%)  {
+      .           entry_t *current_address;
+      .         
+ 32,174 (0.0%)    for (size_t i = 0; i < ht->capacity; i++)
+      .           {
+ 44,170 (0.0%)      current_address = ht->buckets[i]; // The first entry in the bucket
+      .         
+ 24,700 (0.0%)      while (current_address != NULL) // While we have an entry in the bucket
+      .             {
+  5,770 (0.0%)        entry_t *temp = current_address;
+  8,655 (0.0%)        current_address = current_address->next;
+      .         
+ 14,425 (0.0%)        entry_destroy(ht, temp); // free the entry
+      .             }
+      .           }
+      .         
+    416 (0.0%)    free(ht->buckets);
+    312 (0.0%)    free(ht); // Free the space for the hash table itself
+    312 (0.0%)  }
+      .         
+      .         static entry_t *entry_create(elem_t key, elem_t value, entry_t *next)
+ 49,609 (0.1%)  {
+ 28,348 (0.0%)    entry_t *entry = calloc(1, sizeof(entry_t));
+      .         
+ 21,261 (0.0%)    entry->key = key;
+ 21,261 (0.0%)    entry->value = value;
+ 21,261 (0.0%)    entry->next = next;
+      .         
+  7,087 (0.0%)    return entry;
+ 14,174 (0.0%)  }
+      .         
+      .         static entry_t **find_previous_entry(ioopm_hash_table_t *ht, const elem_t key)
+ 59,292 (0.1%)  {
+ 98,820 (0.1%)    size_t bucket = ht->hash_fn(key) % ht->capacity; // Find bucket
+      .         
+ 59,292 (0.1%)    entry_t **previous = &ht->buckets[bucket];
+      .         
+      .           // While not at end of bucket, and key not found...
+144,990 (0.2%)    while (*previous != NULL && !(ht->key_eq_fn((*previous)->key, key)))
+      .           {
+ 16,308 (0.0%)      previous = &(*previous)->next;
+      .           }
+      .         
+  9,882 (0.0%)    return previous;
+ 19,764 (0.0%)  }
+      .         
+      .         static size_t get_new_capacity(ioopm_hash_table_t *ht)
+    144 (0.0%)  {
+      .           // 0 at the end acts as an array terminator
+    216 (0.0%)    size_t primes[] = {17, 31, 67, 127, 257, 509, 1021, 2053, 4099, 8191, 16381, 0};
+      .         
+      .           // While we have not reached the end of the primes array...
+    366 (0.0%)    for (int i = 0; primes[i] != 0; i++)
+      .           {
+    406 (0.0%)      if (primes[i] == ht->capacity) // If we've found the current capacity of ht...
+      .             {
+     90 (0.0%)        return primes[i + 1]; // ...return the next capacity.
+      .             }
+      .           }
+      .           return 0; // If we did not find the current capacity of ht in the primes array, return 0.
+     90 (0.0%)  }
+      .         
+      .         static void resize_hash_table(ioopm_hash_table_t *ht)
+     90 (0.0%)  {
+     72 (0.0%)    size_t new_capacity = get_new_capacity(ht);
+      .           // Exit if there is no new capacity.
+     36 (0.0%)    if (new_capacity == 0)
+      .           {
+      .             return;
+      .           }
+      .         
+    234 (0.0%)    ioopm_hash_table_t *temp_ht = ioopm_hash_table_create_sized(
+      .               ht->hash_fn, ht->key_eq_fn, ht->fn_destroy_fn,
+      .               new_capacity, ht->load_factor);
+      .         
+     36 (0.0%)    if (temp_ht == NULL)
+      .           {
+      .             return;
+      .           }
+      .         
+      .           // Rehash from old buckets to new buckets
+     72 (0.0%)    ioopm_hash_table_iterator_t *it = ioopm_hash_table_iterator_create(ht);
+ 20,568 (0.0%)    while (!ioopm_hash_table_iterator_at_end(it))
+      .           {
+      .             // Get key and value from old bucket
+ 13,628 (0.0%)      elem_t key = ioopm_hash_table_iterator_current_key(it);
+ 13,628 (0.0%)      elem_t value = ioopm_hash_table_iterator_current_value(it);
+      .         
+      .             // Find new bucket
+ 34,070 (0.0%)      size_t bucket = temp_ht->hash_fn(key) % temp_ht->capacity;
+      .         
+      .             // Find end of new bucket
+ 20,442 (0.0%)      entry_t **current = &temp_ht->buckets[bucket];
+ 19,059 (0.0%)      while (*current != NULL)
+      .             {
+  2,024 (0.0%)        current = &(*current)->next;
+      .             }
+      .         
+      .             // Put entry at end of new bucket
+ 27,256 (0.0%)      *current = entry_create(key, value, NULL);
+ 17,035 (0.0%)      temp_ht->size++;
+      .         
+      .             // Go to next entry
+ 10,221 (0.0%)      ioopm_hash_table_iterator_advance(it);
+      .           }
+      .         
+     54 (0.0%)    ioopm_hash_table_iterator_destroy(it);
+      .         
+      .           // Save old hash table information
+     54 (0.0%)    entry_t **old_buckets = ht->buckets;
+     54 (0.0%)    size_t old_capacity = ht->capacity;
+      .         
+      .           // Update hash table with new information
+     72 (0.0%)    ht->buckets = temp_ht->buckets;
+     72 (0.0%)    ht->capacity = temp_ht->capacity;
+     72 (0.0%)    ht->size = temp_ht->size;
+      .         
+      .           // Write old information to temporary hash table
+     54 (0.0%)    temp_ht->buckets = old_buckets;
+     54 (0.0%)    temp_ht->capacity = old_capacity;
+      .         
+      .           // Destroy the old entries without destroying their keys or values
+ 22,878 (0.0%)    for (size_t i = 0; i < temp_ht->capacity; i++)
+      .           {
+ 31,878 (0.0%)      entry_t *current_entry = temp_ht->buckets[i];
+      .         
+ 20,476 (0.0%)      while (current_entry != NULL)
+      .             {
+  6,814 (0.0%)        entry_t *previous_entry = current_entry;
+ 10,221 (0.0%)        current_entry = current_entry->next;
+      .         
+ 10,221 (0.0%)        free(previous_entry);
+      .               // (Do not free the entry's key or value, as they are being used by the new buckets)
+      .             }
+      .           }
+      .         
+     72 (0.0%)    free(temp_ht->buckets);
+     72 (0.0%)    free(temp_ht);
+     36 (0.0%)  }
+      .         
+      .         void ioopm_hash_table_insert(ioopm_hash_table_t *ht, elem_t key, elem_t value)
+ 26,670 (0.0%)  {
+ 22,860 (0.0%)    entry_t **previous = find_previous_entry(ht, key);
+ 11,430 (0.0%)    entry_t *to_insert = *previous;
+      .         
+      .           // If the key exists, update the value; otherwise, create a new entry
+  7,620 (0.0%)    if (to_insert != NULL)
+      .           {
+    390 (0.0%)      to_insert->value = value;
+      .           }
+      .           else
+      .           {
+      .             // Check if adding one more entry would exceed the load factor
+ 77,280 (0.1%)      if ((double)(ht->size + 1) / ht->capacity > ht->load_factor)
+      .             {
+     54 (0.0%)        resize_hash_table(ht);
+      .         
+      .               // The bucket may have changed, so find the insertion position again
+    108 (0.0%)        previous = find_previous_entry(ht, key);
+      .             }
+      .         
+ 29,440 (0.0%)      *previous = entry_create(key, value, NULL);
+ 18,400 (0.0%)      ht->size++;
+      .           }
+ 11,560 (0.0%)  }
+      .         
+      .         bool ioopm_hash_table_lookup(ioopm_hash_table_t *ht, const elem_t key, elem_t *result)
+ 36,813 (0.0%)  {
+ 31,554 (0.0%)    entry_t **previous = find_previous_entry(ht, key); // Find previous entry, or the last entry if the key does not exist
+ 15,777 (0.0%)    entry_t *current = *previous;
+      .         
+      .           // if the key exists, return the value, otherwise, indicate that the lookup failed
+ 10,518 (0.0%)    if (current != NULL)
+      .           {
+  6,416 (0.0%)      *result = current->value;
+  3,208 (0.0%)      return true;
+      .           }
+      .           else
+      .           {
+  3,655 (0.0%)      return false;
+      .           }
+ 10,518 (0.0%)  }
+      .         
+      .         bool ioopm_hash_table_has_key(ioopm_hash_table_t *ht, const elem_t key)
+      .         {
+      .           elem_t lookedup_value;
+      .           return ioopm_hash_table_lookup(ht, key, &lookedup_value);
+      .         }
+      .         
+      .         size_t ioopm_hash_table_size(const ioopm_hash_table_t *ht)
+-- line 227 ----------------------------------------
+-- line 230 ----------------------------------------
+      .         }
+      .         
+      .         bool ioopm_hash_table_is_empty(const ioopm_hash_table_t *ht)
+      .         {
+      .           return ioopm_hash_table_size(ht) == 0;
+      .         }
+      .         
+      .         bool ioopm_hash_table_remove(ioopm_hash_table_t *ht, const elem_t key, elem_t *removed_value)
+  5,565 (0.0%)  {
+  4,770 (0.0%)    entry_t **previous = find_previous_entry(ht, key); // Find previous entry, or the last entry if the key does not exist
+  2,385 (0.0%)    entry_t *current = *previous;
+      .         
+      .           // If the key we are trying to remove exists...
+  1,590 (0.0%)    if (current != NULL)
+      .           {
+      .             // ...remove it and relink the previous node to the new next node
+  3,180 (0.0%)      *removed_value = current->value;
+  3,180 (0.0%)      (*previous) = current->next;
+  3,975 (0.0%)      entry_destroy(ht, current);
+  3,975 (0.0%)      ht->size--;
+      .         
+  1,590 (0.0%)      return true;
+      .           }
+      .           else
+      .           {
+      .             // ...return that the lookup failed
+      .             return false;
+      .           }
+  1,590 (0.0%)  }
+      .         
+      .         bool ioopm_hash_table_remove_without_destroy(ioopm_hash_table_t *ht, const elem_t key, elem_t *removed_value)
+      .         {
+      .           entry_t **previous = find_previous_entry(ht, key); // Find previous entry, or the last entry if the key does not exist
+      .           entry_t *current = *previous;
+      .         
+      .           // If the key we are trying to remove exists...
+      .           if (current != NULL && ht->key_eq_fn(current->key, key))
+-- line 266 ----------------------------------------
+
+--------------------------------------------------------------------------------
+-- Annotated source file: /home/talha/ioopm/inlupp-2/utilities/dp_ht/dp_hash_table_iterator.c
+--------------------------------------------------------------------------------
+Ir____________ 
+
+-- line 12 ----------------------------------------
+      .         struct hash_table_iterator
+      .         {
+      .           ioopm_hash_table_t *ht;
+      .           size_t current_bucket;
+      .           entry_t *current_entry;
+      .         };
+      .         
+      .         static void advance_iterator_state(ioopm_hash_table_iterator_t *it)
+ 26,008 (0.0%)  {
+      .           // Go to the next entry
+ 32,510 (0.0%)    it->current_entry = it->current_entry->next;
+      .         
+      .           // If at end of bucket...
+ 26,008 (0.0%)    if (it->current_entry == NULL)
+      .           {
+      .             // ... Go to the next bucket.
+ 24,290 (0.0%)      it->current_bucket += 1;
+      .         
+      .             // If not at the last bucket...
+ 34,006 (0.0%)      if (it->current_bucket < it->ht->capacity)
+      .             {
+ 48,400 (0.1%)        it->current_entry = it->ht->buckets[it->current_bucket]; // ... Get the first element in the new bucket.
+      .             }
+      .           }
+ 19,506 (0.0%)  }
+      .         
+      .         static void skip_empty_buckets(ioopm_hash_table_iterator_t *it)
+ 26,644 (0.0%)  {
+121,867 (0.1%)    while (it->current_bucket < it->ht->capacity &&
+ 25,354 (0.0%)           it->current_entry == NULL)
+      .           {
+ 30,875 (0.0%)      it->current_bucket++;
+      .         
+ 43,225 (0.0%)      if (it->current_bucket < it->ht->capacity)
+      .             {
+ 60,340 (0.1%)        it->current_entry = it->ht->buckets[it->current_bucket];
+      .             }
+      .           }
+ 19,983 (0.0%)  }
+      .         
+      .         ioopm_hash_table_iterator_t *ioopm_hash_table_iterator_create(ioopm_hash_table_t *ht)
+    795 (0.0%)  {
+    636 (0.0%)    ioopm_hash_table_iterator_t *it = calloc(1, sizeof(ioopm_hash_table_iterator_t));
+      .         
+    477 (0.0%)    it->ht = ht;
+    318 (0.0%)    it->current_bucket = 0;
+    795 (0.0%)    it->current_entry = ht->buckets[0];
+      .         
+      .           // Go to the first logical entry
+    477 (0.0%)    skip_empty_buckets(it);
+      .         
+    159 (0.0%)    return it;
+    318 (0.0%)  }
+      .         
+      .         void ioopm_hash_table_iterator_destroy(ioopm_hash_table_iterator_t *it)
+    795 (0.0%)  {
+    477 (0.0%)    free(it);
+    477 (0.0%)  }
+      .         
+      .         bool ioopm_hash_table_iterator_at_end(ioopm_hash_table_iterator_t *it)
+ 52,652 (0.1%)  {
+ 92,141 (0.1%)    return it->current_bucket == it->ht->capacity;
+ 26,326 (0.0%)  }
+      .         
+      .         void ioopm_hash_table_iterator_advance(ioopm_hash_table_iterator_t *it)
+ 32,510 (0.0%)  {
+ 39,012 (0.0%)    assert(!ioopm_hash_table_iterator_at_end(it) && "iterator at end when advancing");
+      .         
+ 19,506 (0.0%)    advance_iterator_state(it);
+ 19,506 (0.0%)    skip_empty_buckets(it);
+ 19,506 (0.0%)  }
+      .         
+      .         elem_t ioopm_hash_table_iterator_current_key(ioopm_hash_table_iterator_t *it)
+ 14,008 (0.0%)  {
+ 10,506 (0.0%)    return it->current_entry->key;
+  7,004 (0.0%)  }
+      .         
+      .         elem_t ioopm_hash_table_iterator_current_value(ioopm_hash_table_iterator_t *it)
+ 26,008 (0.0%)  {
+ 19,506 (0.0%)    return it->current_entry->value;
+ 13,004 (0.0%)  
+
+--------------------------------------------------------------------------------
+-- Annotated source file: /home/talha/ioopm/inlupp-2/utilities/linked_list.c
+--------------------------------------------------------------------------------
+Ir___________ 
+
+-- line 19 ----------------------------------------
+     .         {
+     .           entry_t *sentinel;
+     .           entry_t *last;
+     .           size_t size;
+     .         
+     .         } ioopm_list_t;
+     .         
+     .         ioopm_list_t *ioopm_list_create(void)
+13,500 (0.0%)  {
+13,500 (0.0%)    ioopm_list_t *list = calloc(1, sizeof(ioopm_list_t));
+20,250 (0.0%)    list->sentinel = calloc(1, sizeof(entry_t));
+     .         
+13,500 (0.0%)    list->last = list->sentinel;
+ 3,375 (0.0%)    return list;
+ 6,750 (0.0%)  }
+     .         
+     .         static entry_t *ioopm_entry_create(elem_t value)
+   375 (0.0%)  {
+   300 (0.0%)    entry_t *entry = calloc(1, sizeof(entry_t));
+   225 (0.0%)    entry->value = value;
+    75 (0.0%)    return entry;
+   150 (0.0%)  }
+     .         
+     .         void ioopm_entry_destroy(entry_t *entry)
+17,250 (0.0%)  {
+10,350 (0.0%)    free(entry);
+10,350 (0.0%)  }
+     .         
+     .         void ioopm_list_destroy(ioopm_list_t *list)
+16,875 (0.0%)  {
+     .         
+10,125 (0.0%)    entry_t *current = list->sentinel;
+     .         
+     .           entry_t *temp;
+17,025 (0.0%)    while (current != NULL)
+     .           {
+ 6,900 (0.0%)      temp = current;
+10,350 (0.0%)      current = current->next;
+     .         
+10,350 (0.0%)      ioopm_entry_destroy(temp);
+     .           }
+     .         
+10,125 (0.0%)    free(list);
+10,125 (0.0%)  }
+     .         
+     .         void ioopm_list_append(ioopm_list_t *list, elem_t value)
+     .         {
+     .           entry_t *last = list->last;
+     .           entry_t *entry = ioopm_entry_create(value);
+     .         
+     .           //Make the current last point at the new entry and make it the new last
+     .           last->next = entry;
+     .           list->last = entry;
+     .         
+     .           list->size++;
+     .         }
+     .         
+     .         void ioopm_list_prepend(ioopm_list_t *list, elem_t value)
+   450 (0.0%)  {
+   225 (0.0%)    entry_t *sentinel = list->sentinel;
+   300 (0.0%)    entry_t *entry = ioopm_entry_create(value);
+     .         
+     .           //Make the entry point to the current first node (the node after sentinal node)
+     .           //Make the sentinal node point at the entry making it the new first logical node
+   300 (0.0%)    entry->next = sentinel->next;
+   225 (0.0%)    sentinel->next = entry;
+   375 (0.0%)    list->size++;
+   225 (0.0%)  }
+     .         
+     .         elem_t ioopm_list_last(ioopm_list_t *list)
+     .         {
+     .           assert(list->last != NULL && "THE LIST IS EMPTY!!");
+     .           return list->last->value;
+     .         }
+     .         
+     .         elem_t ioopm_list_head(ioopm_list_t *list)
+-- line 94 ----------------------------------------
+-- line 162 ----------------------------------------
+     .         {
+     .           entry_t *prev = find_previous_entry(list, index);
+     .           entry_t *current = prev->next;
+     .         
+     .           return current->value;
+     .         }
+     .         
+     .         size_t ioopm_list_size(ioopm_list_t *list)
+   476 (0.0%)  {
+   238 (0.0%)    return list->size;
+   238 (0.0%)  }
+     .         
+     .         bool ioopm_list_is_empty(ioopm_list_t *list)
+     .         {
+     .           return list->size == 0;
+     .         
+
+--------------------------------------------------------------------------------
+-- Annotated source file: /home/talha/ioopm/inlupp-2/utilities/linked_list_iterator.c
+--------------------------------------------------------------------------------
+Ir___________ 
+
+-- line 30 ----------------------------------------
+     .             ioopm_list_t *list;
+     .             entry_t *current_entry;
+     .             entry_t *previous_entry;
+     .         } ioopm_list_iterator_t;
+     .         
+     .         // Iterator functions
+     .         
+     .         ioopm_list_iterator_t *ioopm_list_iterator_create(ioopm_list_t *list)
+20,700 (0.0%)  {
+     .             // Create iterator
+16,560 (0.0%)      ioopm_list_iterator_t *iterator = calloc(1, sizeof(ioopm_list_iterator_t));
+     .         
+     .             // Link iterator to given list
+12,420 (0.0%)      iterator->list = list;
+     .         
+     .             // Make iterator point to first list element
+20,700 (0.0%)      iterator->current_entry = list->sentinel->next;
+     .         
+     .             // Let iterator know that the previous entry is the sentinel node
+16,560 (0.0%)      iterator->previous_entry = list->sentinel;
+     .         
+ 4,140 (0.0%)      return iterator;
+ 8,280 (0.0%)  }
+     .         
+     .         void ioopm_list_iterator_destroy(ioopm_list_iterator_t *iterator)
+20,700 (0.0%)  {
+     .             // Make available the heap space that the iterator is taking up
+12,420 (0.0%)      free(iterator);
+12,420 (0.0%)  }
+     .         
+     .         bool ioopm_list_iterator_at_end(ioopm_list_iterator_t *iterator)
+16,860 (0.0%)  {
+16,860 (0.0%)      if (iterator->current_entry == NULL)
+     .             {
+     .                 // The iterator is pointing at the end of the list
+ 8,250 (0.0%)          return true;
+     .             }
+     .             else
+     .             {
+     .                 // The iterator is pointing at an entry
+    90 (0.0%)          return false;
+     .             }
+ 8,430 (0.0%)  }
+     .         
+     .         void ioopm_list_iterator_advance(ioopm_list_iterator_t *iterator)
+   450 (0.0%)  {
+     .             // Failsafe if iterator is at end of list
+   360 (0.0%)      if (iterator->current_entry == NULL)
+     .             {
+     .                 puts("ERROR: The iterator is at the end of the list.");
+     .                 return;
+     .             }
+     .         
+     .             // Set the new previous entry, to the old current entry
+   360 (0.0%)      iterator->previous_entry = iterator->current_entry;
+     .         
+     .             // Set the new current entry, to the entry after the old current entry
+   450 (0.0%)      iterator->current_entry = iterator->current_entry->next;
+   180 (0.0%)  }
+     .         
+     .         bool ioopm_list_iterator_current(ioopm_list_iterator_t *iterator, elem_t *elem)
+   540 (0.0%)  {
+     .             // Failsafe if iterator, is at end of list
+   360 (0.0%)      if (iterator->current_entry == NULL)
+     .             {
+     .                 puts("ERROR: The iterator is at the end of the list.");
+     .                 return false;
+     .             }
+     .         
+     .             // Return the value of the entry that the iterator is currently pointing at
+   450 (0.0%)      *elem = iterator->current_entry->value;
+    90 (0.0%)      return true;
+   180 (0.0%)  }
+     .         
+     .         bool ioopm_list_iterator_remove(ioopm_list_iterator_t *iterator, elem_t *elem)
+     .         {
+     .             // Failsafe if iterator is at end of list
+     .             if (iterator->current_entry == NULL)
+     .             {
+     .                 puts("ERROR: The iterator is at the end of the list.");
+     .                 return false;
+-- line 110 ----------------------------------------
+
+--------------------------------------------------------------------------------
+-- Annotated source file: /home/talha/ioopm/inlupp-2/utilities/utils.c
+--------------------------------------------------------------------------------
+Ir______________ 
+
+        .         #include "utils.h"
+        .         #include <stdio.h>
+        .         #include <stdlib.h>
+        .         #include <string.h>
+        .         #include <ctype.h>
+        .         
+        .         void print(char *str)
+    3,810 (0.0%)  {
+      762 (0.0%)      int i = 0;
+  187,417 (0.2%)      while (str[i] != '\0')
+        .             {
+  207,224 (0.2%)          putchar(str[i]);
+   25,903 (0.0%)          i++;
+        .             }
+    3,048 (0.0%)  }
+        .         
+        .         void println(char *str)
+        .         {
+        .             print(str);
+        .             putchar('\n');
+        .         }
+        .         
+        .         int read_string(char *buf, int buf_siz)
+  104,778 (0.1%)  {
+   17,463 (0.0%)      int i = 0;
+        .             int c;
+        .         
+  827,411 (0.9%)      while (i < buf_siz - 1)
+        .             {
+  404,974 (0.4%)          c = getchar();
+  775,022 (0.9%)          if (c == '\n' || c == EOF)
+        .                 {
+        .                     break;
+        .                 }
+1,110,144 (1.2%)          buf[i] = (char)c;
+  185,024 (0.2%)          i++;
+        .             }
+   87,315 (0.1%)      buf[i] = '\0';
+        .         
+   34,926 (0.0%)      if (c != '\n' && c != EOF)
+        .             {
+        .                 int discard;
+        .                 do
+        .                 {
+        .                     discard = getchar();
+        .                 } while (discard != '\n' && discard != EOF);
+        .             }
+        .         
+   17,463 (0.0%)      return i;
+   34,926 (0.0%)  }
+        .         
+        .         bool is_number(char *str)
+   20,150 (0.0%)  {
+   16,120 (0.0%)      int len = strlen(str);
+    8,060 (0.0%)      if (len == 0)
+        .                 return false;
+        .         
+    4,030 (0.0%)      int start = 0;
+   16,120 (0.0%)      if (str[0] == '-')
+        .             {
+        .                 if (len == 1)
+        .                     return false;
+        .                 start = 1;
+        .             }
+        .         
+   54,944 (0.1%)      for (int i = start; i < len; i++)
+        .             {
+  115,365 (0.1%)          if (!isdigit((unsigned char)str[i]))
+        .                 {
+        .                     return false;
+        .                 }
+        .             }
+        .         
+    4,030 (0.0%)      return true;
+    8,060 (0.0%)  }
+        .         
+        .         bool not_empty(char *str)
+   54,132 (0.1%)  {
+   54,132 (0.1%)      return strlen(str) > 0;
+   27,066 (0.0%)  }
+        .         
+        .         answer_t make_string(char *str)
+   67,665 (0.1%)  {
+        .         
+        .             answer_t s;
+   54,132 (0.1%)      s.string_value = strdup(str);
+   13,533 (0.0%)      return s;
+   27,066 (0.0%)  }
+        .         
+        .         answer_t make_int(char *str)
+   19,650 (0.0%)  {
+        .         
+        .             answer_t i;
+   15,720 (0.0%)      i.int_value = atoi(str);
+    3,930 (0.0%)      return i;
+    7,860 (0.0%)  }
+        .         
+        .         answer_t ask_question(char *question, char *error_txt, check_func *check, convert_func *convert)
+  244,482 (0.3%)  {
+   17,463 (0.0%)      int buf_siz = 255;
+  541,353 (0.6%)      char buf[buf_siz];
+        .         
+   17,463 (0.0%)      size_t tries = 0;
+        .             do
+        .             {
+   34,926 (0.0%)          if (tries > 0)
+        .                 {
+        .                     printf("\n%s\n", error_txt);
+        .                 }
+        .         
+  104,778 (0.1%)          printf("%s", question);
+   87,315 (0.1%)          read_string(buf, buf_siz);
+   17,463 (0.0%)          tries++;
+        .         
+  122,241 (0.1%)      } while (!check(buf));
+        .         
+   87,315 (0.1%)      return convert(buf);
+  104,778 (0.1%)  }
+        .         
+        .         int ask_question_int(char *question, char *error_txt)
+   23,580 (0.0%)  {
+        .             while (1)
+        .             {
+   27,510 (0.0%)          answer_t answer = ask_question(question, error_txt, is_number, make_int);
+        .         
+   11,790 (0.0%)          if (answer.int_value > 0)
+        .                 {
+    7,860 (0.0%)              return answer.int_value;
+        .                 }
+        .                 else 
+        .                 {
+        .                     printf("\n%s\n", error_txt);
+        .                 }
+        .             }
+    7,860 (0.0%)  }
+        .         
+        .         char *ask_question_string(char *question, char *error_txt)
+   80,598 (0.1%)  {
+   80,598 (0.1%)      return ask_question(question, error_txt, not_empty, make_string).string_value; // hämtar strängen ur 'answer_t' unionen
+   26,866 (0.0%)  }
+        .         
+        .         char *ask_question_shelf(char *question, char *error_txt)
+      600 (0.0%)  {
+        .             answer_t answer;
+        .             char *input;
+        .         
+        .             while (1)
+        .             {
+      700 (0.0%)          answer = ask_question(question, error_txt, not_empty, make_string);
+      200 (0.0%)          input = answer.string_value;
+        .         
+    2,300 (0.0%)          if (isalpha(input[0]) && is_number(input + 1) && strlen(input) == 3)
+        .                 {
+      100 (0.0%)              break;
+        .                 }
+        .                 printf("%s\n", error_txt);
+        .             }
+        .         
+      100 (0.0%)      return input;
+      200 (0.0%)  
+
+--------------------------------------------------------------------------------
+-- Annotation summary
+--------------------------------------------------------------------------------
+Ir________________ 
+
+13,203,977 (14.5%)    annotated: files known & above threshold & readable, line numbers known
+         0            annotated: files known & above threshold & readable, line numbers unknown
+         0          unannotated: files known & above threshold & two or more non-identical
+75,277,227 (82.7%)  unannotated: files known & above threshold & unreadable 
+   884,728  (1.0%)  unannotated: files known & below threshold
+ 1,672,078  (1.8%)  unannotated: files unknown
+
