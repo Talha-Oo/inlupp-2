@@ -26,9 +26,9 @@ void print_merch(merch_t *merch)
   puts("----------------------------------");
   puts("------------- MERCH --------------");
 
-  printf("NAME: %s\n", merch->name);
-  printf("DESCRIPTION: %s\n", merch->desc);
-  printf("Price: %ld\n", merch->price);
+  printf("NAME: %s\n", ioopm_merch_name_get(merch)  /*merch->name*/ );
+  printf("DESCRIPTION: %s\n", ioopm_merch_desc_get(merch) /*merch->desc*/ );
+  printf("Price: %ld\n", ioopm_merch_price_get(merch) /*merch->price*/);
 
   puts("----------------------------------\n");
 }
@@ -41,8 +41,8 @@ static int cmp_merch_name(const void *p1, const void *p2)
   merch_t *merch1 = *merch1_ptr;
   merch_t *merch2 = *merch2_ptr;
 
-  const char *name1 = merch1->name;
-  const char *name2 = merch2->name;
+  const char *name1 = ioopm_merch_name_get(merch1) /*merch1->name*/;
+  const char *name2 = ioopm_merch_name_get(merch2) /*merch2->name*/;
 
   return strcmp(name1, name2);
 }
@@ -55,8 +55,8 @@ static int cmp_shelf_name(const void *p1, const void *p2)
   shelf_t *shelf1 = *shelf1_ptr;
   shelf_t *shelf2 = *shelf2_ptr;
 
-  const char *name1 = shelf1->shelf_name;
-  const char *name2 = shelf2->shelf_name;
+  const char *name1 = ioopm_shelf_name_get(shelf1) /*shelf1->shelf_name*/;
+  const char *name2 = ioopm_shelf_name_get(shelf2) /*shelf2->shelf_name*/;
 
   return strcmp(name1, name2);
 }
@@ -73,7 +73,7 @@ static void sort_shelf(shelf_t *shelves[], size_t shelf_num)
 
 static void put_merch_in_arr(store_t *store, merch_t *merchs[])
 {
-  ioopm_hash_table_t *ht = store->name_to_item;
+  ioopm_hash_table_t *ht = ioopm_store_name_to_item_get(store) /* store->name_to_item */;
   ioopm_hash_table_iterator_t *it = ioopm_hash_table_iterator_create(ht);
 
   size_t i = 0;
@@ -129,7 +129,7 @@ static void print_list_shelf(shelf_t *shelves[], size_t size, size_t *printed)
   for (i = *printed; i < *printed + 20 && i < size; i++)
   {
     shelf_t *shelf = shelves[i];
-    printf("%s: %ld\n", shelf->shelf_name, shelf->quantity);
+    printf("%s: %ld\n", ioopm_shelf_name_get(shelf)  /*shelf->shelf_name*/, ioopm_shelf_quantity_get(shelf) /*shelf->quantity*/);
   }
 
   *printed = i;
@@ -149,7 +149,7 @@ void add_merchandise_to_store(store_t *store)
   }
   else
   {
-    printf("\n%s HAS BEEN ADDED TO THE STORE!!\n", merch->name);
+    printf("\n%s HAS BEEN ADDED TO THE STORE!!\n", ioopm_merch_name_get(merch) /*merch->name*/);
   }
 
   puts("----------------------------------\n");
@@ -279,7 +279,7 @@ void list_merchandise(store_t *store)
   puts("----------------------------------");
   puts("------- LIST MERCHANDISE ---------");
 
-  size_t merch_num = store->merch_num;
+  size_t merch_num = ioopm_store_merch_num_get(store) /* store->merch_num */;
 
   if (merch_num == 0)
   {
@@ -332,7 +332,7 @@ void show_stock(store_t *store)
 
   merch_t *merch = merch_elem.p;
 
-  ioopm_list_t *shelf_list = merch->locs;
+  ioopm_list_t *shelf_list = ioopm_merch_locs_get(merch) /* merch->locs */;
   size_t shelf_num = ioopm_list_size(shelf_list);
 
   if (shelf_num == 0)

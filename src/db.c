@@ -318,3 +318,61 @@ bool ioopm_remove_merch(store_t *store, char *name)
   //free(name);
   return res;
 }
+
+// TILLÄGG VID GRANSKNING
+
+ioopm_hash_table_t *ioopm_store_name_to_item_get(store_t *store) {
+  return store->name_to_item;
+}
+
+ioopm_hash_table_t *ioopm_store_shelf_to_item_get(store_t *store) {
+  return store->shelf_to_item;
+}
+
+ioopm_hash_table_t *ioopm_store_all_carts_get(store_t *store) {
+  return store->all_carts;
+}
+
+ioopm_hash_table_t *ioopm_store_reserved_merchs_get(store_t *store) {
+  return store->reserved_merchs;
+}
+
+size_t ioopm_store_merch_num_get(store_t *store) {
+  return store->merch_num;
+}
+
+size_t ioopm_store_carts_num_get(store_t *store) {
+  return store->carts_num;
+}
+
+char *ioopm_merch_name_get(merch_t *merch) {
+  return merch->name;
+}
+
+char *ioopm_merch_desc_get(merch_t *merch) {
+  return merch->desc;
+}
+
+size_t ioopm_merch_price_get(merch_t *merch) {
+  return merch->price;
+}
+
+ioopm_list_t *ioopm_merch_locs_get(merch_t *merch) {
+  return merch->locs;
+}
+
+size_t ioopm_merch_stock_get(merch_t *merch) {
+  return merch->stock;
+}
+
+char *ioopm_shelf_name_get(shelf_t *shelf) {
+  return shelf->shelf_name;
+}
+
+char *ioopm_shelf_merch_name_get(shelf_t *shelf) {
+  return *(shelf->merch_name);
+}
+
+size_t ioopm_shelf_quantity_get(shelf_t *shelf) {
+  return shelf->quantity;
+}
