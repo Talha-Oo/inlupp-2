@@ -34,9 +34,9 @@ void test_make_destroy_merch()
 
   merch_t *merch = ioopm_create_merch(name, desc, 123);
 
-  CU_ASSERT_EQUAL(strcmp(name, merch->name), 0);
-  CU_ASSERT_EQUAL(strcmp(desc, merch->desc), 0);
-  CU_ASSERT_EQUAL(merch->price, 123);
+  CU_ASSERT_EQUAL(strcmp(name, ioopm_merch_name_get(merch)), 0); // Using name_get instead instead of merch->name
+  CU_ASSERT_EQUAL(strcmp(desc, ioopm_merch_desc_get(merch)), 0); // Using desc_get instead instead of merch->desc
+  CU_ASSERT_EQUAL(ioopm_merch_price_get(merch), 123); // Using price_get instead instead of merch->price
 
   ioopm_destroy_merch(merch);
 }
@@ -61,9 +61,9 @@ void test_add_merchs()
 
   // Checking if we can read the stored merchendise with lookup
   merch_t *looked_up_merch = looked_up_elem.p;
-  CU_ASSERT_EQUAL(strcmp(name1, looked_up_merch->name), 0);
-  CU_ASSERT_EQUAL(strcmp(desc1, looked_up_merch->desc), 0);
-  CU_ASSERT_EQUAL(looked_up_merch->price, 123);
+  CU_ASSERT_EQUAL(strcmp(name1, ioopm_merch_name_get(looked_up_merch)), 0);
+  CU_ASSERT_EQUAL(strcmp(desc1, ioopm_merch_desc_get(looked_up_merch)), 0);
+  CU_ASSERT_EQUAL(ioopm_merch_price_get(looked_up_merch), 123);
 
   // Adding a merchendise which already exists
   char *name2 = strdup("T");
@@ -78,9 +78,9 @@ void test_add_merchs()
 
   // Checking if information is still the same
   looked_up_merch = looked_up_elem.p;
-  CU_ASSERT_EQUAL(strcmp(name1, looked_up_merch->name), 0);
-  CU_ASSERT_EQUAL(strcmp(desc1, looked_up_merch->desc), 0);
-  CU_ASSERT_EQUAL(looked_up_merch->price, 123);
+  CU_ASSERT_EQUAL(strcmp(name1, ioopm_merch_name_get(looked_up_merch)), 0);
+  CU_ASSERT_EQUAL(strcmp(desc1, ioopm_merch_desc_get(looked_up_merch)), 0);
+  CU_ASSERT_EQUAL(ioopm_merch_price_get(looked_up_merch), 123);
 
   // Adding a new merchendise with similar name to a one which already exists
   char *old_name = strdup("T");
@@ -95,9 +95,9 @@ void test_add_merchs()
 
   // Checking if information is still the same
   looked_up_merch = looked_up_elem.p;
-  CU_ASSERT_EQUAL(strcmp(name1, looked_up_merch->name), 0);
-  CU_ASSERT_EQUAL(strcmp(desc1, looked_up_merch->desc), 0);
-  CU_ASSERT_EQUAL(looked_up_merch->price, 123);
+  CU_ASSERT_EQUAL(strcmp(name1, ioopm_merch_name_get(looked_up_merch)), 0);
+  CU_ASSERT_EQUAL(strcmp(desc1, ioopm_merch_desc_get(looked_up_merch)), 0);
+  CU_ASSERT_EQUAL(ioopm_merch_price_get(looked_up_merch), 123);
 
   // Adding a new completely merchendise
   char *new_name = strdup("YO!");
@@ -113,9 +113,9 @@ void test_add_merchs()
 
   // Checking if information is matches
   looked_up_merch = looked_up_elem.p;
-  CU_ASSERT_EQUAL(strcmp(new_name, looked_up_merch->name), 0);
-  CU_ASSERT_EQUAL(strcmp(new_desc, looked_up_merch->desc), 0);
-  CU_ASSERT_EQUAL(looked_up_merch->price, 123123);
+  CU_ASSERT_EQUAL(strcmp(new_name, ioopm_merch_name_get(looked_up_merch)), 0);
+  CU_ASSERT_EQUAL(strcmp(new_desc, ioopm_merch_desc_get(looked_up_merch)), 0);
+  CU_ASSERT_EQUAL(ioopm_merch_price_get(looked_up_merch), 123123);
 
   ioopm_destroy_store(store);
 }
@@ -140,8 +140,8 @@ void test_replenish_merchs()
   CU_ASSERT_TRUE(ioopm_get_merch(store, name1, &merch1_elem));
   CU_ASSERT_TRUE(ioopm_get_merch(store, name2, &merch2_elem));
 
-  ioopm_list_t *merch1_list = merch1->locs;
-  ioopm_list_t *merch2_list = merch2->locs;
+  ioopm_list_t *merch1_list = ioopm_merch_locs_get(merch1); // Using locs_get instead och merck->locs
+  ioopm_list_t *merch2_list = ioopm_merch_locs_get(merch2); // Same as merch1
 
   ioopm_replenish(store, strdup("Kunai"), 1, strdup("ABC"));
   CU_ASSERT_EQUAL(ioopm_list_size(merch1_list), 1); // check if shelf is added in the list of kunai
@@ -155,33 +155,33 @@ void test_replenish_merchs()
   // Kunai:
   elem_t shelf_elem = ioopm_list_head(merch1_list);
   shelf_t *shelf = shelf_elem.p;
-  CU_ASSERT_EQUAL(strcmp(shelf->shelf_name, "ABC"), 0);
-  CU_ASSERT_EQUAL(strcmp(*(shelf->merch_name), merch1->name), 0);
-  CU_ASSERT_EQUAL(merch1->stock, 1);
+  CU_ASSERT_EQUAL(strcmp(ioopm_shelf_name_get(shelf), "ABC"), 0);
+  CU_ASSERT_EQUAL(strcmp(ioopm_shelf_merch_name_get(shelf), ioopm_merch_name_get(merch1)), 0);
+  CU_ASSERT_EQUAL(ioopm_merch_stock_get(merch1), 1);
 
   elem_t looked_up_shelf_elem;
   CU_ASSERT_TRUE(ioopm_get_shelf(store, "ABC", &looked_up_shelf_elem));
 
   shelf_t *looked_up_shelf = looked_up_shelf_elem.p;
-  CU_ASSERT_EQUAL(strcmp(looked_up_shelf->shelf_name, "ABC"), 0);
-  CU_ASSERT_EQUAL(strcmp(*(looked_up_shelf->merch_name), merch1->name), 0);
-  CU_ASSERT_EQUAL(looked_up_shelf->quantity, 1);
+  CU_ASSERT_EQUAL(strcmp(ioopm_shelf_name_get(looked_up_shelf), "ABC"), 0);
+  CU_ASSERT_EQUAL(strcmp(ioopm_shelf_merch_name_get(looked_up_shelf), ioopm_merch_name_get(merch1)), 0);
+  CU_ASSERT_EQUAL(ioopm_shelf_quantity_get(looked_up_shelf), 1);
 
   // checking if the shelf has been added to the hashtable and if the info matches correctly with the
   //  shelf in the list, in the hashtable and the merch itself
   // Kaching:
   shelf_elem = ioopm_list_head(merch2_list);
   shelf = shelf_elem.p;
-  CU_ASSERT_EQUAL(strcmp(shelf->shelf_name, "XYZ"), 0);
-  CU_ASSERT_EQUAL(strcmp(*(shelf->merch_name), merch2->name), 0);
-  CU_ASSERT_EQUAL(merch2->stock, 2);
+  CU_ASSERT_EQUAL(strcmp(ioopm_shelf_name_get(shelf), "XYZ"), 0);
+  CU_ASSERT_EQUAL(strcmp(ioopm_shelf_merch_name_get(shelf), ioopm_merch_name_get(merch2)), 0);
+  CU_ASSERT_EQUAL(ioopm_shelf_quantity_get(shelf), 2);
 
   CU_ASSERT_TRUE(ioopm_get_shelf(store, "XYZ", &looked_up_shelf_elem));
 
   looked_up_shelf = looked_up_shelf_elem.p;
-  CU_ASSERT_EQUAL(strcmp(looked_up_shelf->shelf_name, "XYZ"), 0);
-  CU_ASSERT_EQUAL(strcmp(*(looked_up_shelf->merch_name), merch2->name), 0);
-  CU_ASSERT_EQUAL(looked_up_shelf->quantity, 2);
+  CU_ASSERT_EQUAL(strcmp(ioopm_shelf_name_get(looked_up_shelf), "XYZ"), 0);
+  CU_ASSERT_EQUAL(strcmp(ioopm_shelf_merch_name_get(looked_up_shelf), ioopm_merch_name_get(merch2)), 0);
+  CU_ASSERT_EQUAL(ioopm_shelf_quantity_get(looked_up_shelf), 2);
 
   // Trying to add stock to a shelf of different type of merch
   CU_ASSERT_FALSE(ioopm_replenish(store, strdup("Kaching"), 1000000, strdup("ABC")));
@@ -197,38 +197,39 @@ void test_replenish_merchs()
   // Kunai:
   shelf_elem = ioopm_list_head(merch1_list);
   shelf = shelf_elem.p;
-  CU_ASSERT_EQUAL(strcmp(shelf->shelf_name, "ABC"), 0);
-  CU_ASSERT_EQUAL(strcmp(*(shelf->merch_name), merch1->name), 0);
-  CU_ASSERT_EQUAL(merch1->stock, 1000001);
+  CU_ASSERT_EQUAL(strcmp(ioopm_shelf_name_get(shelf), "ABC"), 0);
+  CU_ASSERT_EQUAL(strcmp(ioopm_shelf_merch_name_get(shelf), ioopm_merch_name_get(merch1)), 0);
+  CU_ASSERT_EQUAL(ioopm_merch_stock_get(merch1), 1000001);
 
   CU_ASSERT_TRUE(ioopm_get_shelf(store, "ABC", &looked_up_shelf_elem));
 
   looked_up_shelf = looked_up_shelf_elem.p;
-  CU_ASSERT_EQUAL(strcmp(looked_up_shelf->shelf_name, "ABC"), 0);
-  CU_ASSERT_EQUAL(strcmp(*(looked_up_shelf->merch_name), merch1->name), 0);
-  CU_ASSERT_EQUAL(looked_up_shelf->quantity, 1000001);
+  CU_ASSERT_EQUAL(strcmp(ioopm_shelf_name_get(looked_up_shelf), "ABC"), 0);
+  CU_ASSERT_EQUAL(strcmp(ioopm_shelf_merch_name_get(looked_up_shelf), ioopm_merch_name_get(merch1)), 0);
+  CU_ASSERT_EQUAL(ioopm_shelf_quantity_get(looked_up_shelf), 1000001);
+
 
   // Having two different shelves
   ioopm_replenish(store, strdup("Kunai"), 1, strdup("LMNOP"));
   CU_ASSERT_TRUE(ioopm_get_shelf(store, "LMNOP", &looked_up_shelf_elem));
   looked_up_shelf = looked_up_shelf_elem.p;
-  CU_ASSERT_EQUAL(strcmp(looked_up_shelf->shelf_name, "LMNOP"), 0);
-  CU_ASSERT_EQUAL(strcmp(*(looked_up_shelf->merch_name), merch1->name), 0);
-  CU_ASSERT_EQUAL(looked_up_shelf->quantity, 1);
+  CU_ASSERT_EQUAL(strcmp(ioopm_shelf_name_get(looked_up_shelf), "LMNOP"), 0);
+  CU_ASSERT_EQUAL(strcmp(ioopm_shelf_merch_name_get(looked_up_shelf), ioopm_merch_name_get(merch1)), 0);
+  CU_ASSERT_EQUAL(ioopm_shelf_quantity_get(looked_up_shelf) , 1);
 
   // Checking if the new shelf is in the list
   shelf_elem = ioopm_list_head(merch1_list);
   shelf = shelf_elem.p;
-  CU_ASSERT_EQUAL(strcmp(shelf->shelf_name, "LMNOP"), 0);
-  CU_ASSERT_EQUAL(strcmp(*(shelf->merch_name), merch1->name), 0);
-  CU_ASSERT_EQUAL(merch1->stock, 1000002);
+  CU_ASSERT_EQUAL(strcmp(ioopm_shelf_name_get(shelf), "LMNOP"), 0);
+  CU_ASSERT_EQUAL(strcmp(ioopm_shelf_merch_name_get(shelf)  , ioopm_merch_name_get(merch1)), 0);
+  CU_ASSERT_EQUAL(ioopm_merch_stock_get(merch1), 1000002);
   CU_ASSERT_EQUAL(ioopm_list_size(merch1_list), 2);
 
   // Adding stock to a existing shelf with correct merch
   ioopm_replenish(store, strdup("Kunai"), 1, strdup("LMNOP"));
   CU_ASSERT_TRUE(ioopm_get_shelf(store, "LMNOP", &looked_up_shelf_elem));
   looked_up_shelf = looked_up_shelf_elem.p;
-  CU_ASSERT_EQUAL(looked_up_shelf->quantity, 2);
+  CU_ASSERT_EQUAL(ioopm_shelf_quantity_get(looked_up_shelf) , 2);
 
   ioopm_destroy_store(store);
 }
@@ -241,16 +242,16 @@ void test_edit_desc_price()
 
   merch_t *merch = ioopm_create_merch(name, desc, 123);
 
-  CU_ASSERT_EQUAL(strcmp(name, merch->name), 0);
-  CU_ASSERT_EQUAL(strcmp(desc, merch->desc), 0);
-  CU_ASSERT_EQUAL(merch->price, 123);
+  CU_ASSERT_EQUAL(strcmp(name, ioopm_merch_name_get(merch) ), 0);
+  CU_ASSERT_EQUAL(strcmp(desc, ioopm_merch_desc_get(merch)), 0);
+  CU_ASSERT_EQUAL(ioopm_merch_price_get(merch), 123);
 
   char *new_desc = strdup("CHANGE!!");
   edit_merch_desc(merch, new_desc);
   edit_merch_price(merch, 321);
 
-  CU_ASSERT_EQUAL(strcmp(new_desc, merch->desc), 0);
-  CU_ASSERT_EQUAL(merch->price, 321);
+  CU_ASSERT_EQUAL(strcmp(new_desc, ioopm_merch_desc_get(merch)), 0);
+  CU_ASSERT_EQUAL(ioopm_merch_price_get(merch), 321);
 
   ioopm_destroy_merch(merch);
 }
@@ -275,7 +276,7 @@ void test_edit_merch_name()
   CU_ASSERT_TRUE(edit_res);
 
   // Checking that the merchandise has the new name
-  CU_ASSERT_EQUAL(strcmp(merch->name, "Shuriken"), 0);
+  CU_ASSERT_EQUAL(strcmp(ioopm_merch_name_get(merch), "Shuriken"), 0);
 
   // Checking that the new name works for lookup
   elem_t looked_up_elem;
@@ -289,8 +290,8 @@ void test_edit_merch_name()
   CU_ASSERT_FALSE(ioopm_get_merch(store, "Kunai", &looked_up_elem));
 
   // Checking that the merchandise description and price remain unchanged
-  CU_ASSERT_EQUAL(strcmp(merch->desc, "Kaching"), 0);
-  CU_ASSERT_EQUAL(merch->price, 123);
+  CU_ASSERT_EQUAL(strcmp(ioopm_merch_desc_get(merch), "Kaching"), 0);
+  CU_ASSERT_EQUAL(ioopm_merch_price_get(merch), 123);
 
   // Trying to rename the merchandise to a name that already exists
   merch_t *other_merch = ioopm_create_merch(strdup("Kunai"), strdup("Other"), 456);
@@ -303,8 +304,8 @@ void test_edit_merch_name()
   CU_ASSERT_FALSE(duplicate_res);
 
   // Checking that both merchandise items keep their original names
-  CU_ASSERT_EQUAL(strcmp(merch->name, "Shuriken"), 0);
-  CU_ASSERT_EQUAL(strcmp(other_merch->name, "Kunai"), 0);
+  CU_ASSERT_EQUAL(strcmp(ioopm_merch_name_get(merch), "Shuriken"), 0);
+  CU_ASSERT_EQUAL(strcmp(ioopm_merch_name_get(other_merch), "Kunai"), 0);
 
   // Checking that both merchandise items can still be found
   CU_ASSERT_TRUE(ioopm_get_merch(store, "Shuriken", &looked_up_elem));
@@ -326,8 +327,8 @@ void test_edit_merch_name()
   CU_ASSERT_PTR_EQUAL(looked_up_elem.p, merch);
 
   // Checking that the merchandise description and price remain unchanged
-  CU_ASSERT_EQUAL(strcmp(merch->desc, "Kaching"), 0);
-  CU_ASSERT_EQUAL(merch->price, 123);
+  CU_ASSERT_EQUAL(strcmp(ioopm_merch_desc_get(merch), "Kaching"), 0);
+  CU_ASSERT_EQUAL(ioopm_merch_price_get(merch), 123);
 
   // Destroying the store and freeing its allocated memory
   ioopm_destroy_store(store);
@@ -402,7 +403,7 @@ void test_create_destroy_cart()
   store_t *store = ioopm_create_store();
   cart_t *cart = ioopm_create_cart(store);
 
-  CU_ASSERT_EQUAL(cart->id, 1);
+  CU_ASSERT_EQUAL(ioopm_cart_id_get(cart), 1);
 
   ioopm_destroy_cart(cart);
   ioopm_destroy_store(store);
@@ -413,16 +414,16 @@ void test_add_carts(void)
   store_t *store = ioopm_create_store();
   ioopm_add_cart(store);
 
-  CU_ASSERT_EQUAL(store->carts_num, 1);
+  CU_ASSERT_EQUAL(ioopm_store_carts_num_get(store), 1);
 
   elem_t cart_elem;
-  ioopm_hash_table_lookup(store->all_carts, int_elem(1), &cart_elem);
+  ioopm_hash_table_lookup(ioopm_store_all_carts_get(store), int_elem(1), &cart_elem);
   cart_t *cart = cart_elem.p;
 
-  CU_ASSERT_EQUAL(cart->id, 1);
+  CU_ASSERT_EQUAL(ioopm_cart_id_get(cart), 1);
 
   ioopm_add_cart(store);
-  CU_ASSERT_EQUAL(store->carts_num, 2);
+  CU_ASSERT_EQUAL(ioopm_store_carts_num_get(store), 2);
 
   ioopm_destroy_store(store);
 }
@@ -454,25 +455,25 @@ void test_add_to_cart(void)
 
   elem_t quantity1_elem;
   elem_t quantity2_elem;
-  CU_ASSERT_TRUE(ioopm_hash_table_lookup(cart1->merchandise, string_elem("Kunai"), &quantity1_elem));
-  CU_ASSERT_FALSE(ioopm_hash_table_lookup(cart2->merchandise, string_elem("Kunai"), &quantity2_elem));
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(ioopm_cart_merchandise_get(cart1), string_elem("Kunai"), &quantity1_elem));
+  CU_ASSERT_FALSE(ioopm_hash_table_lookup(ioopm_cart_merchandise_get(cart2), string_elem("Kunai"), &quantity2_elem));
   CU_ASSERT_EQUAL(quantity1_elem.i, 4); // Should be 4 Kunais in the cart
 
   // Adding more of the same merchandise to the same cart
   CU_ASSERT_EQUAL(ioopm_add_to_cart(store, 2, strdup("Kunai"), 6), 1); // Adding 6 Kuanais in 2nd cart
-  CU_ASSERT_TRUE(ioopm_hash_table_lookup(cart2->merchandise, string_elem("Kunai"), &quantity2_elem));
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(ioopm_cart_merchandise_get(cart2), string_elem("Kunai"), &quantity2_elem));
   CU_ASSERT_EQUAL(quantity2_elem.i, 6);
 
   elem_t reserved_elem;
-  CU_ASSERT_TRUE(ioopm_hash_table_lookup(store->reserved_merchs, string_elem("Kunai"), &reserved_elem));
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(ioopm_store_reserved_merchs_get(store), string_elem("Kunai"), &reserved_elem));
   CU_ASSERT_EQUAL(reserved_elem.i, 10); // Checking if the reserved kunais are now ten
 
   // Adding 1 more Kuanais in 2nd cart, shouldn't work bcs the stock is out
   CU_ASSERT_EQUAL(ioopm_add_to_cart(store, 2, strdup("Kunai"), 1), -3);
 
   // Checking if the info is still same
-  CU_ASSERT_TRUE(ioopm_hash_table_lookup(cart1->merchandise, string_elem("Kunai"), &quantity1_elem));
-  CU_ASSERT_TRUE(ioopm_hash_table_lookup(cart2->merchandise, string_elem("Kunai"), &quantity2_elem));
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(ioopm_cart_merchandise_get(cart1), string_elem("Kunai"), &quantity1_elem));
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(ioopm_cart_merchandise_get(cart2), string_elem("Kunai"), &quantity2_elem));
   CU_ASSERT_EQUAL(quantity1_elem.i, 4); // Should still be 4 Kunais in the cart
   CU_ASSERT_EQUAL(quantity2_elem.i, 6); // Should still be 6 Kunais in the cart
 
@@ -480,10 +481,10 @@ void test_add_to_cart(void)
   CU_ASSERT_EQUAL(ioopm_add_to_cart(store, 1, strdup("BLABLABLA"), 1), -1); // It should fail, merch doesn't exist
   CU_ASSERT_EQUAL(ioopm_add_to_cart(store, 1, strdup("BLA"), 1), 1);        // It should succeed
 
-  CU_ASSERT_TRUE(ioopm_hash_table_lookup(cart1->merchandise, string_elem("BLA"), &quantity1_elem));
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(ioopm_cart_merchandise_get(cart1), string_elem("BLA"), &quantity1_elem));
   CU_ASSERT_EQUAL(quantity1_elem.i, 1);
 
-  CU_ASSERT_TRUE(ioopm_hash_table_lookup(store->reserved_merchs, string_elem("BLA"), &reserved_elem));
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(ioopm_store_reserved_merchs_get(store), string_elem("BLA"), &reserved_elem));
   CU_ASSERT_EQUAL(reserved_elem.i, 1);
 
   ioopm_destroy_store(store);
@@ -552,7 +553,7 @@ void test_remove_from_cart(void)
   // add 6 Kunai in cart 1, (6 kunais reserved)
   CU_ASSERT_EQUAL(ioopm_add_to_cart(store, 1, strdup("Kunai"), 6), 1);
 
-  CU_ASSERT_TRUE(ioopm_hash_table_lookup(store->reserved_merchs, string_elem("Kunai"), &reserved_elem));
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(ioopm_store_reserved_merchs_get(store), string_elem("Kunai"), &reserved_elem));
   CU_ASSERT_EQUAL(reserved_elem.i, 6); // 6 kunais reserved
 
   // cart 2 cannot reserve 5 because only 4 are available
@@ -562,11 +563,11 @@ void test_remove_from_cart(void)
   CU_ASSERT_EQUAL(ioopm_remove_from_cart(store, 1, strdup("Kunai"), 2), 1);
 
   // cart 1 should now contain 4 Kunai.
-  CU_ASSERT_TRUE(ioopm_hash_table_lookup(cart1->merchandise, string_elem("Kunai"), &quantity_elem));
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(ioopm_cart_merchandise_get(cart1), string_elem("Kunai"), &quantity_elem));
   CU_ASSERT_EQUAL(quantity_elem.i, 4); // Should have 4 kunais in cart 1
 
   // now only 4 kunais are reserved
-  CU_ASSERT_TRUE(ioopm_hash_table_lookup(store->reserved_merchs, string_elem("Kunai"), &reserved_elem));
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(ioopm_store_reserved_merchs_get(store), string_elem("Kunai"), &reserved_elem));
   CU_ASSERT_EQUAL(reserved_elem.i, 4);
 
   // now we can add 5 kunais to cart 2
@@ -576,16 +577,16 @@ void test_remove_from_cart(void)
   CU_ASSERT_EQUAL(ioopm_remove_from_cart(store, 1, strdup("Kunai"), 5), -3);
 
   // cart 1 should still only have 4 kunais
-  CU_ASSERT_TRUE(ioopm_hash_table_lookup(cart1->merchandise, string_elem("Kunai"), &quantity_elem));
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(ioopm_cart_merchandise_get(cart1), string_elem("Kunai"), &quantity_elem));
   CU_ASSERT_EQUAL(quantity_elem.i, 4);
 
   CU_ASSERT_EQUAL(ioopm_remove_from_cart(store, 1, strdup("Kunai"), 4), 1);
 
   // no kuani in cart 1
-  CU_ASSERT_FALSE(ioopm_hash_table_lookup(cart1->merchandise, string_elem("Kunai"), &quantity_elem));
+  CU_ASSERT_FALSE(ioopm_hash_table_lookup(ioopm_cart_merchandise_get(cart1), string_elem("Kunai"), &quantity_elem));
 
   // cart 2 should still have its 5 Kunai reserved
-  CU_ASSERT_TRUE(ioopm_hash_table_lookup(store->reserved_merchs, string_elem("Kunai"), &reserved_elem));
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(ioopm_store_reserved_merchs_get(store), string_elem("Kunai"), &reserved_elem));
   CU_ASSERT_EQUAL(reserved_elem.i, 5);
 
   // the cart is emepty so it shouldn't work
@@ -593,7 +594,7 @@ void test_remove_from_cart(void)
 
   // removing 5 kunais from cart 2
   CU_ASSERT_EQUAL(ioopm_remove_from_cart(store, 2, strdup("Kunai"), 5), 1);
-  CU_ASSERT_FALSE(ioopm_hash_table_lookup(store->reserved_merchs, string_elem("Kunai"), &reserved_elem));
+  CU_ASSERT_FALSE(ioopm_hash_table_lookup(ioopm_store_reserved_merchs_get(store), string_elem("Kunai"), &reserved_elem));
 
   ioopm_destroy_store(store);
 }
@@ -634,45 +635,45 @@ void test_checkout(void)
   CU_ASSERT_EQUAL(ioopm_calculate_cost(store, 2), 550); // the total cost of cart 2
 
   // stock should be same
-  CU_ASSERT_EQUAL(kunai->stock, 10);
+  CU_ASSERT_EQUAL(ioopm_merch_stock_get(kunai), 10);
 
   ioopm_get_cart(store, 2, &cart_elem);
 
-  CU_ASSERT_TRUE(ioopm_hash_table_lookup(store->reserved_merchs, string_elem("Kunai"), &reserved_elem));
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(ioopm_store_reserved_merchs_get(store), string_elem("Kunai"), &reserved_elem));
   CU_ASSERT_EQUAL(reserved_elem.i, 9);
 
   // 5. Checkout cart 2: 4 Kunai + 3 Kaching = 550
   CU_ASSERT_EQUAL(ioopm_checkout(store, 2), 550);
 
   //stock should have updated: 10 - 4 
-  CU_ASSERT_EQUAL(kunai->stock, 6); 
+  CU_ASSERT_EQUAL(ioopm_merch_stock_get(kunai), 6); 
 
   elem_t kaching_elem;
   CU_ASSERT_TRUE(ioopm_get_merch(store, "Kaching", &kaching_elem));
   merch_t *kaching = kaching_elem.p;
   //stock should have updated: 8 - 43
-  CU_ASSERT_EQUAL(kaching->stock, 5);  
+  CU_ASSERT_EQUAL(ioopm_merch_stock_get(kaching), 5);  
 
   //cart has been removed after checkout
   CU_ASSERT_FALSE(ioopm_get_cart(store, 2, &cart_elem));
 
   // Cart 3s Kunai reservation must remain while cart 2s should have been removed
-  CU_ASSERT_TRUE(ioopm_hash_table_lookup(store->reserved_merchs, string_elem("Kunai"), &reserved_elem));
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(ioopm_store_reserved_merchs_get(store), string_elem("Kunai"), &reserved_elem));
   CU_ASSERT_EQUAL(reserved_elem.i, 5);
 
   //Checkout cart 3
   CU_ASSERT_EQUAL(ioopm_checkout(store, 3), 500);
-  CU_ASSERT_EQUAL(kunai->stock, 1); //Now one kunai left
+  CU_ASSERT_EQUAL(ioopm_merch_stock_get(kunai), 1); //Now one kunai left
 
   //Now there is no kunai reserved
-  CU_ASSERT_FALSE(ioopm_hash_table_lookup(store->reserved_merchs, string_elem("Kunai"), &reserved_elem));
+  CU_ASSERT_FALSE(ioopm_hash_table_lookup(ioopm_store_reserved_merchs_get(store), string_elem("Kunai"), &reserved_elem));
   CU_ASSERT_FALSE(ioopm_get_cart(store, 3, &cart_elem));
 
   CU_ASSERT_EQUAL(ioopm_add_to_cart(store, 4, strdup("Kunai"), 1), 1);
   CU_ASSERT_EQUAL(ioopm_checkout(store, 4), 100);
-  CU_ASSERT_EQUAL(kunai->stock, 0);
+  CU_ASSERT_EQUAL(ioopm_merch_stock_get(kunai), 0);
 
-  CU_ASSERT_FALSE(ioopm_hash_table_lookup(store->reserved_merchs, string_elem("Kunai"), &reserved_elem));
+  CU_ASSERT_FALSE(ioopm_hash_table_lookup(ioopm_store_reserved_merchs_get(store), string_elem("Kunai"), &reserved_elem));
 
   ioopm_destroy_store(store);
 }

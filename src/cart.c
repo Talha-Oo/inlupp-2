@@ -376,3 +376,11 @@ long long ioopm_checkout(store_t *store, size_t cart_id)
   ioopm_remove_cart(store, cart_id);
   return total;
 }
+
+size_t ioopm_cart_id_get(cart_t *cart) {
+  return cart->id;
+}
+
+ioopm_hash_table_t *ioopm_cart_merchandise_get(cart_t *cart) {
+  return cart->merchandise;
+}

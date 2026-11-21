@@ -62,3 +62,15 @@ cart_t *ioopm_create_cart(store_t *store);
 /// @brief Destroys a shopping cart stored in a hash table entry.
 /// @param entry pointer to the hash table entry containing the cart.
 void all_cart_destroyer(entry_t *entry);
+
+/* TILLÄG GRANSKNING */
+
+/// @brief 
+/// @param cart 
+/// @return 
+size_t ioopm_cart_id_get(cart_t *cart);
+
+/// @brief 
+/// @param cart 
+/// @return 
+ioopm_hash_table_t *ioopm_cart_merchandise_get(cart_t *cart);
